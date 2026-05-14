@@ -1,0 +1,2405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Playground · Tests — Domi Quality Studio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232C2A8A'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-family='system-ui%2Csans-serif' font-weight='700' font-size='10'%3EDQS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Domi Quality Studio — Playground v0.2 (Tests)
+     Sub-tool: catalog of saved checks (trajectory + evals).
+     Mirrors Lab shell (topbar + sidebar) for navigation continuity.
+     ============================================================ */
+  :root {
+    --bg:           #F7F7FA;
+    --surface:      #FFFFFF;
+    --surface-2:    #FAFAFC;
+    --surface-3:    #F2F2F6;
+    --border:       #E7E7EE;
+    --border-2:     #EFEFF4;
+    --divider:      #F0F0F4;
+    --text:         #15161C;
+    --text-muted:   #595D6B;
+    --text-subtle:  #6B6F7D;
+    --text-faint:   #7E8290;
+
+    --indigo-50:    #EEEEF7;
+    --indigo-100:   #DCDCEF;
+    --indigo-200:   #C5C4E5;
+    --indigo-300:   #8B8DD4;
+    --indigo-500:   #4F46BA;
+    --indigo-600:   #3F38A2;
+    --indigo-700:   #2C2A8A;
+
+    --state-red:        #C03A3A;
+    --state-red-bg:     #FBECEC;
+    --state-yellow:     #B58A0A;
+    --state-yellow-bg:  #FAF3DD;
+    --state-green:      #2A7F4D;
+    --state-green-bg:   #E5F2EB;
+
+    --cat-1: #4F46BA;
+    --cat-2: #0E8C7E;
+    --cat-3: #B5650A;
+    --cat-4: #9B2D58;
+    --cat-5: #6B3FAA;
+    --cat-6: #5A6478;
+
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --r-sm: 6px;
+    --r-md: 8px;
+    --r-lg: 12px;
+
+    --shadow-card: 0 1px 2px rgba(20, 22, 30, 0.04), 0 1px 0 rgba(20, 22, 30, 0.02);
+    --shadow-elev: 0 4px 12px -4px rgba(20, 22, 30, 0.08), 0 2px 4px rgba(20, 22, 30, 0.04);
+    --shadow-pop:  0 12px 28px -10px rgba(20, 22, 30, 0.18), 0 4px 10px rgba(20, 22, 30, 0.07);
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"] {
+    --bg:           #0F0F12;
+    --surface:      #1A1A1F;
+    --surface-2:    #222228;
+    --surface-3:    #2A2A30;
+    --border:       #2E2E36;
+    --border-2:     #363640;
+    --divider:      #2A2A32;
+    --text:         #F0F0F5;
+    --text-muted:   #A4A8B8;
+    --text-subtle:  #B0B4C4;
+    --text-faint:   #8A8E9E;
+    --indigo-50:    rgba(120, 116, 220, 0.12);
+    --indigo-100:   rgba(120, 116, 220, 0.22);
+    --indigo-200:   rgba(120, 116, 220, 0.34);
+    --indigo-300:   #7B78D8;
+    --indigo-500:   #8482DC;
+    --indigo-600:   #9694E8;
+    --indigo-700:   #A8A6F2;
+    --state-red:        #D87474;
+    --state-red-bg:     #2C1515;
+    --state-yellow:     #CCA030;
+    --state-yellow-bg:  #2A2008;
+    --state-green:      #40B870;
+    --state-green-bg:   #0F2018;
+    --cat-1: #7B78DC;
+    --cat-2: #20B8AA;
+    --cat-3: #D08020;
+    --cat-4: #C44880;
+    --cat-5: #9A68CC;
+    --cat-6: #8890A8;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(0, 0, 0, 0.3);
+    --shadow-elev: 0 4px 12px -4px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-pop:  0 12px 28px -10px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.4);
+  html[data-theme="dark"] .brand .logo {
+    background: #3F38A2;
+  }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    font-size: 13px;
+    line-height: 1.45;
+    font-feature-settings: "tnum" 1, "cv11" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; padding: 0; }
+  a { color: inherit; text-decoration: none; }
+  input, textarea, select { font: inherit; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ===== APP LAYOUT ===== */
+  .app {
+    display: grid;
+    grid-template-columns: 248px 1fr;
+    grid-template-rows: 52px 1fr;
+    grid-template-areas:
+      "topbar topbar"
+      "sidebar main";
+    height: 100vh;
+  }
+
+  /* ============================================================
+     TOPBAR
+     ============================================================ */
+  .topbar {
+    grid-area: topbar;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 16px; gap: 10px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 6px;
+    border-radius: var(--r-sm);
+    transition: background 0.12s;
+  }
+  .brand:hover { background: var(--surface-2); }
+  .brand .logo {
+    width: 26px; height: 26px;
+    background: #2C2A8A;
+    border-radius: var(--r-sm);
+    display: grid; place-items: center;
+    color: white; font-weight: 700; font-size: 12px;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    box-shadow: var(--shadow-card);
+  }
+  .brand .brand-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .topbar-divider {
+    width: 1px; height: 22px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+  .topbar-selector-group + .topbar-selector-group { margin-left: 20px; }
+  .tool-switcher {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    padding: 6px 10px 6px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    transition: border-color 0.12s, background 0.12s;
+    letter-spacing: -0.005em;
+  }
+  .tool-switcher:hover {
+    border-color: var(--text-subtle);
+    background: var(--surface-3);
+  }
+  .tool-switcher .ts-icon { width: 14px; height: 14px; color: var(--indigo-600); flex-shrink: 0; }
+  .tool-switcher .ts-caret { width: 10px; height: 10px; color: var(--text-subtle); flex-shrink: 0; }
+
+  .agent-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 10px 4px 6px;
+    font-size: 12.5px;
+    transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
+  }
+  .agent-chip:hover { border-color: var(--indigo-300); background: var(--indigo-50); }
+  .agent-chip .ac-avatar {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white; font-size: 12px; font-weight: 700;
+    font-family: var(--font-display);
+    flex-shrink: 0;
+  }
+  .agent-chip .ac-caret { width: 10px; height: 10px; color: var(--text-subtle); flex-shrink: 0; }
+
+  .topbar .spacer { flex: 1; }
+  .topbar-search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 6px 12px;
+    width: 280px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
+  }
+  .topbar-search:hover { border-color: var(--text-subtle); background: var(--surface-3); }
+  .topbar-search:focus-within {
+    border-color: var(--indigo-500);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--indigo-100);
+  }
+  .topbar-search svg { color: var(--text-subtle); flex-shrink: 0; }
+  .topbar-search input {
+    flex: 1; border: none; background: transparent;
+    color: var(--text); font-size: 12.5px;
+    padding: 0; outline: none; min-width: 0;
+  }
+  .topbar-search input::placeholder { color: var(--text-subtle); }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cat-2), var(--indigo-500));
+    color: white; font-weight: 600; font-size: 12px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     SIDEBAR
+     ============================================================ */
+  .sidebar {
+    grid-area: sidebar;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 14px 10px 10px;
+    overflow-y: auto;
+  }
+  .sb-tool-header {
+    padding: 6px 10px 14px;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 8px;
+  }
+  .sb-tool-eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 2px;
+  }
+  .sb-tool-name {
+    font-family: var(--font-display);
+    font-weight: 600; font-size: 14px;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .sb-tool-role { font-size: 12px; color: var(--text-subtle); margin-top: 1px; }
+  .nav-section { padding: 4px 0; display: flex; flex-direction: column; gap: 1px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px;
+    border-radius: var(--r-sm);
+    color: var(--text-muted);
+    font-size: 13px; font-weight: 500;
+    transition: background 0.1s, color 0.1s;
+    cursor: pointer;
+  }
+  .nav-item:hover { background: var(--surface-2); color: var(--text); }
+  .nav-item.active {
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    font-weight: 600;
+  }
+  .nav-item .ic { width: 15px; height: 15px; color: var(--text-subtle); flex-shrink: 0; }
+  .nav-item.active .ic { color: var(--indigo-600); }
+  .nav-item .count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+  .nav-item.active .count { color: var(--indigo-600); }
+  .sb-bottom { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--divider); }
+  html[data-theme="dark"] .theme-toggle .ic-sun  { display: inline-block; }
+  html[data-theme="dark"] .theme-toggle .ic-moon { display: none; }
+  .theme-toggle .ic-sun  { display: none; }
+  html[data-theme="dark"] .theme-toggle .theme-label-light { display: none; }
+  html[data-theme="dark"] .theme-toggle .theme-label-dark  { display: inline; }
+  .theme-toggle .theme-label-dark  { display: none; }
+  .theme-toggle { width: 100%; text-align: left; }
+
+  /* ============================================================
+     MAIN — tests page
+     ============================================================ */
+  .main {
+    grid-area: main;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    padding: 14px 18px 18px;
+    gap: 12px;
+  }
+
+  /* Page header — friendly, compact, sits on bg */
+  .page-header {
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+    padding: 2px 4px;
+  }
+  .ph-id { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .ph-icon {
+    width: 30px; height: 30px; flex-shrink: 0;
+    border-radius: var(--r-sm);
+    background: var(--indigo-50); color: var(--indigo-600);
+    display: grid; place-items: center;
+  }
+  .ph-icon svg { width: 16px; height: 16px; }
+  .ph-text { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 1px; }
+  .ph-title {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 17px; line-height: 1.2;
+    letter-spacing: -0.01em; color: var(--text); margin: 0;
+  }
+  .ph-purpose { font-size: 12.5px; line-height: 1.4; color: var(--text-muted); margin: 0; }
+  .ph-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* Content surface — toolbar + list flow inside */
+  .tests-card {
+    flex: 1; min-height: 0;
+    background: var(--surface);
+    border-radius: var(--r-lg);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .tests-toolbar {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--divider);
+    flex-shrink: 0;
+  }
+  .tests-toolbar-row {
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tests-main-row { justify-content: space-between; flex-wrap: nowrap; }
+  .tests-filter-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  .period-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 9px;
+    border-radius: var(--r-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .period-chip:hover { border-color: var(--text-subtle); color: var(--text); background: var(--surface-2); }
+  .period-chip[aria-expanded="true"] { border-color: var(--indigo-300); color: var(--text); }
+  .period-chip .pc-icon { width: 12px; height: 12px; color: var(--text-subtle); flex-shrink: 0; }
+  .period-chip .pc-val { color: var(--text); font-weight: 600; }
+  .period-chip .pc-caret { width: 10px; height: 10px; color: var(--text-faint); flex-shrink: 0; }
+  .period-chip:hover .pc-caret { color: var(--text-subtle); }
+  .period-chip.is-add { color: var(--text-subtle); border-style: dashed; }
+  .period-chip.is-add:hover { color: var(--text); border-style: solid; }
+
+  .tests-active-filters {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tests-active-filters.is-active { display: flex; }
+  .tests-active-filters .taf-label {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-faint);
+    margin-right: 2px;
+  }
+  .filter-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 4px 4px 9px;
+    border-radius: var(--r-sm);
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    font-size: 12px; font-weight: 500;
+    border: 1px solid var(--indigo-200);
+    cursor: default;
+  }
+  .filter-chip .fc-prop { font-weight: 600; }
+  .filter-chip .fc-op { color: var(--indigo-500); font-weight: 500; }
+  .filter-chip .fc-val { color: var(--indigo-700); }
+  .filter-chip .fc-x {
+    width: 16px; height: 16px; border-radius: 4px;
+    display: grid; place-items: center;
+    color: var(--indigo-500);
+    transition: background 0.12s, color 0.12s;
+    cursor: pointer;
+  }
+  .filter-chip .fc-x:hover { background: var(--indigo-200); color: var(--indigo-700); }
+  .filter-chip .fc-x svg { width: 9px; height: 9px; }
+  .taf-clear {
+    font-size: 12px; color: var(--text-subtle);
+    padding: 4px 6px; border-radius: var(--r-sm);
+    cursor: pointer;
+  }
+  .taf-clear:hover { color: var(--state-red); background: var(--state-red-bg); }
+
+  /* Summary chips row */
+  .tests-summary {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .sum-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 11px 5px 9px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    transition: border-color 0.12s, background 0.12s, color 0.12s;
+    cursor: pointer;
+    user-select: none;
+  }
+  .sum-chip:hover { border-color: var(--text-subtle); color: var(--text); }
+  .sum-chip.is-active {
+    background: var(--indigo-50);
+    border-color: var(--indigo-300);
+    color: var(--indigo-700);
+    font-weight: 600;
+  }
+  .sum-chip .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sum-chip .dot.all  { background: var(--text-faint); }
+  .sum-chip .dot.pass { background: var(--state-green); }
+  .sum-chip .dot.fail { background: var(--state-red); }
+  .sum-chip .dot.reg  { background: var(--state-yellow); }
+  .sum-chip .dot.nev  { background: var(--text-faint); }
+  .sum-chip .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: inherit;
+  }
+
+
+  .btn-primary-sm {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    background: var(--indigo-700);
+    color: white;
+    font-size: 12px; font-weight: 600;
+    border: 1px solid var(--indigo-700);
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .btn-primary-sm:hover { background: var(--indigo-600); border-color: var(--indigo-600); }
+  .btn-primary-sm svg { width: 12px; height: 12px; }
+  html[data-theme="dark"] .btn-primary-sm { background: #4845B8; border-color: #4845B8; color: white; }
+  html[data-theme="dark"] .btn-primary-sm:hover { background: #5856CC; border-color: #5856CC; }
+
+  .btn-ghost-sm {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border);
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+  .btn-ghost-sm:hover { border-color: var(--text-subtle); color: var(--text); background: var(--surface-2); }
+  .btn-ghost-sm svg { width: 12px; height: 12px; }
+
+  /* ============================================================
+     LIST CONTAINER
+     ============================================================ */
+  .tests-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    min-height: 0;
+  }
+  .tests-body::-webkit-scrollbar { width: 8px; }
+  .tests-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .tests-body::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+  .checks-list {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Card frame — identical to Lab's updated layout (status flag + Run at bottom-right, Details at top-right) */
+  .check-item {
+    position: relative;
+    display: block;
+    padding: 14px 24px 14px 22px;
+    border-bottom: 1px solid var(--divider);
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-left-color 0.15s;
+    cursor: pointer;
+  }
+  .check-item:hover { background: var(--surface-2); }
+  .check-item.is-expanded { background: var(--surface-2); }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:has(.check-status.pass)      { border-left-color: var(--state-green); }
+  .check-item:has(.check-status.fail)      { border-left-color: var(--state-red); }
+  .check-item:has(.check-status.regressed) { border-left-color: var(--state-yellow); }
+  .check-item:has(.check-status.never-run) { border-left-color: var(--text-faint); }
+
+  .check-item-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .check-item-statusmark {
+    position: relative;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-item-statusmark svg { width: 12px; height: 12px; stroke-width: 2.8; }
+
+  /* Eval names tooltip on hover */
+  .status-tooltip {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    box-shadow: var(--shadow-pop);
+    padding: 7px 10px;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    min-width: 190px;
+    white-space: nowrap;
+  }
+  .check-item-statusmark:hover .status-tooltip { opacity: 1; }
+  .st-row {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 1.5px 0;
+    font-family: var(--font-body);
+  }
+  .st-icon { width: 10px; height: 10px; flex-shrink: 0; }
+  .st-pass { color: var(--state-green); }
+  .st-fail { color: var(--state-red); }
+  .st-pend { color: var(--text-faint); }
+  .check-item:has(.check-status.pass) .check-item-statusmark { background: var(--state-green-bg); color: var(--state-green); }
+  .check-item:has(.check-status.fail) .check-item-statusmark { background: var(--state-red-bg); color: var(--state-red); }
+  .check-item:has(.check-status.regressed) .check-item-statusmark { background: var(--state-yellow-bg); color: var(--state-yellow); }
+  .check-item:has(.check-status.never-run) .check-item-statusmark { background: var(--surface-3); color: var(--text-subtle); }
+
+  .check-item-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    margin-top: 6px;
+  }
+  .check-item-meta .meta-sep { opacity: 0.4; margin: 0 2px; }
+
+  /* Right column: stacks top actions (edit + expand) above Run */
+  .check-item-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    gap: 8px;
+  }
+  .check-item-actions {
+    display: flex; align-items: center; gap: 4px;
+    justify-content: flex-end;
+  }
+  .check-item.is-expanded .btn-run-test { display: none; }
+  .btn-run-test {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 11px;
+    border-radius: var(--r-sm);
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    font-size: 12px; font-weight: 600;
+    border: 1px solid var(--indigo-100);
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  .btn-run-test:hover { background: var(--indigo-100); border-color: var(--indigo-300); }
+  .btn-run-test svg { width: 11px; height: 11px; }
+  html[data-theme="dark"] .btn-run-test {
+    background: rgba(130,126,220,0.12);
+    border-color: rgba(130,126,220,0.3);
+    color: var(--indigo-600);
+  }
+  html[data-theme="dark"] .btn-run-test:hover {
+    background: rgba(130,126,220,0.22);
+    border-color: rgba(130,126,220,0.5);
+  }
+  .check-item-body { flex: 1; min-width: 0; }
+
+  .check-item-name {
+    font-size: 13.5px; font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  .check-item-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-top: 3px;
+  }
+  .check-item-prov {
+    font-size: 12px;
+    color: var(--text-subtle);
+    margin-top: 6px;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .check-item-prov svg { width: 10px; height: 10px; opacity: 0.65; flex-shrink: 0; }
+  .check-item-prov .prov-pattern {
+    font-family: var(--font-mono);
+    color: var(--indigo-600);
+    background: var(--indigo-50);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  .btn-view-test {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: var(--r-sm);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-subtle);
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+  }
+  .btn-view-test:hover { color: var(--text); border-color: var(--border); background: var(--surface); }
+  .btn-view-test svg { width: 12px; height: 12px; transition: transform 0.15s var(--ease-out); }
+  .btn-view-test.is-open svg { transform: rotate(90deg); }
+
+  /* check-status kept as hidden data hook for :has() selectors */
+  .check-status { display: none; }
+
+  /* Edit — secondary, icon-only */
+  .btn-edit-test {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: var(--r-sm);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-subtle);
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+  }
+  .btn-edit-test:hover {
+    color: var(--text);
+    border-color: var(--border);
+    background: var(--surface);
+  }
+  .btn-edit-test svg { width: 12px; height: 12px; }
+
+  /* ============================================================
+     ANATOMY — same look as Lab. Collapsed by default.
+     ============================================================ */
+  .check-anatomy {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s var(--ease-out);
+  }
+  .check-item.is-expanded .check-anatomy { max-height: 1400px; }
+  .anatomy-inner {
+    padding: 14px 0 4px;
+    margin-top: 12px;
+    border-top: 1px solid var(--divider);
+  }
+
+  .anatomy-section {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .anatomy-section-label {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .anatomy-section-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+
+  /* Provenance eyebrow inside expanded */
+  .anatomy-prov {
+    font-size: 12px;
+    color: var(--text-subtle);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .anatomy-prov svg { width: 11px; height: 11px; opacity: 0.65; flex-shrink: 0; }
+  .anatomy-prov .prov-pattern {
+    font-family: var(--font-mono);
+    color: var(--indigo-600);
+    background: var(--indigo-50);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* Reference (expected output) — last frozen agent turn */
+  .traj-turn.is-reference {
+    border-color: var(--indigo-200);
+    background: var(--indigo-50);
+  }
+  html[data-theme="dark"] .traj-turn.is-reference {
+    background: rgba(120, 116, 220, 0.10);
+    border-color: rgba(120, 116, 220, 0.30);
+  }
+  .traj-turn .traj-tag {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--indigo-600);
+    background: var(--indigo-100);
+    padding: 2px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    order: 4;
+    margin-left: auto;
+  }
+
+  /* Test actions footer inside expanded */
+  .anatomy-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+  }
+  .anatomy-action-btns { display: flex; align-items: center; gap: 4px; }
+  /* Provenance inside anatomy-actions footer */
+  .anatomy-actions .anatomy-prov {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .anatomy-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    border-radius: var(--r-sm);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-subtle);
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+  }
+  .anatomy-action:hover { color: var(--text); border-color: var(--border); background: var(--surface); }
+  .anatomy-action svg { width: 11px; height: 11px; }
+  .anatomy-action.is-danger:hover { color: var(--state-red); border-color: var(--state-red-bg); background: var(--state-red-bg); }
+
+  /* Popover role hint */
+  .pop-item .pi-role { font-size: 12px; color: var(--text-subtle); font-weight: 400; margin-left: 4px; }
+
+  /* Trajectory turns inside anatomy */
+  .traj-turn {
+    display: flex; gap: 8px;
+    padding: 7px 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-sm);
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .traj-turn.is-frozen { opacity: 0.85; }
+  .traj-role {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    min-width: 50px;
+    padding-top: 1px;
+    order: 1;
+  }
+  .traj-turn.user .traj-role { color: var(--text-muted); }
+  .traj-turn.agent .traj-role { color: var(--indigo-600); }
+  .traj-text { color: var(--text); flex: 1; order: 3; }
+  .traj-placeholder { color: var(--text-faint); font-style: italic; }
+  .traj-mark { order: 2; }
+  .traj-mark {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--indigo-600);
+    background: var(--indigo-50);
+    border: 1px solid var(--indigo-100);
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    align-self: center;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  /* Eval rows */
+  .eval-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 9px 10px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .eval-row:last-child { border-bottom: none; }
+  .eval-row-icon { flex-shrink: 0; margin-top: 2px; width: 12px; height: 12px; }
+  .eval-row.pass { border-left: 2px solid var(--state-green); padding-left: 12px; }
+  .eval-row.fail { border-left: 2px solid var(--state-red); padding-left: 12px; }
+  .eval-row.pass .eval-row-icon { color: var(--state-green); }
+  .eval-row.fail .eval-row-icon { color: var(--state-red); }
+  .eval-row-info { flex: 1; min-width: 0; }
+  .eval-row-name { font-weight: 600; color: var(--text); font-size: 12px; }
+  .eval-row-detail { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .eval-row.fail .eval-row-detail { color: var(--state-red); }
+
+  /* Setup transcript — quiet, no boxes, just a vertical rule */
+  .setup-block { margin-bottom: 14px; }
+  .setup-head {
+    font-family: var(--font-display);
+    font-size: 11.5px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .setup-line {
+    display: flex; gap: 10px;
+    padding: 4px 0 4px 12px;
+    border-left: 2px solid var(--divider);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .setup-line + .setup-line { margin-top: 2px; }
+  .setup-role {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    min-width: 60px;
+    padding-top: 2px;
+  }
+  .setup-line.agent .setup-role { color: var(--indigo-500); }
+  .setup-text { flex: 1; min-width: 0; }
+
+  /* Expected output card — pairs the answer with its criteria */
+  .expected-card {
+    border: 1px solid var(--indigo-200);
+    background: var(--indigo-50);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  html[data-theme="dark"] .expected-card {
+    background: rgba(120,116,220,0.07);
+    border-color: rgba(120,116,220,0.30);
+  }
+  .expected-card.is-pending {
+    border-color: var(--divider);
+    background: var(--surface-2);
+  }
+  html[data-theme="dark"] .expected-card.is-pending {
+    background: rgba(255,255,255,0.02);
+    border-color: var(--divider);
+  }
+  .ec-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--indigo-100);
+    background: rgba(120,116,220,0.08);
+  }
+  html[data-theme="dark"] .ec-head {
+    background: rgba(120,116,220,0.10);
+    border-color: rgba(120,116,220,0.20);
+  }
+  .expected-card.is-pending .ec-head {
+    background: transparent;
+    border-color: var(--divider);
+  }
+  .ec-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11.5px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--indigo-600);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .expected-card.is-pending .ec-eyebrow { color: var(--text-subtle); }
+  .ec-role {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    color: var(--text-faint);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .ec-verdict {
+    font-family: var(--font-mono);
+    font-size: 11.5px; font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .ec-verdict.pass { color: var(--state-green); background: rgba(46,160,67,0.14); }
+  .ec-verdict.partial { color: #B5851A; background: rgba(217,144,18,0.16); }
+  html[data-theme="dark"] .ec-verdict.partial { color: #E0A93C; background: rgba(217,144,18,0.20); }
+  .ec-verdict.fail { color: var(--state-red); background: rgba(220,53,69,0.14); }
+  .ec-verdict.pending { color: var(--text-faint); background: var(--surface-3); }
+  .ec-body {
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .ec-body.is-placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+    font-size: 12.5px;
+  }
+  .ec-criteria {
+    border-top: 1px solid var(--indigo-100);
+    padding: 8px 14px 10px;
+  }
+  html[data-theme="dark"] .ec-criteria { border-color: rgba(120,116,220,0.20); }
+  .expected-card.is-pending .ec-criteria { border-color: var(--divider); }
+  .ec-crit-label {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin: 4px 0 6px;
+  }
+  .ec-crit {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 5px 0;
+    font-size: 12px;
+  }
+  .ec-crit-icon { flex-shrink: 0; width: 12px; height: 12px; margin-top: 3px; }
+  .ec-crit.pass .ec-crit-icon { color: var(--state-green); }
+  .ec-crit.fail .ec-crit-icon { color: var(--state-red); }
+  .ec-crit.pending { opacity: 0.6; }
+  .ec-crit.pending .ec-crit-icon { color: var(--text-faint); }
+  .ec-crit-info { flex: 1; min-width: 0; }
+  .ec-crit-name { font-weight: 600; color: var(--text); font-size: 12px; }
+  .ec-crit-detail { font-size: 12px; color: var(--text-muted); margin-top: 1px; line-height: 1.4; }
+  .ec-crit.fail .ec-crit-detail { color: var(--state-red); }
+
+  /* Empty state */
+  .tests-empty {
+    padding: 60px 28px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .tests-empty-title {
+    font-family: var(--font-display);
+    font-weight: 600; font-size: 15px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .tests-empty-sub { font-size: 12.5px; max-width: 420px; margin: 0 auto; }
+
+  /* ============================================================
+     POPOVERS (agent picker, filter)
+     ============================================================ */
+  .pop {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-pop);
+    min-width: 240px;
+    padding: 6px;
+    z-index: 100;
+    display: none;
+  }
+  .pop.is-open { display: block; }
+  .pop-section-label {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    padding: 8px 10px 4px;
+  }
+  .pop-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--r-sm);
+    font-size: 13px; color: var(--text);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .pop-item:hover { background: var(--surface-2); }
+  .pop-item.is-active { background: var(--indigo-50); color: var(--indigo-700); }
+  .pop-item .pi-icon { width: 16px; height: 16px; color: var(--text-subtle); flex-shrink: 0; }
+  .pop-item.is-active .pi-icon { color: var(--indigo-600); }
+  .pop-item .pi-name { flex: 1; }
+  .pop-item .pi-role { font-size: 12px; color: var(--text-subtle); font-weight: 400; }
+  .pop-item .pi-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: white; font-size: 12px; font-weight: 700;
+    font-family: var(--font-display); flex-shrink: 0;
+  }
+  .pop-item .pi-meta {
+    font-size: 12px; font-weight: 600; color: var(--text-subtle);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 2px 6px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  }
+  .pop-item .pi-check { width: 14px; height: 14px; color: var(--indigo-600); flex-shrink: 0; opacity: 0; margin-left: auto; }
+  .pop-item.is-active .pi-check { opacity: 1; }
+  .pop-divider { height: 1px; background: var(--divider); margin: 6px 4px; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200; display: none;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.is-open { display: flex; }
+  html[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,0.7); }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-pop);
+    width: 100%; max-width: 520px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    animation: modal-in 0.15s var(--ease-out);
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+  }
+  .modal-head {
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--divider);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .modal-head h2 {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 600; color: var(--text);
+    letter-spacing: -0.005em; margin: 0; flex: 1;
+  }
+  .modal-close {
+    width: 26px; height: 26px;
+    border-radius: var(--r-sm);
+    display: grid; place-items: center;
+    color: var(--text-subtle);
+    transition: background 0.1s, color 0.1s;
+  }
+  .modal-close:hover { background: var(--surface-2); color: var(--text); }
+  .modal-close svg { width: 14px; height: 14px; }
+  .modal-body {
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .modal-foot {
+    padding: 12px 20px;
+    border-top: 1px solid var(--divider);
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 5px; }
+  .field-label { font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.01em; }
+  .field-input {
+    padding: 8px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    color: var(--text); font-size: 13px;
+    transition: border-color 0.12s, box-shadow 0.12s, background 0.12s;
+    outline: none; width: 100%;
+  }
+  .field-input:focus {
+    border-color: var(--indigo-500);
+    box-shadow: 0 0 0 3px var(--indigo-100);
+    background: var(--surface);
+  }
+  .field-input::placeholder { color: var(--text-subtle); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--r-sm);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+  .btn-ghost:hover { border-color: var(--text-subtle); color: var(--text); background: var(--surface-2); }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--r-sm);
+    font-size: 13px; font-weight: 600;
+    background: var(--indigo-700); color: white;
+    border: 1px solid var(--indigo-700);
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .btn-primary:hover { background: var(--indigo-600); border-color: var(--indigo-600); }
+  html[data-theme="dark"] .btn-primary { background: #4845B8; border-color: #4845B8; }
+  html[data-theme="dark"] .btn-primary:hover { background: #5856CC; border-color: #5856CC; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-pop);
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; color: var(--text);
+    z-index: 300; opacity: 0; pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s;
+    white-space: nowrap;
+  }
+  .toast.is-visible { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--state-green); flex-shrink: 0; }
+  .toast-close {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: var(--r-sm); color: var(--text-subtle);
+    transition: color 0.12s, background 0.12s; margin-left: 2px;
+  }
+  .toast-close:hover { color: var(--text); background: var(--surface-2); }
+  .toast-close svg { width: 11px; height: 11px; }
+
+/* compact meta */
+.check-item-meta { display: flex; align-items: center; gap: 5px; }
+.cim-evals { display: flex; align-items: center; gap: 3px; }
+.cim-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.cim-dot.pass { background: var(--state-green); }
+.cim-dot.fail { background: var(--state-red); }
+.cim-dot.pend { background: var(--text-faint); }
+.cim-run { color: var(--text-faint); font-size: 12px; white-space: nowrap; }
+.check-item.is-expanded .btn-edit-test { display: none; }
+
+/* anatomy eval verdict badge */
+.anatomy-eval-verdict {
+  font-size: 12px; font-weight: 600; letter-spacing: 0;
+  padding: 2px 8px; border-radius: 999px; font-family: var(--font-mono);
+}
+.anatomy-eval-verdict.pass { background: var(--state-green-bg); color: var(--state-green); }
+.anatomy-eval-verdict.fail { background: var(--state-red-bg); color: var(--state-red); }
+.anatomy-eval-verdict.partial { background: var(--state-yellow-bg); color: var(--state-yellow); }
+
+/* anatomy action separator */
+.anatomy-action-sep {
+  width: 1px; height: 14px; background: var(--border);
+  margin: 0 2px; flex-shrink: 0; align-self: center;
+}
+
+/* export popover */
+.export-pop { min-width: 200px; }
+
+/* overflow button + popover */
+.btn-overflow { padding: 5px 7px; }
+.btn-overflow svg { width: 14px; height: 14px; }
+.overflow-pop { min-width: 160px; }
+.overflow-pop .pop-item.is-danger { color: var(--state-red); }
+.overflow-pop .pop-item.is-danger .pi-icon { color: var(--state-red); }
+.overflow-pop .pop-item.is-danger:hover { background: var(--state-red-bg); }
+
+/* card as island when expanded */
+.check-item.is-expanded {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  margin: 8px 10px;
+  box-shadow: 0 0 0 1px var(--border), 0 4px 12px -4px rgba(20, 22, 30, 0.08);
+}
+html[data-theme="dark"] .check-item.is-expanded {
+  box-shadow: 0 0 0 1px var(--border), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
+}
+.check-item.is-expanded + .check-item { border-top: none; }
+
+</style>
+<script>window._topbar = { tool: 'playground', page: 'tests' };</script>
+<script src="topbar.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===========================================================
+       TOPBAR
+       =========================================================== -->
+  <header class="topbar">
+    <a class="brand" href="conv-explorer-overview.html" title="Domi Quality Studio — home">
+      <span class="logo">DQS</span>
+      <span class="brand-name">Domi Quality Studio</span>
+    </a>
+    <span class="topbar-divider"></span>
+    <button class="tool-switcher" type="button" id="tool-switcher-btn" aria-haspopup="true" aria-expanded="false">
+      <svg class="ts-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 4 20 12 6 20 6 4"/></svg>      <span>Playground</span>
+      <svg class="ts-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <button class="agent-chip is-lead" type="button" data-agent-trigger aria-haspopup="true" aria-expanded="false">
+      <span class="ac-avatar" style="background: var(--indigo-500);">D</span>      <span class="ac-name">Domi</span>
+      <svg class="ac-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="spacer"></div>
+    <label class="topbar-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" placeholder="Search tests, agents, patterns…" aria-label="Search" />
+    </label>
+    <button class="avatar" type="button" aria-label="Account">H</button>
+  </header>
+
+  <!-- ===========================================================
+       SIDEBAR — Playground nav
+       =========================================================== -->
+  <aside class="sidebar">
+    <div class="sb-tool-header">
+      <div class="sb-tool-eyebrow">Tool</div>
+      <div class="sb-tool-name">Playground</div>
+      <div class="sb-tool-role">Test agent changes</div>
+    </div>
+
+    <nav class="nav-section" aria-label="Playground pages">
+      <a class="nav-item" href="playground-lab.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8"/><path d="M9 3v7.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L15 10.5V3"/><path d="M7 17h10"/></svg>
+        Lab
+      </a>
+      <a class="nav-item active" href="#" aria-current="page">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+        Tests
+        <span class="count">5</span>
+      </a>
+    </nav>
+
+    <div class="sb-bottom">
+      <button class="nav-item theme-toggle" id="theme-toggle" type="button" title="Switch theme">
+        <svg class="ic ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="ic ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <span class="theme-label-light">Dark mode</span>
+        <span class="theme-label-dark">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===========================================================
+       MAIN — Tests catalog
+       =========================================================== -->
+  <main class="main">
+
+    <!-- Page header — identity -->
+    <header class="page-header">
+      <div class="ph-id">
+        <span class="ph-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <div class="ph-text">
+          <h1 class="ph-title">Tests</h1>
+          <p class="ph-purpose">Saved trajectories that should keep working as Domi evolves. Each test bundles a frozen conversation + the evals that score it.</p>
+        </div>
+      </div>
+      <div class="ph-actions"></div>
+    </header>
+
+    <!-- Content card -->
+    <section class="tests-card">
+      <div class="tests-toolbar">
+        <!-- Row 1: status chips (left) + filter/sort (right) -->
+        <div class="tests-toolbar-row tests-main-row">
+          <div class="tests-summary">
+            <button class="sum-chip is-active" type="button" data-filter="all">
+              <span class="dot all"></span> All <span class="num">5</span>
+            </button>
+            <button class="sum-chip" type="button" data-filter="pass">
+              <span class="dot pass"></span> Pass <span class="num">2</span>
+            </button>
+            <button class="sum-chip" type="button" data-filter="fail">
+              <span class="dot fail"></span> Fail <span class="num">1</span>
+            </button>
+            <button class="sum-chip" type="button" data-filter="regressed">
+              <span class="dot reg"></span> Regressed <span class="num">1</span>
+            </button>
+            <button class="sum-chip" type="button" data-filter="never-run">
+              <span class="dot nev"></span> Never run <span class="num">1</span>
+            </button>
+          </div>
+          <div class="tests-filter-controls">
+            <button class="period-chip is-add" type="button" id="eval-filter-trigger" aria-haspopup="true" aria-expanded="false">
+              <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter
+            </button>
+            <button class="period-chip" type="button" id="sort-trigger" aria-haspopup="true" aria-expanded="false">
+              <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+              Sort: <span class="pc-val" id="sort-label">Status</span>
+              <svg class="pc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Row 2: active filters (conditional) -->
+        <div class="tests-toolbar-row tests-active-filters" id="active-filters-row">
+          <span class="taf-label">Where</span>
+          <button class="taf-clear" id="filters-clear" type="button" hidden>Clear all</button>
+        </div>
+      </div>
+
+      <!-- List -->
+      <div class="tests-body">
+      <div class="checks-list" id="checks-list">
+
+        <!-- ====== 1. Boleto — pergunta sobre código (pass) ====== -->
+        <div class="check-item" data-test="boleto-happy" data-status="pass">
+          <span class="check-status pass" hidden></span>
+          <div class="check-item-top">
+            <span class="check-item-statusmark" aria-label="Pass">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
+              <div class="status-tooltip">
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Truthfulness</div>
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Format adherence</div>
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Conversational tone</div>
+              </div>
+            </span>
+            <div class="check-item-body">
+              <div class="check-item-name">Boleto — pergunta sobre código</div>
+              <div class="check-item-desc">Domi retorna código sem inventar dados</div>
+              <div class="check-item-meta">
+              <span class="cim-evals"><span class="cim-dot pass"></span><span class="cim-dot pass"></span><span class="cim-dot pass"></span></span>
+              <span class="meta-sep">·</span>
+              <span>4 turns</span>
+              <span class="meta-sep">·</span>
+              <span class="cim-run">v17 · 5d ago</span>
+            </div>
+            </div>
+            <div class="check-item-right">
+              <div class="check-item-actions">
+                <button class="btn-edit-test" type="button" title="Edit test definition">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="btn-view-test" type="button" aria-label="Toggle details">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <a class="btn-run-test" href="playground-lab.html?test=boleto-happy" title="Run this test against current build">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+              </a>
+            </div>
+          </div>
+          <div class="check-anatomy">
+            <div class="anatomy-inner">
+              <div class="setup-block">
+                <div class="setup-head">Setup · 3 turns</div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Qual o valor e vencimento do meu boleto?"</span></div>
+                <div class="setup-line agent"><span class="setup-role">Domi v15</span><span class="setup-text">"Olá, Heitor! Seu boleto é de R$ 1.850,00 com vencimento em 10/06/2025."</span></div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"E qual o código?"</span></div>
+              </div>
+              <div class="expected-card">
+                <div class="ec-head">
+                  <span class="ec-eyebrow">Expected output <span class="ec-role">Domi v15</span></span>
+                  <span class="ec-verdict pass">3 / 3 pass</span>
+                </div>
+                <div class="ec-body">"Claro — o código de barras é <strong>34191.79001 01043.510047 91020.510007 8 76520000185000</strong>."</div>
+                <div class="ec-criteria">
+                  <div class="ec-crit-label">Verifies</div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Truthfulness</div>
+                      <div class="ec-crit-detail">Output matches grounded data; no invented fields</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Format adherence</div>
+                      <div class="ec-crit-detail">Currency + date format follow Brazilian conventions</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Conversational tone</div>
+                      <div class="ec-crit-detail">Friendly, concise, addresses user by name</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="anatomy-actions">
+                <div class="anatomy-prov">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Saved by you · 5d ago · from chat
+                </div>
+                <div class="anatomy-action-btns">
+                  <button class="anatomy-action btn-overflow" type="button" data-action="overflow" aria-label="More actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                  </button>
+                  <a class="btn-primary-sm" href="playground-lab.html?test=boleto-happy">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                    Run in Lab
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 2. Boleto — confirmação ausente (fail) ====== -->
+        <div class="check-item" data-test="boleto-missing" data-status="fail">
+          <span class="check-status fail" hidden></span>
+          <div class="check-item-top">
+            <span class="check-item-statusmark" aria-label="Fail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <div class="status-tooltip">
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Conversational tone</div>
+                <div class="st-row"><svg class="st-icon st-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Truthfulness</div>
+                <div class="st-row"><svg class="st-icon st-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Clarification before action</div>
+              </div>
+            </span>
+            <div class="check-item-body">
+              <div class="check-item-name">Boleto — confirmação ausente</div>
+              <div class="check-item-desc">Domi pede confirmação em vez de assumir dados ausentes</div>
+              <div class="check-item-meta">
+              <span class="cim-evals"><span class="cim-dot pass"></span><span class="cim-dot fail"></span><span class="cim-dot fail"></span></span>
+              <span class="meta-sep">·</span>
+              <span>4 turns</span>
+              <span class="meta-sep">·</span>
+              <span class="cim-run">v17 · 5d ago</span>
+            </div>
+            </div>
+            <div class="check-item-right">
+              <div class="check-item-actions">
+                <button class="btn-edit-test" type="button" title="Edit test definition">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="btn-view-test" type="button" aria-label="Toggle details">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <a class="btn-run-test" href="playground-lab.html?test=boleto-missing" title="Run this test against current build">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+              </a>
+            </div>
+          </div>
+          <div class="check-anatomy">
+            <div class="anatomy-inner">
+              <div class="setup-block">
+                <div class="setup-head">Setup · 3 turns</div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Quero ver meu boleto de junho."</span></div>
+                <div class="setup-line agent"><span class="setup-role">Domi v17</span><span class="setup-text">"Não localizei boleto pra esse mês — pode confirmar o contrato?"</span></div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Não, é só o último que tá em atraso mesmo."</span></div>
+              </div>
+              <div class="expected-card">
+                <div class="ec-head">
+                  <span class="ec-eyebrow">Expected output <span class="ec-role">Domi v17</span></span>
+                  <span class="ec-verdict partial">1 / 3 pass</span>
+                </div>
+                <div class="ec-body">"Entendi. O boleto em atraso é o de <strong>maio/2025</strong>. Posso te mandar a 2ª via?"</div>
+                <div class="ec-criteria">
+                  <div class="ec-crit-label">Verifies</div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Conversational tone</div>
+                      <div class="ec-crit-detail">Friendly + concise</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit fail">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Truthfulness</div>
+                      <div class="ec-crit-detail">Chatbot invented "código 4567" instead of asking for confirmation</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit fail">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Clarification before action</div>
+                      <div class="ec-crit-detail">Should ask before assuming contract</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="anatomy-actions">
+                <div class="anatomy-prov">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Saved by you · 3d ago · from chat
+                </div>
+                <div class="anatomy-action-btns">
+                  <button class="anatomy-action btn-overflow" type="button" data-action="overflow" aria-label="More actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                  </button>
+                  <a class="btn-primary-sm" href="playground-lab.html?test=boleto-missing">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                    Run in Lab
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 3. Reagendamento — contexto preservado (regressed) ====== -->
+        <div class="check-item" data-test="agendamento-reagendamento" data-status="regressed">
+          <span class="check-status regressed" hidden></span>
+          <div class="check-item-top">
+            <span class="check-item-statusmark" aria-label="Regressed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+              <div class="status-tooltip">
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Tool selection</div>
+                <div class="st-row"><svg class="st-icon st-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Handoff Continuity</div>
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Confirmation prompt</div>
+              </div>
+            </span>
+            <div class="check-item-body">
+              <div class="check-item-name">Reagendamento — contexto preservado</div>
+              <div class="check-item-desc">Domi mantém propriedade da visita ao remarcar</div>
+              <div class="check-item-meta">
+              <span class="cim-evals"><span class="cim-dot pass"></span><span class="cim-dot fail"></span><span class="cim-dot pass"></span></span>
+              <span class="meta-sep">·</span>
+              <span>4 turns</span>
+              <span class="meta-sep">·</span>
+              <span class="cim-run">v17 · 5d ago</span>
+            </div>
+            </div>
+            <div class="check-item-right">
+              <div class="check-item-actions">
+                <button class="btn-edit-test" type="button" title="Edit test definition">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="btn-view-test" type="button" aria-label="Toggle details">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <a class="btn-run-test" href="playground-lab.html?test=agendamento-reagendamento" title="Run this test against current build">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+              </a>
+            </div>
+          </div>
+          <div class="check-anatomy">
+            <div class="anatomy-inner">
+              <div class="setup-block">
+                <div class="setup-head">Setup · 3 turns</div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Queria reagendar a visita de quinta."</span></div>
+                <div class="setup-line agent"><span class="setup-role">Domi v16</span><span class="setup-text">"Claro. Pra qual dia gostaria de mudar?"</span></div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Sábado de manhã."</span></div>
+              </div>
+              <div class="expected-card">
+                <div class="ec-head">
+                  <span class="ec-eyebrow">Expected output <span class="ec-role">Domi v16</span></span>
+                  <span class="ec-verdict partial">2 / 3 pass</span>
+                </div>
+                <div class="ec-body">"Anotado: visita ao <strong>apto 304</strong> remarcada para <strong>sábado, 10h</strong>. Confirma?"</div>
+                <div class="ec-criteria">
+                  <div class="ec-crit-label">Verifies</div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Tool selection</div>
+                      <div class="ec-crit-detail">Used reschedule_visit correctly</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit fail">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Handoff Continuity</div>
+                      <div class="ec-crit-detail">Asked for property_id again — context from earlier turn was dropped</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Confirmation prompt</div>
+                      <div class="ec-crit-detail">Final turn asks for "Confirma?"</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="anatomy-actions">
+                <div class="anatomy-prov">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Saved by Tamy · 2w ago · from chat
+                </div>
+                <div class="anatomy-action-btns">
+                  <button class="anatomy-action btn-overflow" type="button" data-action="overflow" aria-label="More actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                  </button>
+                  <a class="btn-primary-sm" href="playground-lab.html?test=agendamento-reagendamento">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                    Run in Lab
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 4. Recibo — campos obrigatórios (never run) ====== -->
+        <div class="check-item" data-test="recibo-formato" data-status="never-run">
+          <span class="check-status never-run" hidden></span>
+          <div class="check-item-top">
+            <span class="check-item-statusmark" aria-label="Never run">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+              <div class="status-tooltip">
+                <div class="st-row"><svg class="st-icon st-pend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg> Required fields present</div>
+                <div class="st-row"><svg class="st-icon st-pend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg> Tool call: get_receipt</div>
+                <div class="st-row"><svg class="st-icon st-pend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg> Conversational tone</div>
+              </div>
+            </span>
+            <div class="check-item-body">
+              <div class="check-item-name">Recibo — campos obrigatórios</div>
+              <div class="check-item-desc">Domi retorna recibo com valor, data, imóvel e link</div>
+              <div class="check-item-meta">
+              <span class="cim-evals"><span class="cim-dot pend"></span><span class="cim-dot pend"></span><span class="cim-dot pend"></span></span>
+              <span class="meta-sep">·</span>
+              <span>1 turns</span>
+              <span class="meta-sep">·</span>
+              <span class="cim-run">never run</span>
+            </div>
+            </div>
+            <div class="check-item-right">
+              <div class="check-item-actions">
+                <button class="btn-edit-test" type="button" title="Edit test definition">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="btn-view-test" type="button" aria-label="Toggle details">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <a class="btn-run-test" href="playground-lab.html?test=recibo-formato" title="Run this test against current build">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+              </a>
+            </div>
+          </div>
+          <div class="check-anatomy">
+            <div class="anatomy-inner">
+              <div class="setup-block">
+                <div class="setup-head">Setup · 1 turn</div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Pode me enviar o recibo do último pagamento?"</span></div>
+              </div>
+              <div class="expected-card is-pending">
+                <div class="ec-head">
+                  <span class="ec-eyebrow">Expected output</span>
+                  <span class="ec-verdict pending">awaiting run</span>
+                </div>
+                <div class="ec-body is-placeholder">No expected output recorded yet — run once in Lab to capture.</div>
+                <div class="ec-criteria">
+                  <div class="ec-crit-label">Will verify</div>
+                  <div class="ec-crit pending">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Required fields present</div>
+                      <div class="ec-crit-detail">valor, data, property_id, link</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pending">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Tool call: get_receipt</div>
+                      <div class="ec-crit-detail">Must call before responding</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pending">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Conversational tone</div>
+                      <div class="ec-crit-detail">Friendly + concise</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="anatomy-actions">
+                <div class="anatomy-prov">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  Imported from Conv Explorer · pattern <span class="prov-pattern">#recibo-format</span> · 1w ago
+                </div>
+                <div class="anatomy-action-btns">
+                  <button class="anatomy-action btn-overflow" type="button" data-action="overflow" aria-label="More actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                  </button>
+                  <a class="btn-primary-sm" href="playground-lab.html?test=recibo-formato">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                    Run in Lab
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 5. Recibo — data futura rejeitada (pass) ====== -->
+        <div class="check-item" data-test="recibo-data-invalida" data-status="pass">
+          <span class="check-status pass" hidden></span>
+          <div class="check-item-top">
+            <span class="check-item-statusmark" aria-label="Pass">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
+              <div class="status-tooltip">
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Refuses invalid request</div>
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Explains why</div>
+                <div class="st-row"><svg class="st-icon st-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Conversational tone</div>
+              </div>
+            </span>
+            <div class="check-item-body">
+              <div class="check-item-name">Recibo — data futura rejeitada</div>
+              <div class="check-item-desc">Domi recusa pedido de recibo para data ainda não passada</div>
+              <div class="check-item-meta">
+              <span class="cim-evals"><span class="cim-dot pass"></span><span class="cim-dot pass"></span><span class="cim-dot pass"></span></span>
+              <span class="meta-sep">·</span>
+              <span>2 turns</span>
+              <span class="meta-sep">·</span>
+              <span class="cim-run">v17 · 5d ago</span>
+            </div>
+            </div>
+            <div class="check-item-right">
+              <div class="check-item-actions">
+                <button class="btn-edit-test" type="button" title="Edit test definition">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="btn-view-test" type="button" aria-label="Toggle details">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <a class="btn-run-test" href="playground-lab.html?test=recibo-data-invalida" title="Run this test against current build">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+              </a>
+            </div>
+          </div>
+          <div class="check-anatomy">
+            <div class="anatomy-inner">
+              <div class="setup-block">
+                <div class="setup-head">Setup · 1 turn</div>
+                <div class="setup-line user"><span class="setup-role">User</span><span class="setup-text">"Me manda o recibo de pagamento de janeiro de 2030."</span></div>
+              </div>
+              <div class="expected-card">
+                <div class="ec-head">
+                  <span class="ec-eyebrow">Expected output <span class="ec-role">Domi v17</span></span>
+                  <span class="ec-verdict pass">3 / 3 pass</span>
+                </div>
+                <div class="ec-body">"Essa data ainda não passou — só consigo emitir recibo de pagamentos já efetuados."</div>
+                <div class="ec-criteria">
+                  <div class="ec-crit-label">Verifies</div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Refuses invalid request</div>
+                      <div class="ec-crit-detail">Não inventa recibo para data futura</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Explains why</div>
+                      <div class="ec-crit-detail">Justificativa breve, sem condescendência</div>
+                    </div>
+                  </div>
+                  <div class="ec-crit pass">
+                    <svg class="ec-crit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ec-crit-info">
+                      <div class="ec-crit-name">Conversational tone</div>
+                      <div class="ec-crit-detail">Friendly + concise</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="anatomy-actions">
+                <div class="anatomy-prov">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Saved by you · 1w ago · from chat
+                </div>
+                <div class="anatomy-action-btns">
+                  <button class="anatomy-action btn-overflow" type="button" data-action="overflow" aria-label="More actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                  </button>
+                  <a class="btn-primary-sm" href="playground-lab.html?test=recibo-data-invalida">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                    Run in Lab
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  /* ============================================================
+     Theme toggle (persisted)
+     ============================================================ */
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem('dqs-theme'); } catch (e) {}
+    if (stored === 'light' || stored === 'dark') {
+      document.documentElement.setAttribute('data-theme', stored);
+    }
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme');
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('dqs-theme', next); } catch (e) {}
+      });
+    }
+  })();
+
+  /* ============================================================
+     Expand/collapse check anatomy
+     ============================================================ */
+  (function () {
+    function toggleItem(item) {
+      var expanded = item.classList.toggle('is-expanded');
+      var btn = item.querySelector('.btn-view-test');
+      if (btn) btn.classList.toggle('is-open', expanded);
+    }
+
+    document.querySelectorAll('.check-item').forEach(function (item) {
+      item.addEventListener('click', function (e) {
+        if (e.target.closest('.btn-run-test, .btn-edit-test, .anatomy-action')) return;
+        toggleItem(item);
+      });
+    });
+  })();
+
+  /* ============================================================
+     Unified test list filtering: status + evals + sort + search
+     ============================================================ */
+  var TEST_FILTER_STATE = {
+    status: 'all',
+    evals: new Set(),
+    sort: 'status',
+    search: '',
+  };
+  var STATUS_ORDER = { fail: 0, regressed: 1, 'never-run': 2, pass: 3 };
+
+  function evalKeyFromLabel(label) {
+    return (label || '').toLowerCase().trim()
+      .replace(/conversational tone/, 'conversational-tone')
+      .replace(/format adherence/, 'format-adherence')
+      .replace(/handoff continuity/, 'handoff-continuity')
+      .replace(/tool selection/, 'tool-selection')
+      .replace(/clarification.*$/, 'clarification')
+      .replace(/required fields.*$/, 'required-fields')
+      .replace(/refuses.*$/, 'refuses-invalid')
+      .replace(/truthfulness/, 'truthfulness')
+      .replace(/[^a-z-]/g, '');
+  }
+
+  /* Index each item: data-evals (space-separated keys), data-text (searchable text), data-name, data-created, data-lastrun */
+  (function indexItems() {
+    document.querySelectorAll('.check-item').forEach(function (item, idx) {
+      var keys = new Set();
+      item.querySelectorAll('.ec-crit-name').forEach(function (n) {
+        var k = evalKeyFromLabel(n.textContent);
+        if (k) keys.add(k);
+      });
+      // Also account for the tooltip rows in the statusmark
+      item.querySelectorAll('.st-row').forEach(function (r) {
+        var k = evalKeyFromLabel(r.textContent);
+        if (k) keys.add(k);
+      });
+      item.setAttribute('data-evals', Array.from(keys).join(' '));
+      var name = (item.querySelector('.check-item-name') || {}).textContent || '';
+      var desc = (item.querySelector('.check-item-desc') || {}).textContent || '';
+      item.setAttribute('data-name', name);
+      item.setAttribute('data-text', (name + ' ' + desc).toLowerCase());
+      item.setAttribute('data-orig-index', idx);
+      var runText = (item.querySelector('.cim-run') || {}).textContent || '';
+      var m = runText.match(/(\d+)\s*([smhd])\b/i);
+      var weight = 0;
+      if (m) {
+        var n = parseInt(m[1], 10);
+        var unit = m[2].toLowerCase();
+        weight = n * (unit === 's' ? 1 : unit === 'm' ? 60 : unit === 'h' ? 3600 : 86400);
+      }
+      item.setAttribute('data-lastrun-secs', weight);
+    });
+  })();
+
+  function applyAllFilters() {
+    var parent = document.querySelector('.check-list, .history-body, body');
+    var items = Array.from(document.querySelectorAll('.check-item'));
+
+    var visible = items.filter(function (item) {
+      var status = item.getAttribute('data-status') || '';
+      var statusOk = TEST_FILTER_STATE.status === 'all' || status === TEST_FILTER_STATE.status;
+      var evalKeys = (item.getAttribute('data-evals') || '').split(' ');
+      var evalOk = TEST_FILTER_STATE.evals.size === 0 ||
+        Array.from(TEST_FILTER_STATE.evals).some(function (k) { return evalKeys.indexOf(k) !== -1; });
+      var searchOk = !TEST_FILTER_STATE.search ||
+        (item.getAttribute('data-text') || '').indexOf(TEST_FILTER_STATE.search) !== -1;
+      var show = statusOk && evalOk && searchOk;
+      item.style.display = show ? '' : 'none';
+      return show;
+    });
+
+    var sortKey = TEST_FILTER_STATE.sort;
+    var sorted = visible.slice().sort(function (a, b) {
+      if (sortKey === 'status') {
+        return (STATUS_ORDER[a.getAttribute('data-status')] || 9) -
+               (STATUS_ORDER[b.getAttribute('data-status')] || 9);
+      }
+      if (sortKey === 'last-run') {
+        return (+a.getAttribute('data-lastrun-secs') || 0) -
+               (+b.getAttribute('data-lastrun-secs') || 0);
+      }
+      if (sortKey === 'created') {
+        return (+a.getAttribute('data-orig-index') || 0) -
+               (+b.getAttribute('data-orig-index') || 0);
+      }
+      if (sortKey === 'name') {
+        return (a.getAttribute('data-name') || '').localeCompare(b.getAttribute('data-name') || '');
+      }
+      return 0;
+    });
+
+    if (sorted.length && sorted[0].parentNode) {
+      var anchor = sorted[0].parentNode;
+      sorted.forEach(function (el) { anchor.appendChild(el); });
+    }
+  }
+
+  /* Status filter chips */
+  (function () {
+    var chips = document.querySelectorAll('.sum-chip[data-filter]');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var filter = chip.getAttribute('data-filter');
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        TEST_FILTER_STATE.status = filter;
+        applyAllFilters();
+      });
+    });
+  })();
+
+  /* Topbar search + inner toolbar search → updates TEST_FILTER_STATE.search */
+  (function () {
+    var innerSearch = document.querySelector('.ht-search input');
+    function wireInput(input) {
+      if (!input || input.dataset.wired) return;
+      input.dataset.wired = '1';
+      var timer = null;
+      input.addEventListener('input', function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          TEST_FILTER_STATE.search = input.value.trim().toLowerCase();
+          applyAllFilters();
+        }, 100);
+      });
+    }
+    wireInput(innerSearch);
+    var trySearch = function () {
+      var topInput = document.querySelector('.topbar-search input');
+      if (!topInput) return false;
+      wireInput(topInput);
+      return true;
+    };
+    if (!trySearch()) {
+      var iv = setInterval(function () { if (trySearch()) clearInterval(iv); }, 60);
+      setTimeout(function () { clearInterval(iv); }, 3000);
+    }
+  })();
+
+  /* ============================================================
+     Highlight test from URL ?test=<id> (when arriving from Lab save)
+     ============================================================ */
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var target = params.get('test');
+    if (!target) return;
+    var item = document.querySelector('.check-item[data-test="' + target + '"]');
+    if (!item) return;
+    item.classList.add('is-expanded');
+    item.querySelector('.btn-view-test').classList.add('is-open');
+    setTimeout(function () {
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      item.style.transition = 'background 0.3s';
+      item.style.background = 'var(--indigo-50)';
+      setTimeout(function () { item.style.background = ''; }, 1800);
+    }, 80);
+  })();
+</script>
+
+<!-- Tool picker -->
+
+<!-- Agent picker -->
+
+<!-- Filter by eval popover -->
+<div class="pop" id="eval-filter-pop">
+  <div class="pop-section-label">Tests that use eval</div>
+  <div class="pop-item" data-eval="truthfulness">
+    <span class="pi-name">Truthfulness</span><span class="pi-meta">3</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="conversational-tone">
+    <span class="pi-name">Conversational tone</span><span class="pi-meta">4</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="format-adherence">
+    <span class="pi-name">Format adherence</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="handoff-continuity">
+    <span class="pi-name">Handoff Continuity</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="tool-selection">
+    <span class="pi-name">Tool selection</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="clarification">
+    <span class="pi-name">Clarification before action</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="required-fields">
+    <span class="pi-name">Required fields present</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-eval="refuses-invalid">
+    <span class="pi-name">Refuses invalid request</span><span class="pi-meta">1</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+</div>
+
+<!-- Overflow popover (Edit / Copy link / Duplicate / Delete) -->
+<div class="pop overflow-pop" id="overflow-pop">
+  <div class="pop-item" data-overflow-action="edit">
+    <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span class="pi-name">Edit test</span>
+  </div>
+  <div class="pop-item" data-overflow-action="copy-link">
+    <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    <span class="pi-name">Copy link</span>
+  </div>
+  <div class="pop-item" data-overflow-action="duplicate">
+    <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <span class="pi-name">Duplicate</span>
+  </div>
+  <div class="pop-divider"></div>
+  <div class="pop-item is-danger" data-overflow-action="delete">
+    <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
+    <span class="pi-name">Delete</span>
+  </div>
+</div>
+
+<!-- Sort popover -->
+<div class="pop" id="sort-pop">
+  <div class="pop-section-label">Sort by</div>
+  <div class="pop-item is-active" data-sort="status">
+    <span class="pi-name">Status</span><span class="pi-role">fail → regressed → never-run → pass</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-sort="last-run">
+    <span class="pi-name">Last run</span><span class="pi-role">most recent first</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-sort="created">
+    <span class="pi-name">Created</span><span class="pi-role">newest first</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="pop-item" data-sort="name">
+    <span class="pi-name">Name</span><span class="pi-role">A → Z</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+</div>
+
+<!-- Edit test modal -->
+<div class="modal-overlay" id="modal-edit-test" role="dialog" aria-modal="true" aria-labelledby="edit-test-title">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="edit-test-title">Edit test</h2>
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field-group">
+        <label class="field-label" for="edit-test-name">Test name</label>
+        <input class="field-input" id="edit-test-name" type="text" autocomplete="off" />
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="edit-test-desc">What it tests</label>
+        <input class="field-input" id="edit-test-desc" type="text" autocomplete="off" />
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost" type="button" data-modal-close>Cancel</button>
+      <button class="btn-primary" type="button" id="btn-edit-save">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status">
+  <span class="toast-dot"></span>
+  <span id="toast-msg"></span>
+  <button class="toast-close" id="toast-close" type="button" aria-label="Dismiss">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<script>
+  /* Filter by eval + Sort popovers */
+  (function () {
+    var evalPop  = document.getElementById('eval-filter-pop');
+    var sortPop  = document.getElementById('sort-pop');
+    var evalTrig = document.getElementById('eval-filter-trigger');
+    var sortTrig = document.getElementById('sort-trigger');
+    var openPop = null, openTrig = null;
+
+    function positionPop(pop, trig) {
+      var rect = trig.getBoundingClientRect();
+      pop.style.visibility = 'hidden'; pop.classList.add('is-open');
+      var popW = pop.offsetWidth; pop.classList.remove('is-open'); pop.style.visibility = '';
+      var left = rect.left, maxLeft = window.innerWidth - popW - 8;
+      if (left > maxLeft) left = maxLeft; if (left < 8) left = 8;
+      pop.style.left = left + 'px'; pop.style.top = (rect.bottom + 6) + 'px';
+    }
+    function closeFilterPop() {
+      if (openPop) openPop.classList.remove('is-open');
+      if (openTrig) openTrig.setAttribute('aria-expanded', 'false');
+      openPop = null; openTrig = null;
+    }
+    function openFilterPop(pop, trig) {
+      if (openPop === pop) { closeFilterPop(); return; }
+      closeFilterPop(); positionPop(pop, trig); pop.classList.add('is-open');
+      trig.setAttribute('aria-expanded', 'true'); openPop = pop; openTrig = trig;
+    }
+
+    evalTrig.addEventListener('click', function (e) { e.stopPropagation(); openFilterPop(evalPop, evalTrig); });
+    sortTrig.addEventListener('click', function (e) { e.stopPropagation(); openFilterPop(sortPop, sortTrig); });
+
+    // Sort: single-select, updates label + reorders list
+    sortPop.querySelectorAll('.pop-item').forEach(function (item) {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        sortPop.querySelectorAll('.pop-item').forEach(function (i) { i.classList.remove('is-active'); });
+        item.classList.add('is-active');
+        document.getElementById('sort-label').textContent = item.querySelector('.pi-name').textContent;
+        TEST_FILTER_STATE.sort = item.getAttribute('data-sort') || 'status';
+        applyAllFilters();
+        closeFilterPop();
+      });
+    });
+
+    // Eval filter: multi-select + active filter chips
+    var activeEvals = new Set();
+    var activeRow   = document.getElementById('active-filters-row');
+    var clearBtn    = document.getElementById('filters-clear');
+
+    function renderActiveFilters() {
+      activeRow.querySelectorAll('.filter-chip').forEach(function (c) { c.remove(); });
+      if (activeEvals.size === 0) {
+        activeRow.classList.remove('is-active'); clearBtn.hidden = true; return;
+      }
+      activeRow.classList.add('is-active'); clearBtn.hidden = false;
+      activeEvals.forEach(function (key) {
+        var el = evalPop.querySelector('.pop-item[data-eval="' + key + '"]');
+        var name = el ? el.querySelector('.pi-name').textContent : key;
+        var chip = document.createElement('span');
+        chip.className = 'filter-chip';
+        chip.innerHTML = '<span class="fc-prop">eval</span> <span class="fc-op">is</span> <span class="fc-val">' + name + '</span>' +
+          '<button class="fc-x" type="button" data-remove="' + key + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+        activeRow.insertBefore(chip, clearBtn);
+      });
+    }
+
+    evalPop.querySelectorAll('.pop-item').forEach(function (item) {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var key = item.getAttribute('data-eval');
+        if (activeEvals.has(key)) { activeEvals.delete(key); item.classList.remove('is-active'); }
+        else { activeEvals.add(key); item.classList.add('is-active'); }
+        TEST_FILTER_STATE.evals = activeEvals;
+        renderActiveFilters();
+        applyAllFilters();
+      });
+    });
+
+    activeRow.addEventListener('click', function (e) {
+      var btn = e.target.closest('.fc-x');
+      if (!btn) return;
+      var key = btn.getAttribute('data-remove');
+      activeEvals.delete(key);
+      var el = evalPop.querySelector('.pop-item[data-eval="' + key + '"]');
+      if (el) el.classList.remove('is-active');
+      TEST_FILTER_STATE.evals = activeEvals;
+      renderActiveFilters();
+      applyAllFilters();
+    });
+
+    clearBtn.addEventListener('click', function () {
+      activeEvals.clear();
+      evalPop.querySelectorAll('.pop-item').forEach(function (i) { i.classList.remove('is-active'); });
+      TEST_FILTER_STATE.evals = activeEvals;
+      renderActiveFilters();
+      applyAllFilters();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.pop') && !e.target.closest('.period-chip')) closeFilterPop();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeFilterPop(); });
+  })();
+
+  /* Tool & Agent popups */
+  (function () {
+    var POPS = {
+      get tool()  { return document.getElementById('tool-pop'); },
+      get agent() { return document.getElementById('agent-pop'); },
+    };
+    var openPop = null, openTrigger = null;
+    function positionPop(pop, trigger) {
+      var rect = trigger.getBoundingClientRect();
+      pop.style.visibility = 'hidden'; pop.classList.add('is-open');
+      var popW = pop.offsetWidth; pop.classList.remove('is-open'); pop.style.visibility = '';
+      var left = rect.left, maxLeft = window.innerWidth - popW - 8;
+      if (left > maxLeft) left = maxLeft; if (left < 8) left = 8;
+      pop.style.left = left + 'px'; pop.style.top = (rect.bottom + 6) + 'px';
+    }
+    function close() {
+      if (openPop) openPop.classList.remove('is-open');
+      if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+      openPop = null; openTrigger = null;
+    }
+    function open(pop, trigger) {
+      if (!pop) return;
+      if (openPop === pop && openTrigger === trigger) { close(); return; }
+      close(); positionPop(pop, trigger); pop.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true'); openPop = pop; openTrigger = trigger;
+    }
+    document.getElementById('tool-switcher-btn').addEventListener('click', function (e) { e.stopPropagation(); open(POPS.tool, this); });
+    document.querySelectorAll('[data-agent-trigger]').forEach(function (chip) {
+      chip.addEventListener('click', function (e) { e.stopPropagation(); open(POPS.agent, chip); });
+    });
+    document.querySelectorAll('#tool-pop .pop-item[data-tool-href]').forEach(function (item) {
+      item.addEventListener('click', function (e) { e.stopPropagation(); var href = item.getAttribute('data-tool-href'); if (href) window.location.href = href; });
+    });
+    document.querySelectorAll('#agent-pop .pop-item[data-agent]').forEach(function (item) {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.querySelectorAll('#agent-pop .pop-item').forEach(function (i) { i.classList.remove('is-active'); });
+        item.classList.add('is-active');
+        var color = item.getAttribute('data-color'), initial = item.getAttribute('data-initial'), name = item.getAttribute('data-name');
+        document.querySelectorAll('[data-agent-trigger] .ac-avatar').forEach(function (av) { av.style.background = color; av.textContent = initial; });
+        document.querySelectorAll('[data-agent-trigger] .ac-name').forEach(function (n) { n.textContent = name; });
+        close();
+      });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.pop')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
+  /* Edit & Export */
+  (function () {
+    var modal = document.getElementById('modal-edit-test');
+    var nameIn = document.getElementById('edit-test-name');
+    var descIn = document.getElementById('edit-test-desc');
+    var toast = document.getElementById('toast');
+    var toastMsg = document.getElementById('toast-msg');
+    var toastTimer;
+    function openModal(item) {
+      nameIn.value = item.querySelector('.check-item-name').textContent.trim();
+      descIn.value = item.querySelector('.check-item-desc').textContent.trim();
+      modal.classList.add('is-open');
+      setTimeout(function () { nameIn.focus(); }, 80);
+    }
+    function closeModal() { modal.classList.remove('is-open'); }
+    function showToast(msg) {
+      toastMsg.textContent = msg; toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('is-visible'); }, 3000);
+    }
+    document.querySelectorAll('.btn-edit-test').forEach(function (btn) {
+      btn.addEventListener('click', function (e) { e.stopPropagation(); openModal(btn.closest('.check-item')); });
+    });
+    var overflowPop = document.getElementById('overflow-pop');
+    var currentOverflowItem = null;
+    var currentOverflowTrig = null;
+
+    function positionOverflowPop(trig) {
+      var rect = trig.getBoundingClientRect();
+      overflowPop.style.visibility = 'hidden'; overflowPop.classList.add('is-open');
+      var popW = overflowPop.offsetWidth; overflowPop.classList.remove('is-open'); overflowPop.style.visibility = '';
+      var left = rect.left, maxLeft = window.innerWidth - popW - 8;
+      if (left > maxLeft) left = maxLeft; if (left < 8) left = 8;
+      overflowPop.style.left = left + 'px'; overflowPop.style.top = (rect.bottom + 6) + 'px';
+    }
+    function closeOverflowPop() {
+      overflowPop.classList.remove('is-open');
+      if (currentOverflowTrig) currentOverflowTrig.setAttribute('aria-expanded', 'false');
+      currentOverflowItem = null; currentOverflowTrig = null;
+    }
+    function openOverflowPop(item, trig) {
+      currentOverflowItem = item;
+      currentOverflowTrig = trig;
+      positionOverflowPop(trig);
+      overflowPop.classList.add('is-open');
+      trig.setAttribute('aria-expanded', 'true');
+    }
+
+    document.querySelectorAll('.anatomy-action').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var action = btn.getAttribute('data-action');
+        var item = btn.closest('.check-item');
+        if (action === 'edit') {
+          openModal(item);
+        } else if (action === 'overflow') {
+          if (overflowPop.classList.contains('is-open') && currentOverflowItem === item) {
+            closeOverflowPop();
+          } else {
+            closeOverflowPop();
+            openOverflowPop(item, btn);
+          }
+        }
+      });
+    });
+
+    overflowPop.querySelectorAll('[data-overflow-action]').forEach(function (popItem) {
+      popItem.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var action = popItem.getAttribute('data-overflow-action');
+        var testId = currentOverflowItem ? currentOverflowItem.getAttribute('data-test') : '';
+        if (action === 'edit')           { openModal(currentOverflowItem); }
+        else if (action === 'copy-link') showToast('Link copied · ' + testId);
+        else if (action === 'duplicate') showToast('Test duplicated · ' + testId + '-copy');
+        else if (action === 'delete')    showToast('Test deleted · ' + testId);
+        closeOverflowPop();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#overflow-pop') && !e.target.closest('[data-action="overflow"]')) closeOverflowPop();
+    });
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    modal.querySelectorAll('[data-modal-close]').forEach(function (el) { el.addEventListener('click', closeModal); });
+    document.getElementById('btn-edit-save').addEventListener('click', function () { closeModal(); showToast('Test updated'); });
+    document.getElementById('toast-close').addEventListener('click', function () { clearTimeout(toastTimer); toast.classList.remove('is-visible'); });
+
+  })();
+</script>
+
+</body>
+</html>
