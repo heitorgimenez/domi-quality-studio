@@ -1,0 +1,4293 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domi Quality Studio — Overview</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232C2A8A'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-family='system-ui%2Csans-serif' font-weight='700' font-size='10'%3EDQS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Conv Explorer v2 — Overview
+     Chart owns: breadcrumb (top), range (bottom), direct labels (right)
+     ============================================================ */
+  :root {
+    --bg:           #F7F7FA;
+    --surface:      #FFFFFF;
+    --surface-2:    #FAFAFC;
+    --surface-3:    #F2F2F6;
+    --border:       #E7E7EE;
+    --border-2:     #EFEFF4;
+    --divider:      #F0F0F4;
+    --text:         #15161C;
+    --text-muted:   #595D6B;
+    --text-subtle:  #6B6F7D;
+    --text-faint:   #7E8290;
+
+    --indigo-50:    #EEEEF7;
+    --indigo-100:   #DCDCEF;
+    --indigo-200:   #C5C4E5;
+    --indigo-300:   #8B8DD4;
+    --indigo-500:   #4F46BA;
+    --indigo-600:   #3F38A2;
+    --indigo-700:   #2C2A8A;
+
+    --state-red:        #C03A3A;
+    --state-red-bg:     #FBECEC;
+    --state-yellow:     #B58A0A;
+    --state-yellow-bg:  #FAF3DD;
+    --state-green:      #2A7F4D;
+    --state-green-bg:   #E5F2EB;
+
+    --cat-1: #4F46BA;
+    --cat-2: #0E8C7E;
+    --cat-3: #F5821A;
+    --cat-4: #9B2D58;
+    --cat-5: #6B3FAA;
+    --cat-6: #2E8ED4;
+
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --r-sm: 6px;
+    --r-md: 8px;
+    --r-lg: 12px;
+
+    --shadow-card: 0 1px 2px rgba(20, 22, 30, 0.04), 0 1px 0 rgba(20, 22, 30, 0.02);
+    --shadow-elev: 0 4px 12px -4px rgba(20, 22, 30, 0.08), 0 2px 4px rgba(20, 22, 30, 0.04);
+    --shadow-pop:  0 12px 28px -10px rgba(20, 22, 30, 0.18), 0 4px 10px rgba(20, 22, 30, 0.07);
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"] {
+    --bg:           #0F0F12;
+    --surface:      #1A1A1F;
+    --surface-2:    #222228;
+    --surface-3:    #2A2A30;
+    --border:       #2E2E36;
+    --border-2:     #363640;
+    --divider:      #2A2A32;
+    --text:         #F0F0F5;
+    --text-muted:   #A4A8B8;
+    --text-subtle:  #B0B4C4;
+    --text-faint:   #8A8E9E;
+    --indigo-50:    rgba(120, 116, 220, 0.12);
+    --indigo-100:   rgba(120, 116, 220, 0.22);
+    --indigo-200:   rgba(120, 116, 220, 0.34);
+    --indigo-300:   #7B78D8;
+    --indigo-500:   #8482DC;
+    --indigo-600:   #9694E8;
+    --indigo-700:   #A8A6F2;
+    --state-red:        #D87474;
+    --state-red-bg:     #2C1515;
+    --state-yellow:     #CCA030;
+    --state-yellow-bg:  #2A2008;
+    --state-green:      #40B870;
+    --state-green-bg:   #0F2018;
+    --cat-1: #7B78DC;
+    --cat-2: #20B8AA;
+    --cat-3: #FFA040;
+    --cat-4: #C44880;
+    --cat-5: #9A68CC;
+    --cat-6: #5BB8F5;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(0, 0, 0, 0.3);
+    --shadow-elev: 0 4px 12px -4px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-pop:  0 12px 28px -10px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  html[data-theme="dark"] .brand .logo {
+    background: #3F38A2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    font-size: 13px;
+    line-height: 1.45;
+    font-feature-settings: "tnum" 1, "cv11" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  input { font: inherit; }
+  .num { font-variant-numeric: tabular-nums; }
+  .display { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+  /* ===== APP LAYOUT ===== */
+  .app {
+    display: grid;
+    grid-template-columns: 248px 1fr 360px;
+    grid-template-rows: 52px 1fr;
+    grid-template-areas:
+      "topbar topbar topbar"
+      "sidebar main inspector";
+    height: 100vh;
+  }
+
+  /* =========================================================
+     TOPBAR — three scopes, three treatments
+       1. Platform brand (DQS logo + name) — quiet anchor
+       2. Tool switcher — rectangular, primary nav between tools
+       3. Agent picker — pill with avatar dot — global filter,
+          first-class .agent-chip reusable wherever an agent appears
+     ========================================================= */
+  .topbar {
+    grid-area: topbar;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 16px; gap: 10px;
+  }
+
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 6px;
+    border-radius: var(--r-sm);
+    transition: background 0.12s;
+  }
+  .brand:hover { background: var(--surface-2); }
+  .brand .logo {
+    width: 26px; height: 26px;
+    background: var(--indigo-700);
+    border-radius: var(--r-sm);
+    display: grid; place-items: center;
+    color: white; font-weight: 700; font-size: 12px;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    box-shadow: var(--shadow-card);
+  }
+  .brand .brand-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .topbar-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+  .topbar-selector-group + .topbar-selector-group { margin-left: 20px; }
+
+  /* Tool switcher — rectangular, prominent. Reads as primary nav. */
+  .tool-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    padding: 6px 10px 6px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    transition: border-color 0.12s, background 0.12s;
+    letter-spacing: -0.005em;
+  }
+  .tool-switcher:hover {
+    border-color: var(--text-subtle);
+    background: var(--surface-3);
+  }
+  .tool-switcher .ts-icon {
+    width: 14px; height: 14px;
+    color: var(--indigo-600);
+    flex-shrink: 0;
+  }
+  .tool-switcher .ts-caret {
+    width: 10px; height: 10px;
+    color: var(--text-subtle);
+    flex-shrink: 0;
+  }
+
+  /* Agent chip — REUSABLE. Default (inline) and .is-lead (topbar). */
+  .agent-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 10px 4px 6px;
+    font-size: 12.5px;
+    transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
+  }
+  .agent-chip:hover {
+    border-color: var(--indigo-300);
+    background: var(--indigo-50);
+  }
+  .agent-chip .ac-avatar {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+  .agent-chip .ac-name { color: var(--text); }
+  .agent-chip .ac-caret {
+    width: 10px; height: 10px;
+    color: var(--text-subtle);
+    flex-shrink: 0;
+    margin-left: 1px;
+  }
+  .agent-chip.is-lead {
+    padding: 5px 12px 5px 6px;
+    font-size: 13px;
+    box-shadow: var(--shadow-card);
+  }
+  .agent-chip.is-lead .ac-avatar {
+    width: 22px; height: 22px;
+    font-size: 12px;
+  }
+
+  .topbar .spacer { flex: 1; }
+
+  /* Search — real focusable input */
+  .topbar-search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 6px 12px;
+    width: 280px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
+  }
+  .topbar-search:hover {
+    border-color: var(--text-subtle);
+    background: var(--surface-3);
+  }
+  .topbar-search:focus-within {
+    border-color: var(--indigo-500);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--indigo-100);
+  }
+  .topbar-search svg { color: var(--text-subtle); flex-shrink: 0; }
+  .topbar-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 12.5px;
+    padding: 0;
+    outline: none;
+    min-width: 0;
+  }
+  .topbar-search input::placeholder { color: var(--text-subtle); }
+
+  /* Profile button (avatar) — interactive trigger for profile popover */
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cat-2), var(--indigo-500));
+    color: white; font-weight: 600; font-size: 12px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    border: none;
+    transition: box-shadow 0.12s, transform 0.12s;
+  }
+  .avatar:hover { box-shadow: 0 0 0 3px var(--indigo-100); }
+  .avatar[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--indigo-200); }
+
+  /* === Popovers (tool switcher + agent picker + profile) ===
+     Fixed positioning — coordinates calculated from trigger's
+     getBoundingClientRect(). One shared #agent-pop instance is
+     triggered by any .agent-chip[data-agent-trigger] on the page. */
+  .pop {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-pop);
+    min-width: 240px;
+    padding: 6px;
+    z-index: 100;
+    display: none;
+  }
+  .pop.is-open { display: block; }
+  .pop-section-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    padding: 8px 10px 4px;
+  }
+  .pop-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .pop-item:hover { background: var(--surface-2); }
+  .pop-item.is-active { background: var(--indigo-50); color: var(--indigo-700); }
+  .pop-item.is-disabled { opacity: 0.55; cursor: not-allowed; }
+  .pop-item.is-disabled:hover { background: transparent; }
+  .pop-item .pi-icon { width: 16px; height: 16px; color: var(--text-subtle); flex-shrink: 0; }
+  .pop-item.is-active .pi-icon { color: var(--indigo-600); }
+  .pop-item .pi-name { flex: 1; }
+  .pop-item .pi-meta {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 2px 6px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+  }
+  .pop-item .pi-avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 12px; font-weight: 700;
+    font-family: var(--font-display);
+    flex-shrink: 0;
+  }
+  .pop-item .pi-role { font-size: 12px; color: var(--text-subtle); font-weight: 400; }
+  .pop-item .pi-check {
+    width: 14px; height: 14px;
+    color: var(--indigo-600);
+    flex-shrink: 0; opacity: 0;
+  }
+  .pop-item.is-active .pi-check { opacity: 1; }
+  .pop-divider { height: 1px; background: var(--divider); margin: 6px 4px; }
+
+  /* =========================================================
+     SIDEBAR — scoped to the active tool
+       - Tool eyebrow + role tagline at top (anchors tool identity)
+       - Page nav of the active tool only
+       - Saved views move into Sessions
+       - Bottom: theme toggle
+     ========================================================= */
+  .sidebar {
+    grid-area: sidebar;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 14px 10px 10px;
+    overflow-y: auto;
+  }
+  .sb-tool-header {
+    padding: 6px 10px 14px;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 8px;
+  }
+  .sb-tool-eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 2px;
+  }
+  .sb-tool-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .sb-tool-role { font-size: 12px; color: var(--text-subtle); margin-top: 1px; }
+  .nav-section { padding: 4px 0; display: flex; flex-direction: column; gap: 1px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px;
+    border-radius: var(--r-sm);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.1s, color 0.1s;
+  }
+  .nav-item:hover { background: var(--surface-2); color: var(--text); }
+  .nav-item.active {
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    font-weight: 600;
+  }
+  .nav-item .ic { width: 15px; height: 15px; color: var(--text-subtle); flex-shrink: 0; }
+  .nav-item.active .ic { color: var(--indigo-600); }
+  .nav-item .count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+  .nav-item.active .count { color: var(--indigo-600); }
+  .sb-bottom {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--divider);
+  }
+  .theme-toggle { width: 100%; text-align: left; background: none; border: none; }
+  html[data-theme="dark"] .theme-toggle .ic-sun  { display: inline-block; }
+  html[data-theme="dark"] .theme-toggle .ic-moon { display: none; }
+  .theme-toggle .ic-sun  { display: none; }
+  html[data-theme="dark"] .theme-toggle .theme-label-light { display: none; }
+  html[data-theme="dark"] .theme-toggle .theme-label-dark  { display: inline; }
+  .theme-toggle .theme-label-dark  { display: none; }
+
+  /* ============================================================
+     MAIN — page header (shell pattern) + chart card
+     ============================================================ */
+  .main {
+    grid-area: main;
+    overflow: hidden;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    padding: 24px 32px 24px;
+  }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header{margin-bottom:32px;}
+  .ph-id{display:flex;align-items:flex-start;gap:14px;}
+  .ph-icon{width:36px;height:36px;flex-shrink:0;border-radius:var(--r-md);
+    background:var(--indigo-50);color:var(--indigo-600);
+    display:grid;place-items:center;}
+  .ph-icon svg{width:18px;height:18px;}
+  .ph-text{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px;}
+  .ph-title{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.15;
+    letter-spacing:-0.02em;color:var(--text);margin:0;}
+  .ph-purpose{font-size:13.5px;line-height:1.5;color:var(--text-muted);margin:0;}
+
+  /* Chart card — owns breadcrumb, title, range, chart, brush */
+  .chart-card {
+    flex: 1; min-height: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-card);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Toolbar inside chart card: breadcrumb + title + range presets */
+  .chart-toolbar {
+    display: flex; flex-direction: column; gap: 0;
+    flex-shrink: 0; border-bottom: 1px solid var(--divider);
+  }
+  .ct-top {
+    display: flex; align-items: center; gap: 4px;
+    padding: 14px 20px 10px; width: 100%; min-width: 0;
+  }
+  .filter-bar-label {
+    font: 500 12px/1 var(--font-body);
+    color: var(--text-subtle);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-add-filter {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 8px; border-radius: var(--r-sm);
+    border: 0; background: transparent;
+    font: inherit; font-size: 12.5px; font-weight: 500;
+    color: var(--text-subtle); cursor: pointer;
+    transition: color .12s, background .12s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .btn-add-filter svg { width: 12px; height: 12px; }
+  .btn-add-filter:hover { color: var(--indigo-600); background: var(--indigo-50); }
+  .btn-add-filter[aria-expanded="true"] { color: var(--indigo-600); background: var(--indigo-50); }
+  /* Outer wrapper — keeps label + btn pinned, only chips scroll */
+  .ct-filter-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 20px 10px;
+    border-top: 1px solid var(--divider); width: 100%;
+    min-width: 0;
+  }
+  .ct-chips-row {
+    display: flex; align-items: center; gap: 6px;
+    flex: 1; min-width: 0;
+    overflow-x: auto; scrollbar-width: none;
+    scroll-behavior: smooth;
+    padding: 2px 0;
+  }
+  .ct-chips-row::-webkit-scrollbar { display: none; }
+
+  /* Breadcrumb-as-title: lives in the toolbar's left slot. The current
+     segment is large/display; ancestor segments are small/muted/clickable;
+     back button is a compact circular icon. */
+  .bc-floating {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    transition: opacity 160ms var(--ease-out);
+  }
+  .bc-floating.changed {
+    animation: bcChange 320ms var(--ease-out);
+  }
+  @keyframes bcChange {
+    0%   { transform: translateX(-4px); opacity: 0.5; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  .bc-back {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 999px;
+    color: var(--indigo-700);
+    background: var(--indigo-50);
+    border: none;
+    cursor: pointer;
+    transition: background 120ms ease;
+    align-self: center;
+    margin-right: 2px;
+  }
+  .bc-back:hover { background: var(--indigo-100); }
+  .bc-back svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .bc-floating .crumb {
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 13px;
+    transition: color 120ms ease;
+    align-self: center;
+  }
+  .bc-floating .crumb:hover { color: var(--text); }
+  .bc-floating .crumb.is-current {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.008em;
+    cursor: default;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .bc-floating .crumb-dot {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .bc-floating .sep {
+    color: var(--text-faint);
+    opacity: 0.7;
+    font-size: 13px;
+    align-self: center;
+  }
+  .ct-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .ct-meta {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+  .ct-meta strong { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ct-meta .delta {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-weight: 600;
+    color: var(--state-green);
+  }
+  .ct-meta .delta.bad  { color: var(--state-red); }
+  .ct-meta .delta.flat { color: var(--text-subtle); }
+  .ct-meta .div { color: var(--text-faint); }
+  .ct-meta .vs { color: var(--text-subtle); font-weight: 500; }
+
+  .ct-right {
+    display: flex; align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .pct-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px;
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    border: 1px solid var(--indigo-100);
+    border-radius: 999px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .pct-pill strong { font-weight: 600; }
+  .period-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-body); font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    padding: 4px 8px 4px 10px;
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    background: var(--surface);
+    transition: border-color .12s, color .12s, background .12s;
+    white-space: nowrap;
+  }
+  .period-chip:hover { border-color: var(--text-subtle); color: var(--text); background: var(--surface-2); }
+  .period-chip[aria-expanded="true"] { border-color: var(--indigo-300); color: var(--text); }
+  .period-chip svg { width: 10px; height: 10px; color: var(--text-faint); flex-shrink: 0; display: block; }
+  .period-chip:hover svg { color: var(--text-subtle); }
+  /* Period popover */
+  .pop { position: fixed; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-md); box-shadow: var(--shadow-pop); min-width: 200px; padding: 6px;
+    z-index: 300; display: none; }
+  .pop.is-open { display: block; }
+  .pop-section-label { font-size: 12px; font-weight: 600; color: var(--text-subtle);
+    text-transform: uppercase; letter-spacing: .09em; padding: 8px 10px 4px; }
+  .pop-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm);
+    font-size: 13px; cursor: pointer; transition: background .1s; }
+  .pop-item:hover { background: var(--surface-2); }
+  .pop-item.is-active { background: var(--indigo-50); color: var(--indigo-700); }
+  .pop-item .pi-icon { width: 16px; height: 16px; color: var(--text-subtle); flex-shrink: 0; }
+  .pop-item.is-active .pi-icon { color: var(--indigo-600); }
+  .pop-item .pi-check { width: 14px; height: 14px; color: var(--indigo-600); flex-shrink: 0; opacity: 0; margin-left: auto; }
+  .pop-item.is-active .pi-check { opacity: 1; }
+  .pop-divider { height: 1px; background: var(--divider); margin: 6px 4px; }
+
+  /* Chart canvas */
+  .canvas {
+    flex: 1; min-height: 0;
+    position: relative;
+  }
+  .chart-svg { width: 100%; height: 100%; display: block; shape-rendering: geometricPrecision; }
+  .area-band {
+    cursor: pointer;
+    transition: fill-opacity 220ms var(--ease-out), stroke-opacity 220ms var(--ease-out);
+  }
+  .area-band.entering { animation: revealUp 700ms var(--ease-out) backwards; }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .compare-line {
+    stroke-dasharray: 4 3;
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0;
+    transition: opacity 240ms var(--ease-out);
+  }
+  .compare-line.visible { opacity: 0.55; }
+  .chart-grid line { stroke: var(--border-2); stroke-dasharray: 2 4; }
+  .chart-axis text {
+    font-size: 12px;
+    fill: var(--text-subtle);
+    font-family: var(--font-body);
+    font-feature-settings: "tnum" 1;
+  }
+  .day-cursor {
+    stroke: var(--text);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+    opacity: 0;
+    transition: opacity 100ms ease, stroke 120ms ease, stroke-width 120ms ease;
+    pointer-events: none;
+  }
+  .day-cursor.visible { opacity: 0.55; }
+  .day-cursor.is-pinned {
+    stroke: var(--indigo-500);
+    stroke-dasharray: none;
+    stroke-width: 1.6;
+    opacity: 0.95;
+  }
+  .day-spotlight {
+    fill: var(--state-yellow);
+    opacity: 0;
+    transition: opacity 250ms var(--ease-out);
+    pointer-events: none;
+  }
+  .day-spotlight.visible { opacity: 0.16; }
+
+  /* DIRECT LABELS — sophisticated category naming */
+  .direct-label {
+    cursor: pointer;
+    transition: opacity 200ms ease;
+  }
+  .direct-label .dl-text-name {
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    fill: var(--text);
+    pointer-events: none;
+  }
+  .direct-label .dl-text-pct {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    fill: var(--text-subtle);
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
+  .direct-label .dl-line {
+    fill: none;
+    stroke-width: 1;
+    pointer-events: none;
+  }
+  .direct-label .dl-dot {
+    pointer-events: none;
+  }
+  .direct-label .dl-arrow {
+    font-size: 12px;
+    fill: var(--text-subtle);
+    pointer-events: none;
+    transition: fill 140ms ease, transform 140ms ease;
+  }
+  .direct-label.is-dim { opacity: 0.30; }
+  .direct-label:hover .dl-arrow { fill: var(--text); }
+  .direct-label.is-active .dl-text-name { fill: var(--indigo-700); }
+  .direct-label.is-active .dl-text-pct { fill: var(--indigo-600); }
+  .direct-label.is-active .dl-arrow { fill: var(--indigo-600); }
+  /* Last-level labels are non-drillable — no arrow, default cursor */
+  .direct-label.is-leaf { cursor: default; }
+  .direct-label.is-leaf .dl-hit { cursor: default; }
+  .direct-label .dl-hit {
+    fill: transparent;
+    cursor: pointer;
+  }
+
+  .annot-pin { cursor: pointer; }
+  .annot-pin .pin-pulse { animation: pinPulse 2.4s var(--ease-out) infinite; }
+  @keyframes pinPulse {
+    0%   { opacity: 0.5; r: 6; }
+    70%  { opacity: 0; r: 16; }
+    100% { opacity: 0; r: 16; }
+  }
+  .annot-pin:hover .pin-circle { filter: brightness(1.1); }
+
+  .annot-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--text);
+    color: var(--surface);
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: var(--shadow-pop);
+    transform: translate(-50%, calc(-100% - 12px));
+    opacity: 0;
+    transition: opacity 120ms ease;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .annot-tooltip.visible { opacity: 1; }
+  .annot-tooltip strong { font-weight: 600; }
+  html[data-theme="dark"] .annot-tooltip { background: var(--surface-3); }
+
+  /* Brush integrated into chart card bottom */
+  .brush-bar {
+    flex-shrink: 0;
+    border-top: 1px solid var(--divider);
+    background: var(--surface-2);
+    padding: 10px 20px 12px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brush-bar .lbl {
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+  .brush-canvas {
+    flex: 1; height: 38px;
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    overflow: hidden;
+  }
+  .brush-svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+  .brush-track {
+    position: absolute;
+    top: 0; bottom: 0;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .brush-selection {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: rgba(79, 70, 186, 0.10);
+    border-left: 1.5px solid var(--indigo-500);
+    border-right: 1.5px solid var(--indigo-500);
+    pointer-events: auto;
+    cursor: grab;
+  }
+  .brush-selection:active { cursor: grabbing; }
+  html[data-theme="dark"] .brush-selection { background: rgba(132, 130, 220, 0.16); }
+  .brush-handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px; height: 26px;
+    background: var(--surface);
+    border: 1.5px solid var(--indigo-500);
+    border-radius: 4px;
+    cursor: ew-resize;
+    z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 120ms ease, transform 120ms var(--ease-out);
+  }
+  .brush-handle:hover { box-shadow: 0 0 0 4px var(--indigo-50); }
+  .brush-handle::before {
+    content: '';
+    width: 1.5px; height: 12px;
+    background: var(--indigo-500);
+    border-radius: 1px;
+    box-shadow: -3px 0 0 var(--indigo-500), 3px 0 0 var(--indigo-500);
+    opacity: 0.5;
+  }
+  .brush-info {
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .brush-info strong { color: var(--text); font-weight: 600; }
+
+  /* Date token — clickable button that opens a calendar popover.
+     Visual affordance: caret + token chrome (same family as Dashboard's
+     period token). No more typeable text masquerading as a label. */
+  .date-token {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 5px;
+    font: inherit; font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 3px 8px 3px 10px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  }
+  .date-token:hover {
+    border-color: var(--text-subtle);
+    background: var(--surface-2);
+  }
+  .date-token.is-open {
+    border-color: var(--indigo-500);
+    box-shadow: 0 0 0 3px var(--indigo-50);
+    background: var(--surface);
+  }
+  html[data-theme="dark"] .date-token.is-open {
+    box-shadow: 0 0 0 3px rgba(132, 130, 220, 0.18);
+  }
+  .date-token .caret {
+    color: var(--text-subtle);
+    font-size: 12px;
+    line-height: 1;
+  }
+  .date-pop {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 244px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-pop, 0 12px 32px rgba(20, 20, 40, 0.18));
+    padding: 10px 12px 12px;
+    display: none;
+    z-index: 50;
+    cursor: default;
+    text-align: left;
+    font-weight: 400;
+  }
+  .date-token.is-open .date-pop { display: block; }
+  .date-pop-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .date-pop-header .dp-month {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .date-pop-header .dp-nav {
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid transparent;
+    border-radius: var(--r-sm);
+    background: transparent;
+    color: var(--text-subtle);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .date-pop-header .dp-nav:hover {
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .date-pop-header .dp-nav:disabled {
+    opacity: 0.3; cursor: not-allowed;
+  }
+  .date-pop-weekdays,
+  .date-pop-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .date-pop-weekdays {
+    margin-bottom: 4px;
+  }
+  .date-pop-weekdays span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px 0;
+  }
+  .date-pop-grid .dp-day {
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    height: 28px;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: background 100ms ease, color 100ms ease;
+  }
+  .date-pop-grid .dp-day:hover { background: var(--surface-2); }
+  .date-pop-grid .dp-day.is-empty { visibility: hidden; cursor: default; }
+  .date-pop-grid .dp-day.is-out-of-range {
+    color: var(--text-faint);
+    cursor: not-allowed;
+  }
+  .date-pop-grid .dp-day.is-out-of-range:hover { background: transparent; }
+  .date-pop-grid .dp-day.is-selected {
+    background: var(--indigo-700);
+    color: #fff;
+    font-weight: 600;
+  }
+  .date-pop-grid .dp-day.is-in-range {
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+  }
+  html[data-theme="dark"] .date-pop-grid .dp-day.is-in-range {
+    background: rgba(132, 130, 220, 0.18);
+    color: var(--indigo-300, #ABA8DA);
+  }
+  .date-pop-grid .dp-day.is-today {
+    box-shadow: inset 0 0 0 1px var(--text-subtle);
+  }
+  .date-pop-hint {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--divider);
+    font-size: 12px;
+    color: var(--text-subtle);
+    text-align: center;
+  }
+  .brush-info .reset {
+    font-size: 12px;
+    color: var(--text-subtle);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 120ms ease;
+  }
+  .brush-info .reset:hover { border-color: var(--text-subtle); color: var(--text); }
+  .brush-info .reset[hidden] { display: none; }
+
+  /* ============================================================
+     INSPECTOR
+     ============================================================ */
+  .inspector {
+    grid-area: inspector;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex; flex-direction: column;
+  }
+  .inspector::-webkit-scrollbar { width: 6px; }
+  .inspector::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .insp-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .insp-section:last-child { border-bottom: none; }
+  /* Prominent section — used for Ask me anything to lift it above scroll noise.
+     Mirrors the "What this means" surface on the Dashboard split panel. */
+  .insp-section.is-prominent {
+    background: linear-gradient(180deg, var(--indigo-50), transparent 80%);
+    padding: 22px 20px 24px;
+  }
+  .insp-section.is-prominent .insp-h-title { color: var(--indigo-700); }
+  .insp-h {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .insp-h-title {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--text);
+  }
+  .insp-h-meta {
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+
+  /* Live inspector */
+  .live { display: flex; flex-direction: column; gap: 8px; }
+  .pinned-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px;
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    font-family: var(--font-display);
+  }
+  .unpin-btn {
+    margin-left: 6px;
+    padding: 2px 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 120ms ease;
+  }
+  .unpin-btn:hover {
+    border-color: var(--text-subtle);
+    color: var(--text);
+    background: var(--surface-2);
+  }
+  .live-eyebrow {
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+  .live-num-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .live-num {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    display: inline-flex; align-items: baseline; gap: 6px;
+  }
+  .live-num .unit {
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .live-delta-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.005em;
+  }
+  .live-delta-pill .from {
+    font-weight: 500;
+    opacity: 0.75;
+  }
+  .live-delta-pill.good { background: var(--state-green-bg); color: var(--state-green); }
+  .live-delta-pill.bad  { background: var(--state-red-bg);   color: var(--state-red); }
+  .live-delta-pill.flat { background: var(--surface-3);      color: var(--text-subtle); }
+
+  .live-rows { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+  .live-row {
+    display: grid;
+    grid-template-columns: 10px 1fr auto auto;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: var(--r-sm);
+    font-size: 12px;
+    transition: background 120ms ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+  }
+  .live-row:hover { background: var(--surface-2); }
+  .live-row .sw { width: 8px; height: 8px; border-radius: 2px; }
+  .live-row .nm { color: var(--text); font-weight: 500; }
+  .live-row .v {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .live-row .p {
+    color: var(--text-subtle);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    min-width: 30px;
+    text-align: right;
+  }
+  .live-row .p-sub {
+    display: block;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-weight: 400;
+  }
+
+  /* KPIs */
+  .health-eyebrow {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--divider);
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .kpi-mini { display: flex; flex-direction: column; gap: 3px; }
+  .kpi-mini-lbl {
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .kpi-mini-val {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .kpi-mini-val .u { font-size: 12px; color: var(--text-subtle); font-weight: 500; }
+  .kpi-mini-delta {
+    font-size: 12px; font-weight: 600;
+    margin-top: 1px;
+  }
+  .kpi-mini-delta.good { color: var(--state-green); }
+  .kpi-mini-delta.bad  { color: var(--state-red); }
+  .kpi-mini-delta.flat { color: var(--text-subtle); }
+  .kpi-mini-spark { width: 100%; height: 22px; margin-top: 4px; display: block; }
+
+  /* Bridge link — quiet handoff between tools/pages of the loop.
+     Lives at the bottom of the KPI section: "see the full health breakdown"
+     leads Liderança/PM from Overview into Dashboards. */
+  .insp-bridge {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 12px;
+    font-size: 12px; font-weight: 500;
+    color: var(--indigo-700);
+    transition: color 120ms ease, gap 160ms ease;
+  }
+  .insp-bridge:hover {
+    color: var(--indigo-600);
+    gap: 7px;
+  }
+  .insp-bridge svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+  /* Siblings */
+  .sib-list { display: flex; flex-direction: column; gap: 2px; }
+  .sib {
+    display: grid;
+    grid-template-columns: 10px 1fr 56px auto;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 8px;
+    border-radius: var(--r-sm);
+    font-size: 12px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+    transition: background 120ms ease;
+    width: 100%;
+  }
+  .sib:hover { background: var(--surface-2); }
+  .sib.is-current {
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    cursor: default;
+  }
+  .sib .sw { width: 8px; height: 8px; border-radius: 2px; }
+  .sib .nm { font-weight: 500; }
+  .sib-spark { width: 56px; height: 16px; }
+  .sib .v {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+  .sib.is-current .v { color: var(--indigo-600); font-weight: 600; }
+
+  /* Cross-page actions — "Open this view elsewhere".
+     Layout: icon | (label / scope stacked) | arrow. Label stays on 1 line
+     and truncates; scope sits below in smaller text — never fights the label.*/
+  .action-list { display: flex; flex-direction: column; gap: 6px; }
+  .action {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 120ms ease;
+    text-decoration: none;
+  }
+  .action:hover {
+    border-color: var(--text-subtle);
+    background: var(--surface-2);
+  }
+  .action .ic { color: var(--text-subtle); flex-shrink: 0; }
+  .action:hover .ic { color: var(--text); }
+  .action .body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .action .lbl {
+    color: var(--text);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .action .scope {
+    font-size: 12px;
+    color: var(--text-subtle);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .action .arr {
+    color: var(--text-faint);
+    font-size: 12px;
+    transition: transform 140ms ease, color 140ms ease;
+  }
+  .action:hover .arr {
+    color: var(--text-subtle);
+    transform: translateX(2px);
+  }
+
+  /* Insights */
+  .insight-list { display: flex; flex-direction: column; gap: 10px; }
+  .insight {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 16px 18px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  }
+  .insight:hover {
+    border-color: var(--text-subtle);
+    box-shadow: var(--shadow-elev);
+    transform: translateY(-1px);
+  }
+  .insight-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    align-self: flex-start;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .insight-tag .dot { width: 5px; height: 5px; border-radius: 50%; }
+  .insight.alert .insight-tag { background: var(--state-red-bg); color: var(--state-red); }
+  .insight.alert .insight-tag .dot { background: var(--state-red); }
+  .insight.spike .insight-tag { background: var(--state-yellow-bg); color: var(--state-yellow); }
+  .insight.spike .insight-tag .dot { background: var(--state-yellow); }
+  .insight.win   .insight-tag { background: var(--state-green-bg); color: var(--state-green); }
+  .insight.win   .insight-tag .dot { background: var(--state-green); }
+  .insight.cross .insight-tag { background: var(--indigo-50); color: var(--indigo-700); }
+  .insight.cross .insight-tag .dot { background: var(--indigo-500); }
+  .insight-title {
+    font-family: var(--font-display);
+    font-size: 13.5px; font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+  .insight-body {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .insight-body strong { color: var(--text); font-weight: 600; }
+
+  /* CTA strip — two buttons. "See sessions" is active, "Fix in Playground"
+     is parked (Soon). Both share the same visual treatment. */
+  .insight-cta-row {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-2);
+  }
+  .insight-cta {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    background: none; border: none; padding: 0;
+    cursor: pointer;
+    transition: color 120ms ease;
+  }
+  .insight-cta:hover { color: var(--indigo-700); }
+  .insight-cta svg { width: 11px; height: 11px; flex-shrink: 0; }
+  .insight-cta.is-soon {
+    color: var(--text-subtle);
+    cursor: not-allowed;
+  }
+  .insight-cta.is-soon:hover { color: var(--text-subtle); }
+  .insight-cta-meta {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 1px 5px;
+    margin-left: 5px;
+    border: 1px solid var(--border-2);
+    border-radius: 3px;
+  }
+  .insight-load-more {
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: var(--r-sm);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+  }
+  .insight-load-more:hover {
+    border-style: solid;
+    border-color: var(--text-subtle);
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  /* Ask */
+  .ask-input-wrap { position: relative; }
+  .ask-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 9px 38px 9px 12px;
+    font-size: 12.5px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  .ask-input:focus {
+    border-color: var(--indigo-300);
+    box-shadow: 0 0 0 3px var(--indigo-50);
+  }
+  .ask-input::placeholder { color: var(--text-faint); }
+  .ask-submit {
+    position: absolute; right: 5px; top: 50%;
+    transform: translateY(-50%);
+    width: 26px; height: 26px;
+    background: var(--indigo-700);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    display: grid; place-items: center;
+    transition: background 120ms ease;
+  }
+  .ask-submit:hover { background: var(--indigo-600); }
+  html[data-theme="dark"] .ask-submit { background: #4845B8; color: white; }
+  html[data-theme="dark"] .ask-submit:hover { background: #5856CC; }
+  .ask-suggest-row {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-top: 8px;
+  }
+  .ask-chip {
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px dashed var(--border);
+    background: none;
+    padding: 3px 8px;
+    border-radius: 999px;
+    transition: all 120ms ease;
+  }
+  .ask-chip:hover {
+    border-style: solid;
+    border-color: var(--text-subtle);
+    color: var(--text);
+    background: var(--surface-2);
+  }
+  .ask-thinking {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-subtle);
+    display: none;
+    align-items: center; gap: 6px;
+  }
+  .ask-thinking.visible { display: inline-flex; }
+  .ask-thinking .dots { display: inline-flex; gap: 3px; }
+  .ask-thinking .dots span {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-subtle);
+    animation: dots 1.2s infinite;
+  }
+  .ask-thinking .dots span:nth-child(2) { animation-delay: 0.15s; }
+  .ask-thinking .dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dots {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-3px); opacity: 1; }
+  }
+  .ask-response {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+    border: 1px solid var(--indigo-100);
+    border-radius: var(--r-sm);
+    font-size: 12px;
+    line-height: 1.5;
+    display: none;
+    animation: fadeUp 320ms var(--ease-out);
+  }
+  .ask-response.visible { display: block; }
+  .ask-response strong { color: var(--indigo-700); font-weight: 600; }
+  .ask-response em { font-style: italic; opacity: 0.7; }
+  .ask-response .applied {
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px solid var(--indigo-100);
+    font-size: 12px;
+    color: var(--indigo-600);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* responsive */
+  @media (max-width: 1280px) {
+    .app { grid-template-columns: 248px 1fr 320px; }
+    .ct-title { font-size: 14.5px; }
+    .live-num { font-size: 26px; }
+
+  }
+
+  /* Entrance */
+  .page-header, .chart-card { animation: fadeUp 600ms var(--ease-out) backwards; }
+  .page-header { animation-delay: 0ms; }
+  .chart-card { animation-delay: 80ms; }
+  .insp-section { animation: fadeUp 600ms var(--ease-out) backwards; }
+  .insp-section:nth-child(1) { animation-delay: 60ms; }
+  .insp-section:nth-child(2) { animation-delay: 120ms; }
+  .insp-section:nth-child(3) { animation-delay: 180ms; }
+  .insp-section:nth-child(4) { animation-delay: 240ms; }
+  .insp-section:nth-child(5) { animation-delay: 300ms; }
+
+.chip-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;
+  border:1px solid var(--border);border-radius:var(--r-sm);background:var(--surface);
+  color:var(--text-muted);font-size:12px;font-weight:500;
+  transition:border-color .12s,color .12s,background .12s;
+  white-space:nowrap;}
+.chip-btn:hover{border-color:var(--text-subtle);color:var(--text);}
+.chip-btn[aria-expanded="true"]{border-color:var(--indigo-300);color:var(--text);}
+.chip-btn .lbl{color:var(--text-subtle);font-weight:500;}
+.chip-btn .val{color:var(--text);font-weight:600;}
+.chip-btn .filter-icon{width:12px;height:12px;color:var(--text-subtle);}
+.chip-btn .caret{width:10px;height:10px;color:var(--text-faint);}
+.chip-btn.has-active{background:var(--indigo-50);border-color:var(--indigo-200);color:var(--indigo-700);}
+.chip-btn.has-active .lbl{color:var(--indigo-600);}
+.chip-btn.has-active .filter-icon{color:var(--indigo-500);}
+.chip-btn .filter-count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:16px;height:16px;padding:0 5px;
+  background:var(--indigo-500);color:white;
+  font-size:12px;font-weight:700;font-family:var(--font-mono);
+  border-radius:8px;
+}
+html[data-theme="dark"] .chip-btn .filter-count{background:#4845B8;}
+.active-filters{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px 14px;margin-bottom:14px;
+  background:var(--indigo-50);border:1px solid var(--indigo-100);
+  border-radius:var(--r-md);
+}
+.af-label{
+  font-size:12px;font-weight:700;color:var(--indigo-600);
+  text-transform:uppercase;letter-spacing:.09em;
+}
+.af-chip{cursor:pointer;
+  display:inline-flex;align-items:center;gap:0;
+  padding:2px 2px 2px 9px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:999px;font-size:12px;
+  transition:border-color .12s,background .12s;
+}
+.af-chip:hover{border-color:var(--indigo-300);background:var(--indigo-50);}
+.af-chip .afc-dim{color:var(--text-subtle);font-weight:500;}
+.af-chip .afc-sep{color:var(--text-faint);margin:0 5px;}
+.af-chip .afc-val{color:var(--text);font-weight:600;}
+.af-chip .afc-remove{
+  width:18px;height:18px;border-radius:50%;
+  display:grid;place-items:center;
+  color:var(--text-faint);margin-left:5px;
+  transition:background .12s,color .12s;
+}
+.af-chip .afc-remove:hover{background:var(--surface-3);color:var(--text);}
+html[data-theme="dark"] .af-chip .afc-remove:hover{background:rgba(255,255,255,.08);color:#fff;}
+.af-meta{font-size:12px;color:var(--text-muted);margin-left:auto;}
+.af-meta .num{font-family:var(--font-mono);color:var(--text);font-weight:600;}
+.af-reset{
+  font-size:12px;color:var(--indigo-600);font-weight:600;
+  padding:4px 8px;border-radius:var(--r-sm);
+  transition:background .12s;
+}
+.af-reset:hover{background:var(--indigo-100);color:var(--indigo-700);}
+
+/* ── Filter chip with inline remove (×) ── */
+.chip-btn.fchip{padding-right:4px;}
+.chip-btn.fchip .fchip-remove{
+  display:inline-grid;place-items:center;
+  width:18px;height:18px;border-radius:50%;
+  color:var(--text-subtle);margin-left:2px;
+  transition:background .12s,color .12s;
+  cursor:pointer;
+}
+.chip-btn.fchip .fchip-remove:hover{background:var(--surface-3);color:var(--text);}
+html[data-theme="dark"] .chip-btn.fchip .fchip-remove:hover{background:rgba(255,255,255,.08);color:#fff;}
+.chip-btn.fchip .fchip-remove svg{width:9px;height:9px;}
+.chip-btn.fchip[hidden]{display:none;}
+
+/* ── Add-filter chip (dashed, secondary) ── */
+.chip-btn--add{
+  border-style:dashed;
+  color:var(--text-subtle);
+}
+.chip-btn--add .lbl{color:var(--text-subtle);font-weight:500;}
+.chip-btn--add:hover{border-style:solid;border-color:var(--indigo-300);color:var(--indigo-700);background:var(--indigo-50);}
+.chip-btn--add:hover .lbl{color:var(--indigo-700);}
+.chip-btn--add:hover .filter-icon{color:var(--indigo-500);}
+
+/* ── Add-filter popover items: dim + check on right when added ── */
+#addfilter-pop .pop-item{display:flex;align-items:center;gap:10px;}
+#addfilter-pop .pop-item .afi-icon{width:14px;height:14px;color:var(--text-subtle);flex-shrink:0;}
+#addfilter-pop .pop-item .afi-name{flex:1;}
+#addfilter-pop .pop-item .afi-state{
+  font-size:11.5px;font-family:var(--font-mono);color:var(--text-faint);
+  text-transform:uppercase;letter-spacing:.05em;
+}
+#addfilter-pop .pop-item.is-added{color:var(--text-subtle);}
+#addfilter-pop .pop-item.is-added .afi-state{color:var(--indigo-600);}
+</style>
+<script>window._topbar = { tool: 'conv-explorer', page: 'overview' };</script>
+<script src="topbar.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===========================================================
+       TOPBAR — Sessão 1 shell pattern
+       =========================================================== -->
+  <header class="topbar">
+
+    <a class="brand" href="#" title="Domi Quality Studio — home">
+      <span class="logo">DQS</span>
+      <span class="brand-name">Domi Quality Studio</span>
+    </a>
+
+    <span class="topbar-divider"></span>
+
+    <button class="tool-switcher" type="button" id="tool-switcher-btn" aria-haspopup="true" aria-expanded="false">
+      <svg class="ts-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/>
+        <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+      </svg>      <span>Conv Explorer</span>
+      <svg class="ts-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <button class="agent-chip is-lead" type="button" data-agent-trigger aria-haspopup="true" aria-expanded="false">
+      <span class="ac-avatar" style="background: var(--indigo-500);">D</span>      <span class="ac-name">Domi</span>
+      <svg class="ac-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <div class="spacer"></div>
+
+    <label class="topbar-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search conversations, topics, users…" aria-label="Search" />
+    </label>
+
+    <button class="avatar" type="button" id="profile-btn" aria-haspopup="true" aria-expanded="false" title="Heitor Pagliari">HP</button>
+  </header>
+
+  <!-- ===========================================================
+       SHARED POPOVERS — one instance each, triggered from anywhere
+       =========================================================== -->
+
+  
+  
+  
+  <!-- ===========================================================
+       SIDEBAR — scoped to Conv Explorer
+       =========================================================== -->
+  <aside class="sidebar">
+
+    <div class="sb-tool-header">
+      <div class="sb-tool-eyebrow">Tool</div>
+      <div class="sb-tool-name">Conv Explorer</div>
+      <div class="sb-tool-role">Observe what's happening</div>
+    </div>
+
+    <nav class="nav-section" aria-label="Conv Explorer pages">
+      <a class="nav-item active" href="#" aria-current="page">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overview
+      </a>
+      <a class="nav-item" href="conv-explorer-dashboard.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboards
+      </a>
+      <a class="nav-item" href="conv-explorer-sessions.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Sessions
+      </a>
+    </nav>
+
+    <div class="sb-bottom">
+      <button class="nav-item theme-toggle" id="theme-toggle" type="button" title="Switch theme">
+        <svg class="ic ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="ic ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <span class="theme-label-light">Dark mode</span>
+        <span class="theme-label-dark">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ===== PAGE HEADER ===== -->
+    <header class="page-header">
+      <div class="ph-id">
+        <span class="ph-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </span>
+        <div class="ph-text">
+          <h1 class="ph-title">Conversation volume</h1>
+          <p class="ph-purpose">What users are talking about, and how that changes over time.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="chart-card">
+
+      <div class="chart-toolbar">
+        <div class="ct-top">
+          <div class="bc-floating" id="breadcrumb"></div>
+        </div>
+        <div class="ct-filter-bar">
+          <span class="filter-bar-label">Filtered by</span>
+          <div class="ct-chips-row" id="fchip-track">
+
+          <button class="chip-btn fchip" type="button" id="channel-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="lbl">Channel</span>
+            <span class="val" id="channel-label">Everywhere</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="channel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="outcome-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <span class="lbl">Outcome</span>
+            <span class="val" id="outcome-label">All outcomes</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="outcome">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="domain-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            <span class="lbl">Domain</span>
+            <span class="val" id="domain-label">Any</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="domain">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="resolution-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span class="lbl">Resolution</span>
+            <span class="val" id="resolution-label">Any</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="resolution">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="trigger-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span class="lbl">Trigger</span>
+            <span class="val" id="trigger-label">Any</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="trigger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="mission-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11.5l3 3 7-7"/><path d="M22 12v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h7"/></svg>
+            <span class="lbl">Mission</span>
+            <span class="val" id="mission-label">Any</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="mission">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="customer-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="lbl">Customer</span>
+            <span class="val" id="customer-label">All</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="customer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          <button class="chip-btn fchip" type="button" id="length-trigger" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="lbl">Length</span>
+            <span class="val" id="length-label">Any</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="fchip-remove" role="button" tabindex="0" aria-label="Remove filter" data-remove-dim="length">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+            </span>
+          </button>
+
+          </div><!-- /ct-chips-row -->
+
+          <button class="btn-add-filter" type="button" id="addfilter-trigger" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add filter
+          </button>
+        </div><!-- /ct-filter-bar -->
+      </div>
+
+      <div class="canvas">
+        <svg class="chart-svg" id="chart-svg" preserveAspectRatio="none"></svg>
+        <div class="annot-tooltip" id="annot-tooltip"></div>
+      </div>
+
+      <div class="brush-bar">
+        <span class="lbl" title="Drag the handles or type the dates to change what the chart shows.">Time window</span>
+        <div class="brush-canvas" id="brush-canvas">
+          <svg class="brush-svg" id="brush-svg" preserveAspectRatio="none"></svg>
+          <div class="brush-track"     id="brush-track"></div>
+          <div class="brush-selection" id="brush-selection"></div>
+          <div class="brush-handle" id="brush-handle-left"></div>
+          <div class="brush-handle" id="brush-handle-right"></div>
+        </div>
+        <div class="brush-info">
+          <button class="date-token" id="brush-start-btn" type="button" aria-haspopup="dialog" title="Click to pick a start date">
+            <span class="dt-label" id="brush-start-label">Apr 9</span>
+            <span class="caret">▾</span>
+            <div class="date-pop" id="brush-start-pop" role="dialog" aria-label="Pick start date"></div>
+          </button>
+          <span style="color: var(--text-subtle); margin: 0 4px;">–</span>
+          <button class="date-token" id="brush-end-btn" type="button" aria-haspopup="dialog" title="Click to pick an end date">
+            <span class="dt-label" id="brush-end-label">May 8</span>
+            <span class="caret">▾</span>
+            <div class="date-pop" id="brush-end-pop" role="dialog" aria-label="Pick end date"></div>
+          </button>
+          <span style="color: var(--text-faint); margin-left: 4px;">·</span>
+          <span><strong id="brush-days">30</strong> days</span>
+          <button class="reset" id="brush-reset" hidden>reset</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== INSPECTOR ===== -->
+  <aside class="inspector">
+
+    <section class="insp-section">
+      <div class="insp-h">
+        <div class="insp-h-title" id="live-h-title">What you're seeing</div>
+        <div class="insp-h-meta" id="live-h-meta">30 days</div>
+      </div>
+      <div class="live" id="live-block"></div>
+
+      <!-- KPI minis — three live evals from the suite (plain-language label,
+           eval-suite name in tooltip per "intuitive language" pattern):
+           • Domi solved   ← AI Resolution     (Value)
+           • Escalated     ← Human Escalation  (Value)
+           • Frustration   ← Frustration eval  (Usability) -->
+      <div class="health-eyebrow">Health Score</div>
+      <div class="kpi-row">
+        <div class="kpi-mini" title="AI Resolution — share of conversations Domi closed without escalating to a human teammate.">
+          <span class="kpi-mini-lbl">Domi solved</span>
+          <span class="kpi-mini-val">61<span class="u">%</span></span>
+          <span class="kpi-mini-delta good">↑ 3.2 pts</span>
+          <svg class="kpi-mini-spark" data-kpi-spark="resolution"></svg>
+        </div>
+        <div class="kpi-mini" title="Human Escalation — share of conversations Domi handed off to a human teammate.">
+          <span class="kpi-mini-lbl">Escalated</span>
+          <span class="kpi-mini-val">19<span class="u">%</span></span>
+          <span class="kpi-mini-delta good">↓ 1.8 pts</span>
+          <svg class="kpi-mini-spark" data-kpi-spark="escalation"></svg>
+        </div>
+        <div class="kpi-mini" title="Frustration eval — share of conversations where users expressed frustration with Domi.">
+          <span class="kpi-mini-lbl">Frustration</span>
+          <span class="kpi-mini-val">12<span class="u">%</span></span>
+          <span class="kpi-mini-delta good">↓ 0.6 pts</span>
+          <svg class="kpi-mini-spark" data-kpi-spark="frustration"></svg>
+        </div>
+      </div>
+
+      <!-- Bridge → Dashboards. Quiet text-link, no decoration. -->
+      <a class="insp-bridge" href="conv-explorer-dashboard.html" title="Open the Dashboards page — see the four-quadrant breakdown">
+        See the full health breakdown
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </section>
+
+    <section class="insp-section">
+      <div class="insp-h">
+        <div class="insp-h-title">Worth a look</div>
+        <div class="insp-h-meta" id="insight-period-meta">Last 30 days</div>
+      </div>
+      <div class="insight-list" id="insight-list"></div>
+      <button class="insight-load-more" id="insight-load-more" type="button" hidden>Load more</button>
+    </section>
+
+    <section class="insp-section is-prominent">
+      <div class="insp-h">
+        <div class="insp-h-title">What do you want to know?</div>
+        <div class="insp-h-meta">About what's in the chart</div>
+      </div>
+      <div class="ask-input-wrap">
+        <input type="text" class="ask-input" id="ask-input" placeholder="e.g. what happened on Apr 18?" autocomplete="off" />
+        <button class="ask-submit" id="ask-submit">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="ask-suggest-row" id="ask-suggestions"></div>
+      <div class="ask-thinking" id="ask-thinking">
+        <span>Thinking</span>
+        <span class="dots"><span></span><span></span><span></span></span>
+      </div>
+      <div class="ask-response" id="ask-response"></div>
+    </section>
+
+  </aside>
+
+</div>
+
+<div class="pop" id="channel-pop" role="menu">
+  <div class="pop-section-label">Channel</div>
+  <div class="pop-item is-active" data-channel="all"   data-label="Everywhere">Everywhere<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-channel="inapp" data-label="In-app">In-app<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-channel="wpp"   data-label="WhatsApp">WhatsApp<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="outcome-pop" role="menu">
+  <div class="pop-section-label">Outcome</div>
+  <div class="pop-item is-active" data-outcome="all"       data-label="All outcomes">All outcomes<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-outcome="resolved"  data-label="Domi solved">Domi solved<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-outcome="escalated" data-label="Sent to human">Sent to human<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="domain-pop" role="menu">
+  <div class="pop-section-label">Domain</div>
+  <div class="pop-item is-active" data-domain="all"        data-label="Any">Any<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-domain="pagamentos" data-label="Pagamentos">Pagamentos<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-domain="contratos"  data-label="Contratos">Contratos<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-domain="busca"      data-label="Busca">Busca<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-domain="vistoria"   data-label="Vistoria">Vistoria<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="resolution-pop" role="menu">
+  <div class="pop-section-label">Resolution type</div>
+  <div class="pop-item is-active" data-resolution="all"        data-label="Any">Any<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-resolution="self"       data-label="Self-served">Self-served<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-resolution="assisted"   data-label="Assisted">Assisted<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-resolution="escalated"  data-label="Escalated">Escalated<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-resolution="abandoned"  data-label="Abandoned">Abandoned<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop align-right" id="addfilter-pop" role="menu" style="min-width:240px;">
+  <div class="pop-section-label">Add filter</div>
+  <div class="pop-item" data-add-dim="channel">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="afi-name">Channel</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="outcome">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span class="afi-name">Outcome</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="domain">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    <span class="afi-name">Operational domain</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="resolution">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span class="afi-name">Resolution type</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="trigger">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    <span class="afi-name">Session trigger</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="mission">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11.5l3 3 7-7"/><path d="M22 12v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h7"/></svg>
+    <span class="afi-name">Active mission</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="customer">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="afi-name">Customer type</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-item" data-add-dim="length">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="afi-name">Conversation length</span>
+    <span class="afi-state"></span>
+  </div>
+  <div class="pop-divider"></div>
+  <div class="pop-item" id="addfilter-reset-all" style="color:var(--indigo-600);font-weight:600;">
+    <svg class="afi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 10 9 10"/></svg>
+    <span class="afi-name">Clear all filters</span>
+  </div>
+</div>
+
+<div class="pop" id="trigger-pop" role="menu">
+  <div class="pop-section-label">Session trigger</div>
+  <div class="pop-item is-active" data-trigger="all"      data-label="Any">Any<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"          data-trigger="proactive" data-label="Proactive">Proactive<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"          data-trigger="reactive"  data-label="Reactive">Reactive<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"          data-trigger="handoff"   data-label="Handoff">Handoff<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="mission-pop" role="menu">
+  <div class="pop-section-label">Active mission</div>
+  <div class="pop-item is-active" data-mission="all"       data-label="Any">Any<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-mission="search"    data-label="Property search">Property search<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-mission="rental"    data-label="Rental process">Rental process<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-mission="support"   data-label="Support">Support<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="customer-pop" role="menu">
+  <div class="pop-section-label">Customer type</div>
+  <div class="pop-item is-active" data-customer="all"     data-label="All">All<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-customer="seeker"  data-label="Seeker">Seeker<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-customer="owner"   data-label="Owner">Owner<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="length-pop" role="menu">
+  <div class="pop-section-label">Conversation length</div>
+  <div class="pop-item is-active" data-length="all"    data-label="Any">Any<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-length="short"  data-label="Short (1–3 turns)">Short (1–3 turns)<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-length="medium" data-label="Medium (4–10 turns)">Medium (4–10 turns)<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item"           data-length="long"   data-label="Long (11+ turns)">Long (11+ turns)<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+</div>
+
+<div class="pop" id="range-pop" role="menu" style="min-width:240px;">
+  <div class="pop-section-label">Period</div>
+  <div class="pop-item" data-days="7"  data-label="Last 7 days">Last 7 days<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item" data-days="14" data-label="Last 14 days">Last 14 days<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item is-active" data-days="30" data-label="Last 30 days">Last 30 days<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-item" data-days="90" data-label="Last 90 days">Last 90 days<svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+  <div class="pop-divider"></div>
+  <div class="pop-item" id="range-custom-toggle" data-days="custom">
+    <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span style="flex:1">Custom range…</span>
+    <svg class="pi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   MOCK DATA
+   ============================================================ */
+const TODAY = new Date('2026-05-08');
+function dateMinusDays(n) { const d = new Date(TODAY); d.setDate(d.getDate() - n); return d; }
+function fmtDateISO(d) { return d.toISOString().slice(0,10); }
+function fmtDateShort(d) { return ('0'+d.getDate()).slice(-2) + '/' + ('0'+(d.getMonth()+1)).slice(-2); }
+function fmtMonDay(d) {
+  const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return m[d.getMonth()] + ' ' + d.getDate();
+}
+function fmtFullDay(d) {
+  const w = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return w[d.getDay()] + ', ' + fmtMonDay(d);
+}
+
+const TOTAL_DAYS = 90;
+const ALL_DAYS = []; for (let i = TOTAL_DAYS - 1; i >= 0; i--) ALL_DAYS.push(dateMinusDays(i));
+
+const CATEGORIES = [
+  { id: 'visitas',    name: 'Visitas',    color: 'var(--cat-2)', baseShare: 0.40 },
+  { id: 'pagamentos', name: 'Pagamentos', color: 'var(--cat-1)', baseShare: 0.12 },
+  { id: 'rescisao',   name: 'Rescisão',   color: 'var(--cat-3)', baseShare: 0.10 },
+  { id: 'closing',    name: 'Closing',    color: 'var(--cat-5)', baseShare: 0.07 },
+  { id: 'reparos',    name: 'Reparos',    color: 'var(--cat-6)', baseShare: 0.05 },
+  { id: 'mudancas',   name: 'Mudanças',   color: 'var(--cat-4)', baseShare: 0.05 },
+];
+
+const ISSUES = {
+  visitas: [
+    { id: 'agendar',      name: 'Agendar visita',           share: 0.42 },
+    { id: 'remarcar',     name: 'Remarcar / cancelar',      share: 0.28 },
+    { id: 'noshow',       name: 'No-show / atraso',         share: 0.14 },
+    { id: 'visita-info',  name: 'Info do imóvel',           share: 0.10 },
+    { id: 'visita-other', name: 'Outros',                   share: 0.06 },
+  ],
+  pagamentos: [
+    { id: 'boleto',       name: 'Boleto não recebido',      share: 0.32 },
+    { id: 'parcelamento', name: 'Parcelamento',             share: 0.21 },
+    { id: 'reembolso',    name: 'Reembolso',                share: 0.18 },
+    { id: 'comprovante',  name: 'Comprovante',              share: 0.16 },
+    { id: 'pag-other',    name: 'Outros',                   share: 0.13 },
+  ],
+  rescisao: [
+    { id: 'fin-settle',   name: 'Financial settlement',     share: 0.36 },
+    { id: 'logistics',    name: 'Inspection logistics',     share: 0.27 },
+    { id: 'utility',      name: 'Utility reimbursements',   share: 0.18 },
+    { id: 'fines',        name: 'Contract termination',     share: 0.13 },
+    { id: 'res-other',    name: 'Other',                    share: 0.06 },
+  ],
+  closing: [
+    { id: 'docs',         name: 'Documentação',             share: 0.38 },
+    { id: 'sign',         name: 'Assinatura',               share: 0.27 },
+    { id: 'cls-info',     name: 'Próximos passos',          share: 0.21 },
+    { id: 'cls-other',    name: 'Outros',                   share: 0.14 },
+  ],
+  reparos: [
+    { id: 'request',      name: 'Solicitar reparo',         share: 0.41 },
+    { id: 'status',       name: 'Status do reparo',         share: 0.32 },
+    { id: 'urgency',      name: 'Urgência / emergência',    share: 0.16 },
+    { id: 'rep-other',    name: 'Outros',                   share: 0.11 },
+  ],
+  mudancas: [
+    { id: 'sched',        name: 'Agendar mudança',          share: 0.45 },
+    { id: 'change',       name: 'Alterar / cancelar',       share: 0.30 },
+    { id: 'mud-info',     name: 'Info do processo',         share: 0.18 },
+    { id: 'mud-other',    name: 'Outros',                   share: 0.07 },
+  ],
+};
+
+/* ── Agent / filter config ─────────────────────────────────────── */
+const AGENT_CONFIGS = {
+  'Domi':     { seed:    0, volumeScale: 1.00, kpiBase: { resolution: 58, mission: 47, escalation: 20, frustration: 12 } },
+  'Wall-E':   { seed: 1000, volumeScale: 0.38, kpiBase: { resolution: 71, mission: 55, escalation: 14, frustration:  7 } },
+  'Matthew':  { seed: 2000, volumeScale: 0.24, kpiBase: { resolution: 76, mission: 61, escalation: 12, frustration:  5 } },
+  'SonIA':    { seed: 3000, volumeScale: 0.52, kpiBase: { resolution: 63, mission: 48, escalation: 22, frustration: 15 } },
+  'Concierge':{ seed: 4000, volumeScale: 0.15, kpiBase: { resolution: 81, mission: 68, escalation:  8, frustration:  4 } },
+  'MarIA':    { seed: 5000, volumeScale: 0.34, kpiBase: { resolution: 52, mission: 41, escalation: 28, frustration: 19 } },
+  'Isaias':   { seed: 6000, volumeScale: 0.20, kpiBase: { resolution: 69, mission: 54, escalation: 16, frustration:  9 } },
+};
+const CHANNEL_SCALES = { 'all': 1.0, 'inapp': 0.68, 'wpp': 0.32 };
+const OUTCOME_SCALES = { 'all': 1.0, 'resolved': 0.61, 'escalated': 0.28 };
+const DOMAIN_SCALES     = { 'all': 1.0, 'pagamentos': 0.34, 'contratos': 0.22, 'busca': 0.31, 'vistoria': 0.13 };
+const RESOLUTION_SCALES = { 'all': 1.0, 'self': 0.49, 'assisted': 0.27, 'escalated': 0.16, 'abandoned': 0.08 };
+const TRIGGER_SCALES    = { 'all': 1.0, 'proactive': 0.22, 'reactive': 0.71, 'handoff': 0.07 };
+const MISSION_SCALES    = { 'all': 1.0, 'search': 0.35, 'rental': 0.41, 'support': 0.24 };
+const CUSTOMER_SCALES   = { 'all': 1.0, 'seeker': 0.62, 'owner': 0.38 };
+const LENGTH_SCALES     = { 'all': 1.0, 'short': 0.46, 'medium': 0.39, 'long': 0.15 };
+
+let AGENT_NOISE_SEED = 0;
+
+function noise(seed, day) {
+  return Math.sin(((seed + AGENT_NOISE_SEED) * 9301 + day * 49297) % 233280) * 0.5 + 0.5;
+}
+const TOTAL_DAILY_AVG = 6370;
+const ALL_DAILY_TOTALS = ALL_DAYS.map((d, i) => {
+  const dow = d.getDay();
+  const weekend = (dow === 0 || dow === 6) ? 0.78 : 1.0;
+  const n = 0.92 + 0.16 * noise(99, i);
+  return Math.round(TOTAL_DAILY_AVG * weekend * n);
+});
+
+function dailyForCat(cat, idx) {
+  return ALL_DAYS.map((d, i) => {
+    let share = cat.baseShare;
+    share *= 0.92 + 0.16 * noise(idx + 7, i);
+    if (cat.id === 'pagamentos' && fmtDateISO(d) === '2026-04-18') share *= 2.4;
+    if (cat.id === 'rescisao' && i > TOTAL_DAYS - 11) share *= (1 - (i - (TOTAL_DAYS - 11)) * 0.018);
+    return Math.round(ALL_DAILY_TOTALS[i] * share);
+  });
+}
+
+const L0_ALL = CATEGORIES.map((c, idx) => {
+  const daily = dailyForCat(c, idx);
+  return { ...c, daily, total: daily.reduce((a, b) => a + b, 0) };
+});
+
+function buildL1All(catId) {
+  const cat = L0_ALL.find(c => c.id === catId);
+  const issues = ISSUES[catId] || [];
+  return issues.map((iss, idx) => {
+    const daily = cat.daily.map((cv, di) => Math.round(cv * iss.share * (0.88 + 0.24 * noise(idx * 13 + 3, di))));
+    return { ...iss, color: cat.color, parent: cat, daily, total: daily.reduce((a,b)=>a+b,0) };
+  });
+}
+function buildL2All(catId, issueId) {
+  const issue = buildL1All(catId).find(i => i.id === issueId);
+  if (!issue) return [];
+  const patterns = [
+    { name: 'User repeats query',     share: 0.35 },
+    { name: 'Chatbot gives wrong info', share: 0.24 },
+    { name: 'Bot loops on tool call', share: 0.18 },
+    { name: 'Missing context',        share: 0.13 },
+    { name: 'Other',                  share: 0.10 },
+  ];
+  return patterns.map((p, idx) => {
+    const daily = issue.daily.map((iv, di) => Math.round(iv * p.share * (0.85 + 0.30 * noise(idx * 17 + 5, di))));
+    return { id: 'p' + idx, name: p.name, color: issue.color, parent: issue, daily, total: daily.reduce((a,b)=>a+b,0), share: p.share };
+  });
+}
+
+function buildKpiSeries(base, vol = 4) {
+  return ALL_DAYS.map((_, i) => Math.max(0, base + (noise(base * 7, i) - 0.5) * vol + (i * 0.03)));
+}
+const KPI_SERIES = {
+  resolution: buildKpiSeries(58, 8),
+  mission:    buildKpiSeries(47, 5),
+  escalation: buildKpiSeries(20, 4),
+  frustration: buildKpiSeries(12, 3),
+};
+
+/* ── Recompute all derived data when agent / channel / outcome changes ── */
+function recomputeFilteredData() {
+  const cfg       = AGENT_CONFIGS[state.agent] || AGENT_CONFIGS['Domi'];
+  AGENT_NOISE_SEED = cfg.seed;
+
+  const chScale   = CHANNEL_SCALES[state.channel]       || 1.0;
+  const outScale  = OUTCOME_SCALES[state.outcome]       || 1.0;
+  const domScale  = DOMAIN_SCALES[state.domain]         || 1.0;
+  const resScale  = RESOLUTION_SCALES[state.resolution] || 1.0;
+  const trgScale  = TRIGGER_SCALES[state.trigger]       || 1.0;
+  const misScale  = MISSION_SCALES[state.mission]       || 1.0;
+  const cusScale  = CUSTOMER_SCALES[state.customer]     || 1.0;
+  const lenScale  = LENGTH_SCALES[state.length]         || 1.0;
+  const total    = TOTAL_DAILY_AVG * cfg.volumeScale * chScale * outScale * domScale * resScale * trgScale * misScale * cusScale * lenScale;
+
+  // Rebuild totals in-place (noise() now uses the new seed)
+  ALL_DAYS.forEach((d, i) => {
+    const dow     = d.getDay();
+    const weekend = (dow === 0 || dow === 6) ? 0.78 : 1.0;
+    ALL_DAILY_TOTALS[i] = Math.round(total * weekend * (0.92 + 0.16 * noise(99, i)));
+  });
+
+  // Rebuild L0 categories in-place
+  CATEGORIES.forEach((c, idx) => {
+    const daily = dailyForCat(c, idx);
+    L0_ALL[idx] = { ...L0_ALL[idx], daily, total: daily.reduce((a, b) => a + b, 0) };
+  });
+
+  // Rebuild KPI sparks with agent-specific baselines
+  const k = cfg.kpiBase;
+  KPI_SERIES.resolution  = buildKpiSeries(k.resolution,  8);
+  KPI_SERIES.mission     = buildKpiSeries(k.mission,      5);
+  KPI_SERIES.escalation  = buildKpiSeries(k.escalation,   4);
+  KPI_SERIES.frustration = buildKpiSeries(k.frustration,  3);
+}
+
+const ANNOTATIONS = {
+  L0: [
+    { date: '2026-04-18', kind: 'bad',  label: 'Pagamentos spike',  body: 'Billing batch · +140%',         target: { level: 1, category: 'pagamentos' } },
+    { date: '2026-04-29', kind: 'good', label: 'Rescisão template', body: 'New email · −8pp escalation',   target: { level: 1, category: 'rescisao' } },
+  ],
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  level: 0,
+  category: null,
+  issue: null,
+  highlightDate: null,
+  dimSeries: null,
+  hoverIdx: null,
+  pinnedDayIdx: null,
+  compare: false,
+  range: { startIdx: TOTAL_DAYS - 30, endIdx: TOTAL_DAYS - 1 },
+  agent: 'Domi',
+  channel: 'all',
+  outcome: 'all',
+  domain: 'all',
+  resolution: 'all',
+};
+
+function visibleDays() { return ALL_DAYS.slice(state.range.startIdx, state.range.endIdx + 1); }
+function rangeLength() { return state.range.endIdx - state.range.startIdx + 1; }
+
+function currentSeriesAll() {
+  if (state.level === 0) return L0_ALL;
+  if (state.level === 1) return buildL1All(state.category);
+  if (state.level === 2) return buildL2All(state.category, state.issue);
+  return [];
+}
+function currentSeriesVisible() {
+  return currentSeriesAll().map(s => ({
+    ...s,
+    visible: s.daily.slice(state.range.startIdx, state.range.endIdx + 1),
+    visibleTotal: s.daily.slice(state.range.startIdx, state.range.endIdx + 1).reduce((a,b)=>a+b,0),
+  }));
+}
+function currentTotal() { return currentSeriesVisible().reduce((a,s) => a + s.visibleTotal, 0); }
+function currentPrevTotal() {
+  const len = rangeLength();
+  const prevStart = Math.max(0, state.range.startIdx - len);
+  const prevEnd = Math.max(0, state.range.startIdx - 1);
+  return currentSeriesAll().reduce((a, s) => a + s.daily.slice(prevStart, prevEnd + 1).reduce((x,y)=>x+y,0), 0);
+}
+function currentTotalAll() {
+  return ALL_DAILY_TOTALS.slice(state.range.startIdx, state.range.endIdx + 1).reduce((a,b)=>a+b,0);
+}
+function currentAnnotations() { return state.level === 0 ? ANNOTATIONS.L0 : []; }
+
+/* ============================================================
+   SVG helpers + monotonic cubic curve
+   ============================================================ */
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, content) {
+  const e = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (typeof content === 'string') e.textContent = content;
+  return e;
+}
+function monotonePath(points) {
+  const n = points.length;
+  if (n < 2) return '';
+  if (n === 2) return `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)} L ${points[1].x.toFixed(2)} ${points[1].y.toFixed(2)}`;
+  const dx = new Array(n - 1), dy = new Array(n - 1), d = new Array(n - 1);
+  for (let i = 0; i < n - 1; i++) {
+    dx[i] = points[i+1].x - points[i].x;
+    dy[i] = points[i+1].y - points[i].y;
+    d[i]  = dx[i] !== 0 ? dy[i] / dx[i] : 0;
+  }
+  const m = new Array(n);
+  m[0] = d[0]; m[n-1] = d[n-2];
+  for (let i = 1; i < n - 1; i++) {
+    m[i] = (d[i-1] * d[i] <= 0) ? 0 : (d[i-1] + d[i]) / 2;
+  }
+  for (let i = 0; i < n - 1; i++) {
+    if (d[i] === 0) { m[i] = 0; m[i+1] = 0; }
+    else {
+      const a = m[i] / d[i], b = m[i+1] / d[i];
+      const r = a*a + b*b;
+      if (r > 9) {
+        const t = 3 / Math.sqrt(r);
+        m[i]   = t * a * d[i];
+        m[i+1] = t * b * d[i];
+      }
+    }
+  }
+  let path = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+  for (let i = 0; i < n - 1; i++) {
+    const x1 = points[i].x   + dx[i] / 3;
+    const y1 = points[i].y   + m[i]   * dx[i] / 3;
+    const x2 = points[i+1].x - dx[i] / 3;
+    const y2 = points[i+1].y - m[i+1] * dx[i] / 3;
+    path += ` C ${x1.toFixed(2)} ${y1.toFixed(2)}, ${x2.toFixed(2)} ${y2.toFixed(2)}, ${points[i+1].x.toFixed(2)} ${points[i+1].y.toFixed(2)}`;
+  }
+  return path;
+}
+
+/* ============================================================
+   CHART RENDER
+   Direct labels reserve PAD.right space ~140px for category names
+   ============================================================ */
+const PAD = { top: 24, right: 210, bottom: 32, left: 56 };
+function chartBox() {
+  const svg = document.getElementById('chart-svg');
+  const r = svg.getBoundingClientRect();
+  const W = Math.max(700, r.width);
+  const H = Math.max(280, r.height);
+  return { W, H, PLOT_W: W - PAD.left - PAD.right, PLOT_H: H - PAD.top - PAD.bottom };
+}
+
+function drawChart(animateEntrance = false) {
+  const svg = document.getElementById('chart-svg');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const { W, H, PLOT_W, PLOT_H } = chartBox();
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  const series = currentSeriesVisible();
+  const N = rangeLength();
+  const visDays = visibleDays();
+
+  const dayTotals = visDays.map((_, i) => series.reduce((a, s) => a + s.visible[i], 0));
+
+  const len = N;
+  const prevStart = Math.max(0, state.range.startIdx - len);
+  const prevEnd = Math.max(0, state.range.startIdx - 1);
+  const prevLen = prevEnd - prevStart + 1;
+  const compareTotals = state.compare
+    ? Array.from({ length: N }, (_, i) => {
+        const pi = prevStart + Math.min(i, prevLen - 1);
+        return currentSeriesAll().reduce((a, s) => a + (s.daily[pi] || 0), 0);
+      })
+    : [];
+
+  const maxLive    = Math.max(...dayTotals, 1);
+  const maxCompare = state.compare ? Math.max(...compareTotals, 0) : 0;
+  const maxTotal   = Math.max(maxLive, maxCompare);
+
+  const xScale = i => PAD.left + (i / Math.max(1, N - 1)) * PLOT_W;
+  const yScale = v => PAD.top + (1 - v / maxTotal) * PLOT_H;
+
+  /* Grid */
+  const gridG = svgEl('g', { class: 'chart-grid' });
+  for (let g = 0; g <= 4; g++) {
+    const y = PAD.top + (g / 4) * PLOT_H;
+    gridG.appendChild(svgEl('line', { x1: PAD.left, x2: PAD.left + PLOT_W, y1: y, y2: y }));
+    const yVal = Math.round(maxTotal * (1 - g / 4));
+    const t = svgEl('text', { x: PAD.left - 12, y: y + 4, 'text-anchor': 'end', 'font-size': '10.5', fill: 'var(--text-subtle)' });
+    t.textContent = yVal >= 1000 ? (yVal/1000).toFixed(1) + 'k' : yVal;
+    gridG.appendChild(t);
+  }
+  svg.appendChild(gridG);
+
+  /* Day spotlight */
+  if (state.highlightDate) {
+    const idx = visDays.findIndex(d => fmtDateISO(d) === state.highlightDate);
+    if (idx >= 0) {
+      const x = xScale(idx);
+      const w = PLOT_W / Math.max(1, N - 1);
+      svg.appendChild(svgEl('rect', { x: x - w/2, y: PAD.top, width: w, height: PLOT_H, class: 'day-spotlight visible' }));
+    }
+  }
+
+  /* Stacked areas — render largest cumul first */
+  const ordered = [...series].sort((a,b) => b.visibleTotal - a.visibleTotal);
+  const cumul = ordered.map(() => new Array(N).fill(0));
+  for (let i = 0; i < N; i++) {
+    let acc = 0;
+    for (let j = 0; j < ordered.length; j++) {
+      acc += ordered[j].visible[i];
+      cumul[j][i] = acc;
+    }
+  }
+  for (let j = ordered.length - 1; j >= 0; j--) {
+    const s = ordered[j];
+    const upper = cumul[j].map((v, i) => ({ x: xScale(i), y: yScale(v) }));
+    const baseline = PAD.top + PLOT_H;
+    const dPath = monotonePath(upper) + ` L ${xScale(N-1).toFixed(2)} ${baseline.toFixed(2)} L ${xScale(0).toFixed(2)} ${baseline.toFixed(2)} Z`;
+    const isDim  = state.dimSeries && state.dimSeries !== s.id;
+    const isSpot = state.dimSeries === s.id;
+    const baseFillOpacity   = isDim ? 0.10 : (isSpot ? 0.50 : 0.30);
+    const baseStrokeOpacity = isDim ? 0.30 : (isSpot ? 1.0  : 0.85);
+    const path = svgEl('path', {
+      d: dPath,
+      fill: s.color,
+      'fill-opacity': baseFillOpacity,
+      stroke: s.color,
+      'stroke-width': isSpot ? '1.5' : '1.2',
+      'stroke-opacity': baseStrokeOpacity,
+      class: 'area-band' + (animateEntrance ? ' entering' : ''),
+      'data-id': s.id,
+    });
+    if (animateEntrance) path.style.animationDelay = (60 + (ordered.length - 1 - j) * 60) + 'ms';
+    path.addEventListener('click', e => { e.stopPropagation(); drillIn(s.id); });
+    path.addEventListener('mouseenter', () => {
+      if (state.dimSeries) return;
+      svg.querySelectorAll('.area-band').forEach(p => {
+        if (p.getAttribute('data-id') !== s.id) {
+          p.setAttribute('fill-opacity', '0.10');
+          p.setAttribute('stroke-opacity', '0.35');
+        } else {
+          p.setAttribute('fill-opacity', '0.50');
+          p.setAttribute('stroke-opacity', '1');
+        }
+      });
+      previewLabels(s.id);
+    });
+    path.addEventListener('mouseleave', () => {
+      restoreBandsOpacity(svg, series);
+      previewLabels(null);
+    });
+    svg.appendChild(path);
+  }
+
+  /* Compare line */
+  if (state.compare && compareTotals.length) {
+    const cmpPts = compareTotals.map((v, i) => ({ x: xScale(i), y: yScale(v) }));
+    svg.appendChild(svgEl('path', {
+      d: monotonePath(cmpPts),
+      class: 'compare-line visible',
+      stroke: 'var(--text-muted)',
+    }));
+  }
+
+  /* DIRECT LABELS — sophisticated category presentation */
+  renderDirectLabels(svg, ordered, cumul, xScale, yScale, PLOT_W, PLOT_H);
+
+  /* Annotation pins — removed (visual noise) */
+
+  /* X axis */
+  const tickEvery = Math.max(1, Math.ceil(N / 7));
+  const xAxisG = svgEl('g', { class: 'chart-axis' });
+  for (let i = 0; i < N; i += tickEvery) {
+    const t = svgEl('text', { x: xScale(i), y: PAD.top + PLOT_H + 18, 'text-anchor': 'middle', 'font-size': '10.5', fill: 'var(--text-subtle)' });
+    t.textContent = fmtDateShort(visDays[i]);
+    xAxisG.appendChild(t);
+  }
+  if (N > 1) {
+    const lastT = svgEl('text', {
+      x: xScale(N - 1), y: PAD.top + PLOT_H + 18,
+      'text-anchor': 'end', 'font-size': '10.5', fill: 'var(--text)'
+    });
+    lastT.textContent = fmtDateShort(visDays[N - 1]) + ' ↓';
+    xAxisG.appendChild(lastT);
+  }
+  svg.appendChild(xAxisG);
+
+  /* Cursor */
+  const cursor = svgEl('line', { x1: 0, x2: 0, y1: PAD.top, y2: PAD.top + PLOT_H, class: 'day-cursor', id: 'day-cursor' });
+  svg.appendChild(cursor);
+
+  /* Hover overlay (covers plot area only, NOT the label column) */
+  const overlay = svgEl('rect', {
+    x: PAD.left, y: PAD.top, width: PLOT_W, height: PLOT_H,
+    fill: 'transparent', style: 'cursor: crosshair;'
+  });
+  overlay.addEventListener('mousemove', onChartMove);
+  overlay.addEventListener('mouseleave', onChartLeave);
+  overlay.addEventListener('click', onChartClick);
+  svg.appendChild(overlay);
+
+  syncCursor();
+}
+
+function restoreBandsOpacity(svg, series) {
+  svg.querySelectorAll('.area-band').forEach(p => {
+    const sId = p.getAttribute('data-id');
+    const dim = state.dimSeries && state.dimSeries !== sId;
+    const spot = state.dimSeries === sId;
+    p.setAttribute('fill-opacity', dim ? 0.10 : (spot ? 0.50 : 0.30));
+    p.setAttribute('stroke-opacity', dim ? 0.30 : (spot ? 1.0 : 0.85));
+  });
+}
+
+/* DIRECT LABELS with collision avoidance + connector lines.
+   Labels stay anchored to their band; we only push them apart when they'd
+   actually overlap (label height = ~22–24px). No forced gap — bigger bands
+   have labels close to where they live in the chart, smaller bands cluster. */
+function renderDirectLabels(svg, ordered, cumul, xScale, yScale, PLOT_W, PLOT_H) {
+  const N = cumul[0].length;
+  // Always % of the grand total for the period (not just the drilled subset)
+  const total = currentTotalAll();
+  const labelsX = PAD.left + PLOT_W + 16;     // text start
+  const labelW  = 168;                          // total label box width
+  const minGap  = 42;                           // ~30px text + 12px clear breathing
+  const isLeaf  = state.level >= 2;
+
+  // Re-derive band ranges
+  const ranges = ordered.map((s, j) => {
+    const topVal = cumul[j][N - 1];
+    const botVal = j === 0 ? 0 : cumul[j - 1][N - 1];
+    return { s, topVal, botVal, topY: yScale(topVal), botY: yScale(botVal) };
+  });
+
+  ranges.forEach(r => {
+    r.anchorY = (r.topY + r.botY) / 2;
+    r.value = r.topVal - r.botVal;
+    r.pct = total ? (r.value / total) * 100 : 0;
+  });
+
+  // Sort by anchorY ascending — guarantees no line crossings since labels stay in same y order
+  ranges.sort((a, b) => a.anchorY - b.anchorY);
+
+  // Place labels with collision avoidance — push down then push up if overflow
+  const minTop = PAD.top + 8;
+  const maxBot = PAD.top + PLOT_H - 8;
+
+  // Initial: anchor positions
+  ranges.forEach(r => r.labelY = r.anchorY);
+
+  // Iterate to converge (forward + backward passes)
+  for (let iter = 0; iter < 8; iter++) {
+    let moved = false;
+    // Forward pass — push down
+    for (let i = 1; i < ranges.length; i++) {
+      const want = ranges[i-1].labelY + minGap;
+      if (ranges[i].labelY < want) {
+        ranges[i].labelY = want;
+        moved = true;
+      }
+    }
+    // Bottom overflow — push everything up
+    const overflowBottom = ranges[ranges.length - 1].labelY - maxBot;
+    if (overflowBottom > 0) {
+      ranges.forEach(r => r.labelY -= overflowBottom);
+      moved = true;
+    }
+    // Top overflow — push everything down
+    const overflowTop = minTop - ranges[0].labelY;
+    if (overflowTop > 0) {
+      ranges.forEach(r => r.labelY += overflowTop);
+      moved = true;
+    }
+    if (!moved) break;
+  }
+
+  ranges.forEach(r => {
+    const isDim  = state.dimSeries && state.dimSeries !== r.s.id;
+    const isActive = state.dimSeries === r.s.id;
+
+    const g = svgEl('g', {
+      class: 'direct-label'
+        + (isDim ? ' is-dim' : '')
+        + (isActive ? ' is-active' : '')
+        + (isLeaf ? ' is-leaf' : ''),
+      'data-id': r.s.id,
+    });
+
+    // Connector — curved line from band end to label dot
+    const startX = PAD.left + PLOT_W;
+    const startY = r.anchorY;
+    const endX = labelsX - 6;
+    const endY = r.labelY - 6;
+    const midX = (startX + endX) / 2;
+    const dPath = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+    g.appendChild(svgEl('path', {
+      d: dPath, class: 'dl-line',
+      stroke: r.s.color,
+      'stroke-opacity': isDim ? '0.20' : '0.55',
+    }));
+
+    // Color dot
+    g.appendChild(svgEl('circle', {
+      cx: labelsX, cy: r.labelY - 6, r: 4,
+      fill: r.s.color, class: 'dl-dot',
+    }));
+
+    // Row 1: Name (Inter Tight 600 13.5px)
+    const tName = svgEl('text', {
+      x: labelsX + 10, y: r.labelY - 2,
+      class: 'dl-text-name',
+    });
+    tName.textContent = r.s.name;
+    g.appendChild(tName);
+
+    // Row 2: Volume + percentage
+    const tMeta = svgEl('text', {
+      x: labelsX + 10, y: r.labelY + 13,
+      class: 'dl-text-pct',
+    });
+    const volStr = r.value >= 1000 ? (r.value/1000).toFixed(1) + 'k' : r.value.toLocaleString('pt-BR');
+    tMeta.textContent = volStr + ' · ' + r.pct.toFixed(r.pct < 10 ? 1 : 0) + '%';
+    g.appendChild(tMeta);
+
+    // Drill arrow on the right — only at levels where you can drill in.
+    // At leaf level (L2), the labels are just the breakdown; no further depth.
+    if (!isLeaf) {
+      const tArr = svgEl('text', {
+        x: labelsX + labelW - 4, y: r.labelY,
+        class: 'dl-arrow',
+        'text-anchor': 'end',
+      });
+      tArr.textContent = '→';
+      g.appendChild(tArr);
+    }
+
+    // Hit-area for click + hover
+    const hit = svgEl('rect', {
+      x: labelsX - 8, y: r.labelY - 18,
+      width: labelW + 4, height: 34,
+      class: 'dl-hit',
+    });
+    g.appendChild(hit);
+    hit.addEventListener('click', e => {
+      e.stopPropagation();
+      if (state.level < 2) drillIn(r.s.id);
+      else toggleDim(r.s.id);
+    });
+    hit.addEventListener('mouseenter', () => previewLabels(r.s.id));
+    hit.addEventListener('mouseleave', () => previewLabels(null));
+
+    svg.appendChild(g);
+  });
+}
+
+function previewLabels(id) {
+  const svg = document.getElementById('chart-svg');
+  // Bands
+  if (id == null) {
+    // Restore default
+    const series = currentSeriesVisible();
+    restoreBandsOpacity(svg, series);
+    svg.querySelectorAll('.direct-label').forEach(g => {
+      g.classList.remove('is-dim');
+      const sId = g.getAttribute('data-id');
+      g.classList.toggle('is-active', state.dimSeries === sId);
+    });
+    return;
+  }
+  // Dim others
+  svg.querySelectorAll('.area-band').forEach(p => {
+    const sId = p.getAttribute('data-id');
+    if (sId === id) {
+      p.setAttribute('fill-opacity', '0.50');
+      p.setAttribute('stroke-opacity', '1');
+    } else {
+      p.setAttribute('fill-opacity', '0.10');
+      p.setAttribute('stroke-opacity', '0.35');
+    }
+  });
+  svg.querySelectorAll('.direct-label').forEach(g => {
+    const sId = g.getAttribute('data-id');
+    g.classList.toggle('is-dim', sId !== id);
+    g.classList.toggle('is-active', sId === id);
+  });
+}
+
+function applyTarget(target, date) {
+  state.level = target.level || 0;
+  state.category = target.category || null;
+  state.issue = target.issue || null;
+  state.dimSeries = null;
+  state.highlightDate = date || null;
+  state.pinnedDayIdx = null; state.hoverIdx = null;
+  withFade(() => renderAll(true));
+}
+
+/* Cursor */
+function syncCursor() {
+  const cursor = document.getElementById('day-cursor');
+  if (!cursor) return;
+  const { PLOT_W } = chartBox();
+  const N = rangeLength();
+  let activeLocalIdx = null;
+  let isPinned = false;
+  if (state.hoverIdx != null) {
+    activeLocalIdx = state.hoverIdx - state.range.startIdx;
+  } else if (state.pinnedDayIdx != null
+      && state.pinnedDayIdx >= state.range.startIdx
+      && state.pinnedDayIdx <= state.range.endIdx) {
+    activeLocalIdx = state.pinnedDayIdx - state.range.startIdx;
+    isPinned = true;
+  }
+  if (activeLocalIdx == null) {
+    cursor.classList.remove('visible', 'is-pinned');
+    return;
+  }
+  const xc = PAD.left + (activeLocalIdx / Math.max(1, N - 1)) * PLOT_W;
+  cursor.setAttribute('x1', xc);
+  cursor.setAttribute('x2', xc);
+  cursor.classList.add('visible');
+  cursor.classList.toggle('is-pinned', isPinned);
+}
+
+function onChartMove(e) {
+  const svg = document.getElementById('chart-svg');
+  const rect = svg.getBoundingClientRect();
+  const { W, PLOT_W } = chartBox();
+  const xVB = (e.clientX - rect.left) * (W / rect.width);
+  const xPlot = xVB - PAD.left;
+  const ratio = Math.max(0, Math.min(1, xPlot / PLOT_W));
+  const N = rangeLength();
+  const idx = Math.round(ratio * (N - 1));
+  state.hoverIdx = state.range.startIdx + idx;
+  if (state.pinnedDayIdx != null) return;
+  syncCursor();
+  renderLive();
+}
+function onChartLeave() {
+  state.hoverIdx = null;
+  if (state.pinnedDayIdx != null) return;
+  syncCursor();
+  renderLive();
+}
+function onChartClick(e) {
+  // Calculate idx directly from click position — never rely on hoverIdx being set
+  const svg = document.getElementById('chart-svg');
+  const rect = svg.getBoundingClientRect();
+  const { W, PLOT_W } = chartBox();
+  const xVB = (e.clientX - rect.left) * (W / rect.width);
+  const xPlot = xVB - PAD.left;
+  const ratio = Math.max(0, Math.min(1, xPlot / PLOT_W));
+  const N = rangeLength();
+  const clickedIdx = state.range.startIdx + Math.round(ratio * (N - 1));
+  if (state.pinnedDayIdx != null) state.pinnedDayIdx = null;
+  else state.pinnedDayIdx = clickedIdx;
+  state.hoverIdx = clickedIdx;
+  syncCursor();
+  renderLive();
+}
+function unpinDay() {
+  state.pinnedDayIdx = null;
+  syncCursor();
+  renderLive();
+}
+
+function showAnnotTooltip(a, x, y) {
+  const t = document.getElementById('annot-tooltip');
+  t.innerHTML = `<strong>${a.label}</strong><br>${a.body}`;
+  t.classList.add('visible');
+  const wrap = document.querySelector('.canvas');
+  const wRect = wrap.getBoundingClientRect();
+  const svg = document.getElementById('chart-svg');
+  const sRect = svg.getBoundingClientRect();
+  const { W, H } = chartBox();
+  const xPx = sRect.left - wRect.left + x * (sRect.width / W);
+  const yPx = sRect.top  - wRect.top  + y * (sRect.height / H);
+  t.style.left = xPx + 'px';
+  t.style.top  = yPx + 'px';
+}
+function hideAnnotTooltip() {
+  document.getElementById('annot-tooltip').classList.remove('visible');
+}
+
+/* ============================================================
+   BREADCRUMB / TITLE / META
+   ============================================================ */
+let _lastBcKey = null;
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  const key = state.level + '|' + state.category + '|' + state.issue;
+  const changed = _lastBcKey !== null && _lastBcKey !== key;
+  _lastBcKey = key;
+
+  bc.innerHTML = '';
+  bc.classList.toggle('is-drilled', state.level > 0);
+
+  // Back button (only when drilled)
+  if (state.level > 0) {
+    const back = document.createElement('button');
+    back.className = 'bc-back';
+    back.setAttribute('aria-label', 'Back');
+    back.title = 'Back';
+    back.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
+    back.addEventListener('click', () => drillTo(state.level - 1));
+    bc.appendChild(back);
+  }
+
+  const crumbs = [{ label: 'All categories', level: 0, color: null }];
+  if (state.level >= 1) {
+    const cat = CATEGORIES.find(c => c.id === state.category);
+    crumbs.push({ label: cat.name, level: 1, color: cat.color });
+  }
+  if (state.level >= 2) {
+    const issue = (ISSUES[state.category] || []).find(i => i.id === state.issue);
+    const cat = CATEGORIES.find(c => c.id === state.category);
+    crumbs.push({ label: issue.name, level: 2, color: cat.color });
+  }
+  crumbs.forEach((c, i) => {
+    const isCurrent = i === crumbs.length - 1;
+    const span = document.createElement('span');
+    span.className = 'crumb' + (isCurrent ? ' is-current' : '');
+    if (isCurrent && c.color) {
+      const dot = document.createElement('span');
+      dot.className = 'crumb-dot';
+      dot.style.background = c.color;
+      span.appendChild(dot);
+    }
+    const txt = document.createElement('span');
+    txt.textContent = c.label;
+    span.appendChild(txt);
+    if (!isCurrent) span.addEventListener('click', () => drillTo(c.level));
+    bc.appendChild(span);
+    if (!isCurrent) {
+      const sep = document.createElement('span'); sep.className = 'sep'; sep.textContent = '›';
+      bc.appendChild(sep);
+    }
+  });
+
+  if (changed) {
+    bc.classList.remove('changed');
+    void bc.offsetWidth; // restart animation
+    bc.classList.add('changed');
+  }
+}
+
+function tickNumber(el, from, to, dur = 500) {
+  const start = performance.now();
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  function frame(now) {
+    const t = Math.min(1, (now - start) / dur);
+    const v = Math.round(from + (to - from) * easeOut(t));
+    el.textContent = v.toLocaleString('pt-BR');
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function renderHead() {
+  // Title now lives in the breadcrumb itself — see renderBreadcrumb().
+}
+
+/* ============================================================
+   LIVE INSPECTOR
+   ============================================================ */
+function renderLive() {
+  const block = document.getElementById('live-block');
+  const hTitle = document.getElementById('live-h-title');
+  const hMeta = document.getElementById('live-h-meta');
+  const series = currentSeriesVisible();
+  const total = currentTotal();
+
+  let activeDayIdx = null;
+  let activeIsPinned = false;
+  if (state.hoverIdx != null) activeDayIdx = state.hoverIdx;
+  else if (state.pinnedDayIdx != null
+        && state.pinnedDayIdx >= state.range.startIdx
+        && state.pinnedDayIdx <= state.range.endIdx) {
+    activeDayIdx = state.pinnedDayIdx;
+    activeIsPinned = true;
+  }
+
+  if (activeDayIdx != null) {
+    const idx = activeDayIdx;
+    const day = ALL_DAYS[idx];
+    const counts = currentSeriesAll().map(s => ({ id: s.id, name: s.name, color: s.color, val: s.daily[idx] }));
+    const dayTotal = counts.reduce((a,c) => a + c.val, 0);
+    counts.sort((a,b) => b.val - a.val);
+
+    hTitle.innerHTML = activeIsPinned
+      ? '<span class="pinned-tag">📍 Pinned day</span>'
+      : 'Day inspector';
+    hMeta.innerHTML = activeIsPinned
+      ? `${fmtDateShort(day)} <button class="unpin-btn" id="unpin-btn">unpin</button>`
+      : fmtDateShort(day);
+
+    let cmpPill = '';
+    if (state.compare) {
+      const len = rangeLength();
+      const prevStart = Math.max(0, state.range.startIdx - len);
+      const localIdx = idx - state.range.startIdx;
+      const prevIdx = Math.max(0, prevStart + localIdx);
+      const prev = currentSeriesAll().reduce((a,s) => a + (s.daily[prevIdx] || 0), 0);
+      if (prev > 0) {
+        const dl = ((dayTotal - prev) / prev) * 100;
+        const dCls = dl >= 0 ? 'good' : 'bad';
+        const sg = dl >= 0 ? '↑' : '↓';
+        cmpPill = `<span class="live-delta-pill ${dCls}">${sg} ${Math.abs(dl).toFixed(1)}%<span class="from">from ${prev.toLocaleString('pt-BR')}</span></span>`;
+      }
+    }
+    const rows = counts.map(c => `
+      <button class="live-row" data-cat="${c.id}">
+        <span class="sw" style="background:${c.color}"></span>
+        <span class="nm">${c.name}</span>
+        <span class="v">${c.val.toLocaleString('pt-BR')}</span>
+        <span class="p">${dayTotal ? Math.round(100 * c.val / dayTotal) : 0}%</span>
+      </button>
+    `).join('');
+    block.innerHTML = `
+      <div class="live-eyebrow">${fmtFullDay(day)}</div>
+      <div class="live-num-row">
+        <span class="live-num display">${dayTotal.toLocaleString('pt-BR')}<span class="unit">conv.</span></span>
+        ${cmpPill}
+      </div>
+      <div class="live-rows">${rows}</div>
+    `;
+    block.querySelectorAll('.live-row').forEach(r => {
+      r.addEventListener('mouseenter', () => previewLabels(r.dataset.cat));
+      r.addEventListener('mouseleave', () => previewLabels(null));
+      r.addEventListener('click', () => {
+        if (state.level < 2) drillIn(r.dataset.cat);
+        else toggleDim(r.dataset.cat);
+      });
+    });
+    const unpinBtn = document.getElementById('unpin-btn');
+    if (unpinBtn) unpinBtn.addEventListener('click', e => { e.stopPropagation(); unpinDay(); });
+  } else {
+    hTitle.textContent = 'Selection';
+    let metaTxt = rangeLength() + 'd';
+    if (state.level === 0) metaTxt += ' · all categories';
+    else if (state.level === 1) metaTxt += ' · ' + CATEGORIES.find(c => c.id === state.category).name;
+    else metaTxt += ' · drilled';
+    hMeta.textContent = metaTxt;
+
+    const prev = currentPrevTotal();
+    const delta = prev ? ((total - prev) / prev * 100) : 0;
+    const cls = delta > 0.5 ? 'good' : (delta < -0.5 ? 'bad' : 'flat');
+    const sg = delta > 0.5 ? '↑' : (delta < -0.5 ? '↓' : '→');
+
+    const grandTotal = currentTotalAll();
+    const sortedSeries = [...series].sort((a,b) => b.visibleTotal - a.visibleTotal);
+    const rows = sortedSeries.slice(0, 5).map(s => {
+      const pctOfTotal = grandTotal ? (s.visibleTotal / grandTotal * 100) : 0;
+      const pctOfSel   = total      ? (s.visibleTotal / total      * 100) : 0;
+      const pctStr = state.level === 0
+        ? `${pctOfTotal.toFixed(pctOfTotal < 10 ? 1 : 0)}%`
+        : `${pctOfTotal.toFixed(pctOfTotal < 10 ? 1 : 0)}% <span class="p-sub" title="% within this category">${pctOfSel.toFixed(0)}% here</span>`;
+      return `
+        <button class="live-row" data-cat="${s.id}">
+          <span class="sw" style="background:${s.color}"></span>
+          <span class="nm">${s.name}</span>
+          <span class="v">${s.visibleTotal.toLocaleString('pt-BR')}</span>
+          <span class="p">${pctStr}</span>
+        </button>
+      `;
+    }).join('');
+    block.innerHTML = `
+      <div class="live-eyebrow">Total in this view</div>
+      <div class="live-num-row">
+        <span class="live-num display">${total.toLocaleString('pt-BR')}<span class="unit">conv.</span></span>
+        <span class="live-delta-pill ${cls}">${sg} ${Math.abs(delta).toFixed(1)}%<span class="from">from ${prev.toLocaleString('pt-BR')}</span></span>
+      </div>
+      <div class="live-rows">${rows}</div>
+    `;
+    block.querySelectorAll('.live-row').forEach(r => {
+      r.addEventListener('mouseenter', () => previewLabels(r.dataset.cat));
+      r.addEventListener('mouseleave', () => previewLabels(null));
+      r.addEventListener('click', () => {
+        if (state.level < 2) drillIn(r.dataset.cat);
+        else toggleDim(r.dataset.cat);
+      });
+    });
+  }
+}
+
+/* ============================================================
+   SIBLINGS
+   ============================================================ */
+function renderSiblings() {
+  const sec = document.getElementById('siblings-section');
+  const list = document.getElementById('sib-list');
+  const title = document.getElementById('siblings-title');
+  if (!sec || !list || !title) return; // section was removed from the inspector
+
+  if (state.level === 0) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+
+  let siblings, currentId;
+  if (state.level === 1) {
+    siblings = L0_ALL;
+    currentId = state.category;
+    title.textContent = 'Other categories';
+  } else {
+    siblings = buildL1All(state.category);
+    currentId = state.issue;
+    title.textContent = 'Other issues in ' + CATEGORIES.find(c => c.id === state.category).name;
+  }
+
+  const max = Math.max(...siblings.map(s => s.total));
+  list.innerHTML = '';
+  siblings.forEach(s => {
+    const isCurrent = s.id === currentId;
+    const row = document.createElement('button');
+    row.className = 'sib' + (isCurrent ? ' is-current' : '');
+    row.innerHTML = `
+      <span class="sw" style="background:${s.color}"></span>
+      <span class="nm">${s.name}</span>
+      <svg class="sib-spark" data-sib="${s.id}"></svg>
+      <span class="v">${s.total.toLocaleString('pt-BR')}</span>
+    `;
+    if (!isCurrent) {
+      row.addEventListener('click', () => {
+        if (state.level === 1) { state.category = s.id; state.issue = null; }
+        else { state.issue = s.id; }
+        state.dimSeries = null; state.highlightDate = null;
+        state.pinnedDayIdx = null; state.hoverIdx = null;
+        withFade(() => renderAll(true));
+      });
+    }
+    list.appendChild(row);
+    requestAnimationFrame(() => {
+      const svg = row.querySelector('[data-sib]');
+      drawMicroSpark(svg, s.daily, s.color, max);
+    });
+  });
+}
+
+function drawMicroSpark(svg, series, color, normMax) {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const r = svg.getBoundingClientRect();
+  const W = Math.max(40, r.width || 56);
+  const H = Math.max(14, r.height || 16);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const N = series.length;
+  const max = normMax || Math.max(...series, 1);
+  const xS = i => (i / (N - 1)) * W;
+  const yS = v => H - 1 - (v / max) * (H - 2);
+  const pts = series.map((v, i) => ({ x: xS(i), y: yS(v) }));
+  const linePath = monotonePath(pts);
+  const areaPath = linePath + ` L ${W} ${H} L 0 ${H} Z`;
+  svg.appendChild(svgEl('path', { d: areaPath, fill: color, 'fill-opacity': '0.18' }));
+  svg.appendChild(svgEl('path', { d: linePath, fill: 'none', stroke: color, 'stroke-width': '1' }));
+}
+
+/* KPI sparks */
+function renderKpiSparks() {
+  const colorMap = {
+    resolution: 'var(--state-green)',
+    mission:    'var(--text-muted)',
+    escalation: 'var(--state-green)',
+  };
+  document.querySelectorAll('[data-kpi-spark]').forEach(svg => {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const kpi = svg.getAttribute('data-kpi-spark');
+    const series = KPI_SERIES[kpi].slice(state.range.startIdx, state.range.endIdx + 1);
+    const r = svg.getBoundingClientRect();
+    const W = Math.max(60, r.width || 80);
+    const H = Math.max(20, r.height || 22);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    if (series.length < 2) return;
+    const min = Math.min(...series), max = Math.max(...series);
+    const xS = i => (i / (series.length - 1)) * W;
+    const yS = v => H - 1 - ((v - min) / Math.max(0.01, max - min)) * (H - 2);
+    const c = colorMap[kpi];
+    const pts = series.map((v, i) => ({ x: xS(i), y: yS(v) }));
+    const linePath = monotonePath(pts);
+    const areaPath = linePath + ` L ${W} ${H} L 0 ${H} Z`;
+    svg.appendChild(svgEl('path', { d: areaPath, fill: c, 'fill-opacity': '0.15' }));
+    svg.appendChild(svgEl('path', { d: linePath, fill: 'none', stroke: c, 'stroke-width': '1.2' }));
+    const lp = pts[pts.length - 1];
+    svg.appendChild(svgEl('circle', { cx: lp.x, cy: lp.y, r: '2', fill: c }));
+  });
+}
+
+/* INSIGHTS — coworker tone. No headlines, no all-caps, no jargon.
+   Each card is a sentence I'd say if I were sitting next to you. */
+const INSIGHTS = [
+  { cls: 'alert', tag: 'Worth a look',
+    title: 'Rescisão · Financial Settlement is where Domi struggles most',
+    body: '<strong>3.6k conversations</strong> in 30 days, and <strong>40%</strong> end up needing a human — the highest rate anywhere on this page.',
+    apply: () => applyTarget({ level: 2, category: 'rescisao', issue: 'fin-settle' })
+  },
+  { cls: 'spike', tag: 'Apr 18',
+    title: 'Pagamentos more than doubled — billing batch failed',
+    body: 'Conversations jumped <strong>+140%</strong> in a single day, mostly from <strong>Boleto não recebido</strong>. The batch was rerun the next morning.',
+    apply: () => applyTarget({ level: 1, category: 'pagamentos' }, '2026-04-18')
+  },
+  { cls: 'win', tag: 'Going well',
+    title: 'Rescisão handoffs dropped 8 points',
+    body: 'Over the last 10 days. Most likely the new closing-email template — worth confirming before claiming the win.',
+    apply: () => applyTarget({ level: 1, category: 'rescisao' })
+  },
+  { cls: 'cross', tag: 'A pattern',
+    title: 'Two topics drive most of the human handoffs',
+    body: '<strong>Rescisão</strong> and <strong>Reparos</strong> together are only <strong>15%</strong> of volume but <strong>70%</strong> of conversations sent to a human.',
+    apply: () => { state.level = 0; state.category = null; state.issue = null; state.dimSeries = 'rescisao'; state.highlightDate = null; state.pinnedDayIdx = null; renderAll(); }
+  },
+];
+let _insightsExpanded = false;
+const _INSIGHTS_COLLAPSED = 3;
+function renderInsights() {
+  const list = document.getElementById('insight-list');
+  const more = document.getElementById('insight-load-more');
+  if (!list) return;
+  list.innerHTML = '';
+  const visible = _insightsExpanded ? INSIGHTS : INSIGHTS.slice(0, _INSIGHTS_COLLAPSED);
+  visible.forEach(ins => {
+    const card = document.createElement('button');
+    card.className = 'insight ' + ins.cls;
+    // Body click drills into the chart. CTAs are their own buttons:
+    //   "See sessions" → navigates to Sessions filtered by this pattern (active).
+    //   "Fix in Playground" → parked intent for v0.2 (Soon badge).
+    card.innerHTML = `
+      <span class="insight-tag"><span class="dot"></span>${ins.tag}</span>
+      <div class="insight-title">${ins.title}</div>
+      <div class="insight-body">${ins.body}</div>
+      <div class="insight-cta-row">
+        <button class="insight-cta" type="button" data-cta="sessions" title="Open these conversations in Sessions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          See sessions
+        </button>
+        <button class="insight-cta" type="button" data-cta="playground" title="Open this pattern in Playground Lab to test a fix">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          Fix in Playground
+        </button>
+      </div>
+    `;
+    // Card body drills into the chart.
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.insight-cta-row')) { e.preventDefault(); e.stopPropagation(); return; }
+      ins.apply();
+    });
+    // See sessions → Sessions page (with current context).
+    const seeBtn = card.querySelector('[data-cta="sessions"]');
+    if (seeBtn) seeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const qs = buildContextParams('sessions').toString();
+      window.location.href = 'conv-explorer-sessions.html' + (qs ? '?' + qs : '');
+    });
+    const fixBtn = card.querySelector('[data-cta="playground"]');
+    if (fixBtn) fixBtn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      const title = encodeURIComponent(ins.title || '');
+      const tag   = encodeURIComponent(ins.tag   || '');
+      window.location.href = 'playground-lab.html?from_insight=1&insight_title=' + title + '&insight_tag=' + tag;
+    });
+    list.appendChild(card);
+  });
+  if (more) {
+    if (INSIGHTS.length > _INSIGHTS_COLLAPSED && !_insightsExpanded) {
+      more.hidden = false;
+      more.textContent = 'Load more (' + (INSIGHTS.length - _INSIGHTS_COLLAPSED) + ')';
+    } else {
+      more.hidden = true;
+    }
+  }
+}
+
+/* ASK — answers in plain language, like a coworker explaining what they
+   see. No bullet-pointed stats; full sentences. */
+const ASK_RECIPES = [
+  { match: /(escalation|spike|jump|18|abril|apr|tuesday|terça)/i,
+    explain: 'On <strong>Apr 18</strong>, conversations to a human jumped because <strong>Pagamentos · Boleto não recebido</strong> blew up — the billing batch failed that morning. It was rerun by the next day.',
+    apply: () => applyTarget({ level: 1, category: 'pagamentos' }, '2026-04-18') },
+  { match: /(pior|worst|least|resolve)/i,
+    explain: 'Domi resolves the fewest cases in <strong>Reparos</strong> — only <strong>38%</strong> close without a human. Most of the gap is in <strong>Status do reparo</strong> and <strong>Urgência</strong>.',
+    apply: () => { state.level = 0; state.category = null; state.issue = null; state.dimSeries = 'reparos'; state.highlightDate = null; renderAll(); } },
+  { match: /(in.?app|wpp|whatsapp).*(rescis|rescisão|rescisao)/i,
+    explain: 'In <strong>Rescisão</strong>, most conversations come over WhatsApp (<strong>72%</strong>) — and those end up needing a human <strong>12 points</strong> more often than the in-app ones.',
+    apply: () => applyTarget({ level: 1, category: 'rescisao' }) },
+  { match: /(top|maior|biggest|most|problem|problema|pain)/i,
+    explain: 'Looking at volume × impact, the biggest pain right now is <strong>Rescisão · Financial Settlement</strong>: only <strong>1.9%</strong> of conversations, but <strong>40%</strong> need a human.',
+    apply: () => applyTarget({ level: 2, category: 'rescisao', issue: 'fin-settle' }) },
+  { match: /(visit|agendar)/i,
+    explain: 'In <strong>Visitas</strong>, most people are trying to <strong>schedule</strong> a visit (<strong>42%</strong>) and Domi handles that well — <strong>78%</strong> resolve. The pain is <strong>No-show / atraso</strong>: <strong>27%</strong> need a human.',
+    apply: () => applyTarget({ level: 1, category: 'visitas' }) },
+];
+const SUGGESTIONS = [
+  'what happened on Apr 18',
+  'where Domi resolves least',
+  'biggest problem right now',
+];
+function renderSuggestions() {
+  const wrap = document.getElementById('ask-suggestions');
+  wrap.innerHTML = '';
+  SUGGESTIONS.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'ask-chip';
+    btn.textContent = s;
+    btn.addEventListener('click', () => {
+      document.getElementById('ask-input').value = s;
+      document.getElementById('ask-suggestions').style.display = 'none';
+      handleAsk();
+    });
+    wrap.appendChild(btn);
+  });
+}
+function handleAsk() {
+  const input = document.getElementById('ask-input');
+  const q = input.value.trim();
+  if (!q) return;
+  const thinking = document.getElementById('ask-thinking');
+  const response = document.getElementById('ask-response');
+  response.classList.remove('visible');
+  thinking.classList.add('visible');
+  setTimeout(() => {
+    thinking.classList.remove('visible');
+    const recipe = ASK_RECIPES.find(r => r.match.test(q)) || {
+      explain: `I'm not sure how to answer <em>"${q}"</em> yet — try asking about a date, a topic (Pagamentos, Visitas…), or where Domi struggles most.`,
+      apply: () => {}
+    };
+    response.innerHTML = `${recipe.explain}<div class="applied">↳ I updated the chart to match</div>`;
+    response.classList.add('visible');
+    recipe.apply();
+  }, 720);
+}
+
+/* ============================================================
+   DRILL FLOW
+   ============================================================ */
+function withFade(fn) {
+  const svg = document.getElementById('chart-svg');
+  svg.style.transition = 'opacity 200ms ease';
+  svg.style.opacity = '0';
+  setTimeout(() => { fn(); svg.style.opacity = '1'; }, 220);
+}
+function drillIn(id) {
+  if (state.level === 0) {
+    state.level = 1; state.category = id; state.issue = null;
+  } else if (state.level === 1) {
+    state.level = 2; state.issue = id;
+  } else { toggleDim(id); return; }
+  state.dimSeries = null; state.highlightDate = null;
+  state.pinnedDayIdx = null; state.hoverIdx = null;
+  withFade(() => renderAll(true));
+}
+function drillTo(level) {
+  state.level = level;
+  if (level === 0) { state.category = null; state.issue = null; }
+  if (level === 1) { state.issue = null; }
+  state.dimSeries = null; state.highlightDate = null;
+  state.pinnedDayIdx = null; state.hoverIdx = null;
+  withFade(() => renderAll(true));
+}
+function toggleDim(id) {
+  state.dimSeries = (state.dimSeries === id) ? null : id;
+  renderAll();
+}
+function renderAll(animateEntrance = false) {
+  renderBreadcrumb();
+  renderHead();
+  renderLive();
+  renderSiblings();
+  renderActions();
+  drawChart(animateEntrance);
+  renderRangeUI();
+  renderKpiSparks();
+  writeURLState();
+}
+
+/* ============================================================
+   PAGE LEDE — verdict + texture, state-aware.
+   Reads the current view (level / category / issue / pinned day) and
+   writes a one-sentence verdict plus a context line. The text itself
+   IS the page title; it changes as the user explores.
+   ============================================================ */
+function renderLede() {
+  const headEl = document.getElementById('lede-headline');
+  const ctxEl  = document.getElementById('lede-context');
+  if (!headEl || !ctxEl) return;
+  const days = rangeLength();
+  const total = currentTotal();
+  const fmt = n => n.toLocaleString('pt-BR');
+
+  // Sync the period chip in the page-header eyebrow row.
+  // Mirrors what the chart's range-presets/brush say, so eyebrow and chart
+  // never disagree about the active window.
+  const metaPeriodChip = document.getElementById('meta-period-chip');
+  if (metaPeriodChip) metaPeriodChip.textContent = 'Last ' + days + ' days';
+
+  // Pinned day takes priority — coworker is pointing at a specific day
+  if (state.pinnedDayIdx != null) {
+    const day = ALL_DAYS[state.pinnedDayIdx];
+    const isApr18 = fmtDateISO(day) === '2026-04-18';
+    if (isApr18) {
+      headEl.innerHTML = `Apr 18 was the day <strong>Pagamentos broke</strong>.`;
+      ctxEl.innerHTML  = `The billing batch failed in the morning, so <strong>Boleto não recebido</strong> conversations more than doubled. Domi caught up by the next day.`;
+    } else {
+      headEl.innerHTML = `${fmtFullDay(day)} — a typical day.`;
+      ctxEl.innerHTML  = `<strong>${fmt(currentDayTotal(state.pinnedDayIdx))}</strong> conversations on this day, in line with the rolling average. Click the chart again to unpin.`;
+    }
+    return;
+  }
+
+  // Drilled into a specific issue (level 2)
+  if (state.level === 2) {
+    const cat = CATEGORIES.find(c => c.id === state.category);
+    const issue = (ISSUES[state.category] || []).find(i => i.id === state.issue);
+    headEl.innerHTML = `Inside <strong>${cat.name}</strong>: <strong>${issue.name}</strong>.`;
+    ctxEl.innerHTML  = `<strong>${fmt(total)}</strong> conversations in the last <strong>${days}</strong> days — that's <strong>${(total/currentTotalAll()*100).toFixed(2)}%</strong> of all volume in this view.`;
+    return;
+  }
+
+  // Drilled into a category (level 1)
+  if (state.level === 1) {
+    const cat = CATEGORIES.find(c => c.id === state.category);
+    const issues = ISSUES[cat.id] || [];
+    const top = issues[0];
+    headEl.innerHTML = `Inside <strong>${cat.name}</strong>, <strong>${top.name}</strong> is what drives most of it.`;
+    ctxEl.innerHTML  = `<strong>${fmt(total)}</strong> conversations over <strong>${days}</strong> days — about <strong>${(total/currentTotalAll()*100).toFixed(1)}%</strong> of all volume. Click any band to go one level deeper.`;
+    return;
+  }
+
+  // Default — overview at level 0. Pick the verdict from the data.
+  const series = currentSeriesAll();
+  const sorted = [...series].sort((a, b) => b.daily.reduce((s, v) => s + v, 0) - a.daily.reduce((s, v) => s + v, 0));
+  const lead = sorted[0];
+  const second = sorted[1];
+
+  // Period context: if range covers Apr 18 (the spike), call it out
+  const startDate = ALL_DAYS[state.range.startIdx];
+  const endDate   = ALL_DAYS[state.range.endIdx];
+  const apr18 = new Date('2026-04-18');
+  const includesSpike = apr18 >= startDate && apr18 <= endDate;
+  const periodLabel = days === 30 ? '30-day stretch'
+                    : days === 7  ? 'week'
+                    : days === 14 ? 'two weeks'
+                    : days === 60 ? '60-day window'
+                    : days === 90 ? 'quarter'
+                    : `${days}-day window`;
+
+  if (includesSpike) {
+    headEl.innerHTML = `A mostly normal ${periodLabel}, with one rough day.`;
+    ctxEl.innerHTML  = `<strong>${lead.name}</strong> still runs the volume, with <strong>${second.name}</strong> a distant second. The thing worth your eyes: a <span class="lede-link" data-jump="apr-18">spike on Apr 18</span> when Pagamentos more than doubled.`;
+  } else {
+    headEl.innerHTML = `A quiet ${periodLabel} — nothing dramatic.`;
+    ctxEl.innerHTML  = `<strong>${lead.name}</strong> leads the volume, with <strong>${second.name}</strong> close behind. Trends are steady, no spikes worth flagging in this window.`;
+  }
+}
+
+function currentDayTotal(idx) {
+  return currentSeriesAll().reduce((s, x) => s + (x.daily[idx] || 0), 0);
+}
+
+/* ============================================================
+   CROSS-PAGE — Go deeper actions + URL state
+   Connection to Dashboard / Conversations
+   ============================================================ */
+/* Map Overview category IDs → slugs other pages use.
+   Sessions uses 'payments' (English) where Overview uses 'pagamentos' (PT). */
+const SESSIONS_SLUG = {
+  pagamentos: 'payments',
+  visitas:    'visitas',
+  rescisao:   'rescisao',
+  mudancas:   'mudancas',
+  closing:    'closing',
+  reparos:    'reparos',
+};
+
+function buildContextParams(target /* 'sessions' | 'dashboard' | undefined */) {
+  const params = new URLSearchParams();
+  if (state.level >= 1) {
+    const slug = (target === 'sessions')
+      ? (SESSIONS_SLUG[state.category] || state.category)
+      : state.category;
+    params.set('view', slug);
+  }
+  if (state.level >= 2) params.set('issue', state.issue);
+  const len = state.range.endIdx - state.range.startIdx + 1;
+  if (state.range.endIdx === TOTAL_DAYS - 1 && [7, 14, 30, 60, 90].includes(len)) {
+    if (len !== 30) params.set('days', String(len));
+  } else {
+    params.set('start', fmtDateISO(ALL_DAYS[state.range.startIdx]));
+    params.set('end',   fmtDateISO(ALL_DAYS[state.range.endIdx]));
+  }
+  if (state.compare) params.set('compare', '1');
+  if (state.pinnedDayIdx != null) {
+    params.set('day', fmtDateISO(ALL_DAYS[state.pinnedDayIdx]));
+  }
+  return params;
+}
+
+function currentScopeText() {
+  const total = currentTotal();
+  const totalStr = total >= 1000 ? (total/1000).toFixed(1) + 'k' : total.toLocaleString('pt-BR');
+  if (state.level === 0) return totalStr + ' total';
+  if (state.level === 1) {
+    const cat = CATEGORIES.find(c => c.id === state.category);
+    return totalStr + ' in ' + cat.name;
+  }
+  const issue = (ISSUES[state.category] || []).find(i => i.id === state.issue);
+  return totalStr + ' matching';
+}
+
+function renderActions() {
+  const list = document.getElementById('action-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  const scope = currentScopeText();
+  const sessionsQs  = buildContextParams('sessions').toString();
+  const dashboardQs = buildContextParams('dashboard').toString();
+
+  // Browse conversations
+  const browseLbl = state.pinnedDayIdx != null
+    ? 'Read this day\'s conversations'
+    : (state.level === 0 ? 'Read individual conversations'
+       : 'Read these conversations');
+  const aConv = document.createElement('a');
+  aConv.className = 'action';
+  aConv.href = 'conv-explorer-v2-sessions.html' + (sessionsQs ? '?' + sessionsQs : '');
+  aConv.innerHTML = `
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="body">
+      <span class="lbl">${browseLbl}</span>
+      <span class="scope">~${scope}</span>
+    </span>
+    <span class="arr">→</span>
+  `;
+  list.appendChild(aConv);
+
+  // Open in Dashboard
+  const dashLbl = 'See detailed metrics';
+  const aDash = document.createElement('a');
+  aDash.className = 'action';
+  aDash.href = 'conv-explorer-v2-dashboard.html' + (dashboardQs ? '?' + dashboardQs : '');
+  aDash.innerHTML = `
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+    <span class="body">
+      <span class="lbl">${dashLbl}</span>
+      <span class="scope">Resolution, escalation, customer health</span>
+    </span>
+    <span class="arr">→</span>
+  `;
+  list.appendChild(aDash);
+}
+
+/* URL state — read on boot, write on every render.
+   Accepts both internal ids (pagamentos) and Sessions slugs (payments). */
+const SESSIONS_SLUG_REVERSE = Object.fromEntries(
+  Object.entries(SESSIONS_SLUG).map(([k, v]) => [v, k])
+);
+function readURLState() {
+  const params = new URLSearchParams(window.location.search);
+  let cat = params.get('view');
+  if (cat && SESSIONS_SLUG_REVERSE[cat]) cat = SESSIONS_SLUG_REVERSE[cat];
+  const issue = params.get('issue');
+  if (cat && CATEGORIES.find(c => c.id === cat)) {
+    state.category = cat;
+    state.level = 1;
+    if (issue && (ISSUES[cat] || []).find(i => i.id === issue)) {
+      state.issue = issue;
+      state.level = 2;
+    }
+  }
+  if (params.get('compare') === '1') state.compare = true;
+
+  const days = parseInt(params.get('days'), 10);
+  if (days && [7, 14, 30, 60, 90].includes(days)) {
+    state.range = { startIdx: TOTAL_DAYS - days, endIdx: TOTAL_DAYS - 1 };
+  } else {
+    const start = params.get('start');
+    const end   = params.get('end');
+    if (start && end) {
+      const sIdx = ALL_DAYS.findIndex(d => fmtDateISO(d) === start);
+      const eIdx = ALL_DAYS.findIndex(d => fmtDateISO(d) === end);
+      if (sIdx >= 0 && eIdx >= 0 && eIdx >= sIdx) {
+        state.range = { startIdx: sIdx, endIdx: eIdx };
+      }
+    }
+  }
+  const day = params.get('day');
+  if (day) {
+    const idx = ALL_DAYS.findIndex(d => fmtDateISO(d) === day);
+    if (idx >= 0) state.pinnedDayIdx = idx;
+  }
+}
+
+let _writeURLPending = false;
+function writeURLState() {
+  // Debounce to avoid hammering history during drags
+  if (_writeURLPending) return;
+  _writeURLPending = true;
+  requestAnimationFrame(() => {
+    _writeURLPending = false;
+    const qs = buildContextParams().toString();
+    const url = qs ? '?' + qs : window.location.pathname.split('/').pop();
+    try { history.replaceState(null, '', qs ? '?' + qs : window.location.pathname); } catch (e) {}
+  });
+}
+
+/* ============================================================
+   RANGE UI — presets + brush
+   ============================================================ */
+function setRangeByDays(n) {
+  state.range = {
+    startIdx: Math.max(0, TOTAL_DAYS - n),
+    endIdx: TOTAL_DAYS - 1,
+  };
+  syncPresetButton();
+  renderAll();
+}
+function syncPresetButton() {
+  const len = rangeLength();
+  const isLastN = state.range.endIdx === TOTAL_DAYS - 1;
+  const matched = isLastN ? [7, 14, 30, 90].find(d => d === len) : null;
+  const label = matched ? 'Last ' + matched + ' days' : 'Custom range';
+  const lbl = document.getElementById('range-label');
+  if (lbl) lbl.textContent = label;
+  const meta = document.getElementById('insight-period-meta');
+  if (meta) meta.textContent = label;
+  const pop = document.getElementById('range-pop');
+  if (pop) pop.querySelectorAll('.pop-item[data-days]').forEach(item => {
+    const days = item.dataset.days;
+    if (days === 'custom') {
+      item.classList.toggle('is-active', !matched);
+    } else {
+      item.classList.toggle('is-active', isLastN && parseInt(days, 10) === len);
+    }
+  });
+}
+
+function renderBrushSvg() {
+  const svg = document.getElementById('brush-svg');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const r = svg.getBoundingClientRect();
+  const W = Math.max(200, r.width || 600);
+  const H = Math.max(28, r.height || 38);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const series = currentSeriesAll();
+  const N = ALL_DAYS.length;
+  const dayTotals = ALL_DAYS.map((_, i) => series.reduce((a, s) => a + s.daily[i], 0));
+  const maxTotal = Math.max(...dayTotals, 1);
+  const xS = i => (i / (N - 1)) * W;
+  const yS = v => H - 1 - ((v / maxTotal) * (H - 2));
+  const pts = dayTotals.map((v, i) => ({ x: xS(i), y: yS(v) }));
+  const linePath = monotonePath(pts);
+  const areaPath = linePath + ` L ${W} ${H} L 0 ${H} Z`;
+  svg.appendChild(svgEl('path', { d: areaPath, fill: 'var(--text-faint)', 'fill-opacity': '0.30' }));
+  svg.appendChild(svgEl('path', { d: linePath, fill: 'none', stroke: 'var(--text-subtle)', 'stroke-width': '1' }));
+}
+
+function renderRangeUI() {
+  renderBrushSvg();
+  const sel = document.getElementById('brush-selection');
+  const handleL = document.getElementById('brush-handle-left');
+  const handleR = document.getElementById('brush-handle-right');
+  const N = ALL_DAYS.length;
+  const left  = (state.range.startIdx / (N - 1)) * 100;
+  const right = (state.range.endIdx   / (N - 1)) * 100;
+  sel.style.left = left + '%';
+  sel.style.width = (right - left) + '%';
+  handleL.style.left = left + '%';
+  handleR.style.left = right + '%';
+
+  // Brush dates are now token buttons — write to the inner label spans
+  const startLbl = document.getElementById('brush-start-label');
+  const endLbl   = document.getElementById('brush-end-label');
+  if (startLbl) startLbl.textContent = fmtMonDay(ALL_DAYS[state.range.startIdx]);
+  if (endLbl)   endLbl.textContent   = fmtMonDay(ALL_DAYS[state.range.endIdx]);
+  document.getElementById('brush-days').textContent  = rangeLength();
+  document.getElementById('brush-reset').hidden =
+    (state.range.startIdx === TOTAL_DAYS - 30 && state.range.endIdx === TOTAL_DAYS - 1);
+
+  syncPresetButton();
+}
+
+/* Brush drag */
+(function initBrush() {
+  const canvas  = document.getElementById('brush-canvas');
+  const handleL = document.getElementById('brush-handle-left');
+  const handleR = document.getElementById('brush-handle-right');
+  const sel     = document.getElementById('brush-selection');
+  const reset   = document.getElementById('brush-reset');
+  const track   = document.getElementById('brush-track');
+
+  let dragging = null;
+  let dragStartX = 0;
+  let dragStartIdx = 0;
+  let dragStartEnd = 0;
+
+  function pctToIdx(pct) {
+    return Math.max(0, Math.min(TOTAL_DAYS - 1, Math.round(pct * (TOTAL_DAYS - 1))));
+  }
+  function clientToPct(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  }
+
+  handleL.addEventListener('mousedown', e => { e.preventDefault(); e.stopPropagation(); dragging = 'left';  document.body.style.cursor = 'ew-resize'; });
+  handleR.addEventListener('mousedown', e => { e.preventDefault(); e.stopPropagation(); dragging = 'right'; document.body.style.cursor = 'ew-resize'; });
+  sel.addEventListener('mousedown', e => {
+    e.preventDefault(); e.stopPropagation();
+    dragging = 'middle';
+    dragStartX = e.clientX;
+    dragStartIdx = state.range.startIdx;
+    dragStartEnd = state.range.endIdx;
+    document.body.style.cursor = 'grabbing';
+  });
+  // Click on empty track → seek-extend
+  canvas.addEventListener('mousedown', e => {
+    if (dragging) return;
+    if (e.target === handleL || e.target === handleR || e.target === sel) return;
+    const idx = pctToIdx(clientToPct(e.clientX));
+    if (idx < state.range.startIdx) {
+      state.range.startIdx = idx;
+    } else if (idx > state.range.endIdx) {
+      state.range.endIdx = idx;
+    }
+    renderAll();
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    if (dragging === 'left') {
+      const idx = pctToIdx(clientToPct(e.clientX));
+      state.range.startIdx = Math.min(idx, state.range.endIdx);
+      renderRangeUI(); drawChart(); renderHead(); renderLive(); renderKpiSparks();
+    } else if (dragging === 'right') {
+      const idx = pctToIdx(clientToPct(e.clientX));
+      state.range.endIdx = Math.max(idx, state.range.startIdx);
+      renderRangeUI(); drawChart(); renderHead(); renderLive(); renderKpiSparks();
+    } else if (dragging === 'middle') {
+      const rect = canvas.getBoundingClientRect();
+      const dxPx = e.clientX - dragStartX;
+      const dxIdx = Math.round((dxPx / rect.width) * (TOTAL_DAYS - 1));
+      const len = dragStartEnd - dragStartIdx;
+      let newStart = dragStartIdx + dxIdx;
+      let newEnd   = dragStartEnd + dxIdx;
+      if (newStart < 0) { newStart = 0; newEnd = len; }
+      if (newEnd > TOTAL_DAYS - 1) { newEnd = TOTAL_DAYS - 1; newStart = newEnd - len; }
+      state.range.startIdx = newStart;
+      state.range.endIdx = newEnd;
+      renderRangeUI(); drawChart(); renderHead(); renderLive(); renderKpiSparks();
+    }
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = null;
+    document.body.style.cursor = '';
+    syncPresetButton();
+  });
+
+  reset.addEventListener('click', () => {
+    setRangeByDays(30);
+  });
+})();
+
+/* Date picker — calendar popover on each date token.
+   Replaces the old typeable input. Click the token → calendar appears →
+   click a day → range updates. Out-of-range days (outside the 90-day
+   window) are visible but disabled. */
+(function initDatePicker() {
+  const startBtn = document.getElementById('brush-start-btn');
+  const endBtn   = document.getElementById('brush-end-btn');
+  const startPop = document.getElementById('brush-start-pop');
+  const endPop   = document.getElementById('brush-end-pop');
+  if (!startBtn || !endBtn) return;
+
+  const MONTHS_LONG  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const WEEKDAYS_SHORT = ['S','M','T','W','T','F','S'];
+
+  // Each picker tracks the "viewed" month independent of the selected date
+  const viewState = {
+    start: null,  // Date — first day of month being viewed
+    end:   null,
+  };
+
+  const minDate = ALL_DAYS[0];                       // 90 days ago
+  const maxDate = ALL_DAYS[ALL_DAYS.length - 1];     // today
+
+  function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+  function sameDay(a, b)   { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+  function isToday(d)      { return sameDay(d, TODAY); }
+  function inWindow(d)     { return d >= minDate && d <= maxDate; }
+
+  function render(which) {
+    const pop = which === 'start' ? startPop : endPop;
+    const view = viewState[which];
+    const monthStart = view;
+    const year = monthStart.getFullYear();
+    const month = monthStart.getMonth();
+    const firstWeekday = monthStart.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const rangeStart = ALL_DAYS[state.range.startIdx];
+    const rangeEnd   = ALL_DAYS[state.range.endIdx];
+    const selectedDate = which === 'start' ? rangeStart : rangeEnd;
+
+    // Disable nav buttons that would go outside the window
+    const prevDisabled = startOfMonth(minDate).getTime() >= monthStart.getTime();
+    const nextDisabled = startOfMonth(maxDate).getTime() <= monthStart.getTime();
+
+    let html = `
+      <div class="date-pop-header">
+        <button class="dp-nav" type="button" data-dir="-1" ${prevDisabled ? 'disabled' : ''} aria-label="Previous month">‹</button>
+        <span class="dp-month">${MONTHS_LONG[month]} ${year}</span>
+        <button class="dp-nav" type="button" data-dir="1" ${nextDisabled ? 'disabled' : ''} aria-label="Next month">›</button>
+      </div>
+      <div class="date-pop-weekdays">${WEEKDAYS_SHORT.map(w => `<span>${w}</span>`).join('')}</div>
+      <div class="date-pop-grid">`;
+
+    // Empty pads before day 1
+    for (let i = 0; i < firstWeekday; i++) {
+      html += `<button class="dp-day is-empty" type="button" tabindex="-1" aria-hidden="true"></button>`;
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(year, month, d);
+      const inRange = inWindow(date);
+      const isSelected = sameDay(date, selectedDate);
+      const isInBetween = !isSelected && date >= rangeStart && date <= rangeEnd && inRange;
+      const cls = ['dp-day'];
+      if (!inRange) cls.push('is-out-of-range');
+      if (isSelected) cls.push('is-selected');
+      else if (isInBetween) cls.push('is-in-range');
+      if (isToday(date)) cls.push('is-today');
+      html += `<button class="${cls.join(' ')}" type="button" data-date="${fmtDateISO(date)}" ${!inRange ? 'disabled' : ''}>${d}</button>`;
+    }
+    html += `</div><div class="date-pop-hint">Past 90 days</div>`;
+
+    pop.innerHTML = html;
+
+    // Wire up buttons
+    pop.querySelectorAll('.dp-nav').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const dir = parseInt(btn.dataset.dir, 10);
+        viewState[which] = new Date(viewState[which].getFullYear(), viewState[which].getMonth() + dir, 1);
+        render(which);
+      });
+    });
+    pop.querySelectorAll('.dp-day:not(.is-empty):not(.is-out-of-range)').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const iso = btn.dataset.date;
+        const idx = ALL_DAYS.findIndex(x => fmtDateISO(x) === iso);
+        if (idx < 0) return;
+        if (which === 'start') {
+          state.range.startIdx = Math.min(idx, state.range.endIdx - 1);
+        } else {
+          state.range.endIdx = Math.max(idx, state.range.startIdx + 1);
+        }
+        close();
+        renderAll();
+      });
+    });
+  }
+
+  function open(which) {
+    close(); // close the other one if open
+    const btn = which === 'start' ? startBtn : endBtn;
+    const refDate = ALL_DAYS[which === 'start' ? state.range.startIdx : state.range.endIdx];
+    viewState[which] = startOfMonth(refDate);
+    render(which);
+    btn.classList.add('is-open');
+  }
+  function close() {
+    startBtn.classList.remove('is-open');
+    endBtn.classList.remove('is-open');
+  }
+
+  startBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (startBtn.classList.contains('is-open')) close();
+    else open('start');
+  });
+  endBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (endBtn.classList.contains('is-open')) close();
+    else open('end');
+  });
+  // Click outside → close
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.date-token')) close();
+  });
+  // Escape → close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+})();
+
+/* ============================================================
+   TOOLBAR CHIP POPOVERS — channel, outcome, compare, range
+   One pop open at a time. Click outside or Escape closes.
+   ============================================================ */
+const ALL_POPS = ['channel-pop','outcome-pop','domain-pop','resolution-pop','trigger-pop','mission-pop','customer-pop','length-pop','range-pop','addfilter-pop'];
+const ALL_TRIGGERS = ['channel-trigger','outcome-trigger','domain-trigger','resolution-trigger','trigger-trigger','mission-trigger','customer-trigger','length-trigger','range-trigger','addfilter-trigger'];
+function closeAllChipPops() {
+  ALL_POPS.forEach(id => { const p = document.getElementById(id); if (p) p.classList.remove('is-open'); });
+  ALL_TRIGGERS.forEach(id => { const t = document.getElementById(id); if (t) t.setAttribute('aria-expanded', 'false'); });
+}
+function openChipPop(trigger, pop) {
+  closeAllChipPops();
+  const r = trigger.getBoundingClientRect();
+  pop.style.visibility = 'hidden';
+  pop.classList.add('is-open');
+  const popW = pop.offsetWidth;
+  pop.classList.remove('is-open');
+  pop.style.visibility = '';
+  let left = pop.classList.contains('align-right') ? r.right - popW : r.left;
+  const maxLeft = window.innerWidth - popW - 8;
+  if (left > maxLeft) left = maxLeft;
+  if (left < 8) left = 8;
+  pop.style.top   = (r.bottom + 6) + 'px';
+  pop.style.left  = left + 'px';
+  pop.style.right = 'auto';
+  pop.classList.add('is-open');
+  trigger.setAttribute('aria-expanded', 'true');
+}
+function wireChipTrigger(triggerId, popId) {
+  const trigger = document.getElementById(triggerId);
+  const pop     = document.getElementById(popId);
+  if (!trigger || !pop) return;
+  trigger.addEventListener('click', e => {
+    // ignore clicks on the inline ×
+    if (e.target.closest('.fchip-remove')) return;
+    e.stopPropagation();
+    pop.classList.contains('is-open') ? closeAllChipPops() : openChipPop(trigger, pop);
+  });
+}
+wireChipTrigger('channel-trigger',    'channel-pop');
+wireChipTrigger('outcome-trigger',    'outcome-pop');
+wireChipTrigger('domain-trigger',     'domain-pop');
+wireChipTrigger('resolution-trigger', 'resolution-pop');
+wireChipTrigger('trigger-trigger',    'trigger-pop');
+wireChipTrigger('mission-trigger',    'mission-pop');
+wireChipTrigger('customer-trigger',   'customer-pop');
+wireChipTrigger('length-trigger',     'length-pop');
+wireChipTrigger('range-trigger',      'range-pop');
+wireChipTrigger('addfilter-trigger',  'addfilter-pop');
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.pop') && !e.target.closest('.chip-btn') && !e.target.closest('.btn-add-filter')) closeAllChipPops();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllChipPops(); });
+
+/* ── Dynamic filter chips: add / remove ── */
+const FILTER_DIMS = {
+  channel:    { label: 'Channel',    defaultVal: 'all', defaultLabel: 'Everywhere',   dataAttr: 'channel'    },
+  outcome:    { label: 'Outcome',    defaultVal: 'all', defaultLabel: 'All outcomes', dataAttr: 'outcome'    },
+  domain:     { label: 'Domain',     defaultVal: 'all', defaultLabel: 'Any',          dataAttr: 'domain'     },
+  resolution: { label: 'Resolution', defaultVal: 'all', defaultLabel: 'Any',          dataAttr: 'resolution' },
+  trigger:    { label: 'Trigger',    defaultVal: 'all', defaultLabel: 'Any',          dataAttr: 'trigger'    },
+  mission:    { label: 'Mission',    defaultVal: 'all', defaultLabel: 'Any',          dataAttr: 'mission'    },
+  customer:   { label: 'Customer',   defaultVal: 'all', defaultLabel: 'All',          dataAttr: 'customer'   },
+  length:     { label: 'Length',     defaultVal: 'all', defaultLabel: 'Any',          dataAttr: 'length'     },
+};
+const activeDims = new Set();
+
+function refreshAddFilterPop() {
+  const pop = document.getElementById('addfilter-pop');
+  if (!pop) return;
+  pop.querySelectorAll('.pop-item[data-add-dim]').forEach(item => {
+    const dim = item.dataset.addDim;
+    const isOn = activeDims.has(dim);
+    item.classList.toggle('is-added', isOn);
+    const stateLbl = item.querySelector('.afi-state');
+    if (stateLbl) stateLbl.textContent = isOn ? 'Added' : '';
+  });
+}
+
+function addFilterDim(dim) {
+  if (activeDims.has(dim)) return;
+  activeDims.add(dim);
+  const chip = document.getElementById(dim + '-trigger');
+  if (chip) chip.hidden = false;
+  refreshAddFilterPop();
+}
+
+function removeFilterDim(dim) {
+  if (!activeDims.has(dim)) return;
+  activeDims.delete(dim);
+  const cfg = FILTER_DIMS[dim];
+  if (!cfg) return;
+  // reset value in pop + chip label + state
+  const popId = dim + '-pop';
+  document.querySelectorAll('#' + popId + ' .pop-item').forEach(i => i.classList.remove('is-active'));
+  const defItem = document.querySelector('#' + popId + ' .pop-item[data-' + cfg.dataAttr + '="' + cfg.defaultVal + '"]');
+  if (defItem) defItem.classList.add('is-active');
+  const lblEl = document.getElementById(dim + '-label');
+  if (lblEl) lblEl.textContent = cfg.defaultLabel;
+  state[dim] = cfg.defaultVal;
+  // hide chip
+  const chip = document.getElementById(dim + '-trigger');
+  if (chip) { chip.hidden = true; chip.classList.remove('has-active'); }
+  refreshAddFilterPop();
+  recomputeFilteredData();
+  renderAll(true);
+}
+
+function setFilterChipValue(dim, val, lbl) {
+  state[dim] = val;
+  const lblEl = document.getElementById(dim + '-label');
+  if (lblEl) lblEl.textContent = lbl;
+  const chip = document.getElementById(dim + '-trigger');
+  const cfg = FILTER_DIMS[dim];
+  if (chip && cfg) {
+    chip.classList.toggle('has-active', val !== cfg.defaultVal);
+  }
+}
+
+// Wire inline × on every fchip
+document.querySelectorAll('.fchip .fchip-remove').forEach(btn => {
+  const handler = e => {
+    e.stopPropagation();
+    e.preventDefault();
+    const dim = btn.dataset.removeDim;
+    if (dim) removeFilterDim(dim);
+  };
+  btn.addEventListener('click', handler);
+  btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') handler(e); });
+});
+
+// Wire add-filter popover items
+document.querySelectorAll('#addfilter-pop .pop-item[data-add-dim]').forEach(item => {
+  item.addEventListener('click', () => {
+    const dim = item.dataset.addDim;
+    if (activeDims.has(dim)) {
+      removeFilterDim(dim);
+    } else {
+      addFilterDim(dim);
+    }
+    closeAllChipPops();
+  });
+});
+document.getElementById('addfilter-reset-all').addEventListener('click', () => {
+  Array.from(activeDims).forEach(removeFilterDim);
+  closeAllChipPops();
+});
+
+/* Channel pop */
+document.querySelectorAll('#channel-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#channel-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('channel', item.dataset.channel || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Outcome pop */
+document.querySelectorAll('#outcome-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#outcome-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('outcome', item.dataset.outcome || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Domain pop */
+document.querySelectorAll('#domain-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#domain-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('domain', item.dataset.domain || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Resolution pop */
+document.querySelectorAll('#resolution-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#resolution-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('resolution', item.dataset.resolution || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Trigger pop */
+document.querySelectorAll('#trigger-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#trigger-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('trigger', item.dataset.trigger || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Mission pop */
+document.querySelectorAll('#mission-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#mission-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('mission', item.dataset.mission || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Customer pop */
+document.querySelectorAll('#customer-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#customer-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('customer', item.dataset.customer || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Length pop */
+document.querySelectorAll('#length-pop .pop-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#length-pop .pop-item').forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+    setFilterChipValue('length', item.dataset.length || 'all', item.dataset.label);
+    closeAllChipPops();
+    recomputeFilteredData();
+    renderAll(true);
+  });
+});
+
+/* Range pop — preset days + custom range */
+document.querySelectorAll('#range-pop .pop-item[data-days]').forEach(item => {
+  item.addEventListener('click', () => {
+    const v = item.dataset.days;
+    closeAllChipPops();
+    if (v === 'custom') {
+      const startBtn = document.getElementById('brush-start-btn');
+      if (startBtn) setTimeout(() => startBtn.click(), 0);
+      return;
+    }
+    const lbl = item.dataset.label;
+    document.getElementById('range-label').textContent = lbl;
+    setRangeByDays(parseInt(v, 10));
+  });
+});
+
+// Initialize: state fields for new dims
+state.domain = 'all';
+state.resolution = 'all';
+state.trigger = 'all';
+state.mission = 'all';
+state.customer = 'all';
+state.length = 'all';
+refreshAddFilterPop();
+
+// Default active filters
+addFilterDim('channel');
+addFilterDim('outcome');
+
+/* ── Filter track: scroll newly-added chip into view ── */
+const fchipTrack = document.getElementById('fchip-track');
+if (fchipTrack) {
+  const _addOrig = addFilterDim;
+  addFilterDim = function(d) {
+    _addOrig(d);
+    requestAnimationFrame(() => {
+      const c = document.getElementById(d + '-trigger');
+      if (c) c.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+    });
+  };
+}
+
+function syncCompareChip() { /* compare chip removed — kept as no-op for boot/popstate compatibility */ }
+
+/* ============================================================
+   SHELL — theme toggle + popover system + agent sync
+   Lifted from conv-explorer-v3-shell.html so every page behaves
+   the same. Order in this block matters: theme is read on boot,
+   popovers are wired, then agent picker syncs all .agent-chip.
+   ============================================================ */
+
+/* Theme — persisted across sessions via localStorage. Re-render
+   chart-side bits because some colors are pulled from CSS vars
+   directly into SVG fills/strokes. */
+(function () {
+  const html = document.documentElement;
+  let saved = null;
+  try { saved = localStorage.getItem('dqs-theme'); } catch (e) {}
+  if (saved) html.setAttribute('data-theme', saved);
+  const btn = document.getElementById('theme-toggle');
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try { localStorage.setItem('dqs-theme', next); } catch (e) {}
+    drawChart();
+    renderKpiSparks();
+    renderSiblings();
+    renderRangeUI();
+  });
+})();
+
+/* Shared popover system — fixed positioning, viewport-clamped,
+   one #agent-pop instance triggered by any .agent-chip[data-agent-trigger]. */
+(function () {
+  const POPS = {
+    tool:    document.getElementById('tool-pop'),
+    agent:   document.getElementById('agent-pop'),
+    profile: document.getElementById('profile-pop'),
+  };
+  let openPop = null, openTrigger = null;
+
+  function positionPop(pop, trigger) {
+    const rect = trigger.getBoundingClientRect();
+    pop.style.visibility = 'hidden';
+    pop.classList.add('is-open');
+    const popW = pop.offsetWidth, popH = pop.offsetHeight;
+    pop.classList.remove('is-open');
+    pop.style.visibility = '';
+
+    let left = pop.classList.contains('align-right') ? rect.right - popW : rect.left;
+    const maxLeft = window.innerWidth - popW - 8;
+    if (left > maxLeft) left = maxLeft;
+    if (left < 8) left = 8;
+
+    let top = rect.bottom + 6;
+    if (top + popH > window.innerHeight - 8) top = rect.top - popH - 6;
+
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+  }
+  function close() {
+    if (openPop) openPop.classList.remove('is-open');
+    if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+    openPop = null; openTrigger = null;
+  }
+  function open(pop, trigger) {
+    if (openPop === pop && openTrigger === trigger) { close(); return; }
+    close();
+    positionPop(pop, trigger);
+    pop.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    openPop = pop; openTrigger = trigger;
+  }
+
+  const toolBtn = document.getElementById('tool-switcher-btn');
+  if (toolBtn) toolBtn.addEventListener('click', e => { e.stopPropagation(); open(POPS.tool, toolBtn); });
+
+  const profileBtn = document.getElementById('profile-btn');
+  if (profileBtn) profileBtn.addEventListener('click', e => { e.stopPropagation(); open(POPS.profile, profileBtn); });
+
+  document.querySelectorAll('[data-agent-trigger]').forEach(chip => {
+    chip.addEventListener('click', e => { e.stopPropagation(); open(POPS.agent, chip); });
+  });
+
+  document.addEventListener('click', e => { if (!e.target.closest('.pop')) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (openPop && openTrigger) positionPop(openPop, openTrigger); });
+
+  /* Agent selection: clicking an agent updates EVERY .agent-chip on
+     the page (lead in topbar + inline in page header), then recomputes
+     data so the chart and KPIs reflect the selected agent. */
+  const agentPop = POPS.agent;
+  if (agentPop) {
+    agentPop.querySelectorAll('.pop-item[data-agent]').forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        if (item.classList.contains('is-disabled')) return;
+        const color = item.getAttribute('data-color');
+        const initial = item.getAttribute('data-initial');
+        const name = item.getAttribute('data-name');
+        agentPop.querySelectorAll('.pop-item[data-agent]').forEach(i => i.classList.remove('is-active'));
+        item.classList.add('is-active');
+        document.querySelectorAll('.agent-chip').forEach(chip => {
+          const av = chip.querySelector('.ac-avatar');
+          const nm = chip.querySelector('.ac-name');
+          if (av) { av.style.background = color; av.textContent = initial; }
+          if (nm) nm.textContent = name;
+        });
+        agentPop.classList.remove('is-open');
+        document.querySelectorAll('[data-agent-trigger]').forEach(t => t.setAttribute('aria-expanded', 'false'));
+        // Recompute and redraw with new agent's data
+        state.agent = name;
+        state.level = 0; state.category = null; state.issue = null;
+        state.dimSeries = null; state.pinnedDayIdx = null;
+        recomputeFilteredData();
+        renderAll(true);
+      });
+    });
+  }
+})();
+
+/* Misc */
+document.getElementById('ask-submit').addEventListener('click', handleAsk);
+document.getElementById('ask-input').addEventListener('keydown', e => { if (e.key === 'Enter') handleAsk(); });
+
+/* Worth a look — Load more */
+(function() {
+  const btn = document.getElementById('insight-load-more');
+  if (!btn) return;
+  btn.addEventListener('click', () => { _insightsExpanded = true; renderInsights(); });
+})();
+
+/* BOOT */
+readURLState();                  // pick up incoming context from Dashboard / Conversations
+syncCompareChip();
+renderInsights();
+renderSuggestions();
+renderAll(true);
+requestAnimationFrame(() => { renderRangeUI(); drawChart(); });
+
+/* Topbar search → Enter sends query to Sessions page (overview has no row list) */
+(function () {
+  var trySearch = function () {
+    var input = document.querySelector('.topbar-search input');
+    if (!input) return false;
+    if (input.dataset.wired) return true;
+    input.dataset.wired = '1';
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var q = input.value.trim();
+      if (!q) return;
+      var qs = (typeof buildContextParams === 'function') ? buildContextParams('sessions') : new URLSearchParams();
+      qs.set('q', q);
+      window.location.href = 'conv-explorer-sessions.html?' + qs.toString();
+    });
+    return true;
+  };
+  if (!trySearch()) {
+    var iv = setInterval(function () { if (trySearch()) clearInterval(iv); }, 60);
+    setTimeout(function () { clearInterval(iv); }, 3000);
+  }
+})();
+
+/* Lede inline links — coworker pointing at something specific.
+   Delegated so dynamic re-renders keep working. */
+document.addEventListener('click', e => {
+  const link = e.target.closest('.lede-link');
+  if (!link) return;
+  e.preventDefault();
+  const jump = link.dataset.jump;
+  if (jump === 'apr-18') {
+    applyTarget({ level: 1, category: 'pagamentos' }, '2026-04-18');
+  }
+});
+
+// Back/forward navigation respects URL state
+window.addEventListener('popstate', () => {
+  // Reset, then re-read
+  state.level = 0; state.category = null; state.issue = null;
+  state.dimSeries = null; state.highlightDate = null;
+  state.pinnedDayIdx = null; state.hoverIdx = null; state.compare = false;
+  state.range = { startIdx: TOTAL_DAYS - 30, endIdx: TOTAL_DAYS - 1 };
+  readURLState();
+  syncCompareChip();
+  renderAll();
+});
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    drawChart();
+    renderKpiSparks();
+    renderSiblings();
+    renderRangeUI();
+  }, 80);
+});
+</script>
+
+</body>
+</html>
